@@ -1,55 +1,99 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme() ?? 'light';
 
   return (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+  screenOptions={{
+    headerShown: false,
+    tabBarActiveTintColor: Colors[colorScheme].tint,
+    tabBarInactiveTintColor: '#9CA3AF',
+    tabBarStyle: {
+      height: 72,          // ⬅️ artırıldı
+      paddingBottom: 8,
+    },
+    tabBarItemStyle: {
+      paddingTop: 6,      // ⬅️ çok önemli
+    },
+  }}
+>
+
       <Tabs.Screen
         name="index"
         options={{
           title: 'Ana Sayfa',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? 'home' : 'home-outline'}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
-      {/** 'Keşfet' removed - not needed in app flow */}
+
       <Tabs.Screen
         name="subscriptions"
         options={{
           title: 'Abonelikler',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="creditcard.fill" color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? 'card' : 'card-outline'}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
+
       <Tabs.Screen
-        name="add"
-        options={{
-          title: 'Ekle',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="plus.circle.fill" color={color} />,
+  name="add"
+  options={{
+    title: 'Ekle',
+    tabBarIcon: ({ color, focused }) => (
+      <Ionicons
+        name={focused ? 'add-circle' : 'add-circle-outline'}
+        size={40}          // ⬅️ biraz büyüdü
+        color={color}
+        style={{
+          marginTop: -6,   // ⬅️ yukarı taşı ama kesme yok
         }}
       />
+    ),
+  }}
+/>
+
       <Tabs.Screen
         name="ai"
         options={{
           title: 'AI Analiz',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="chart.bar.fill" color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? 'analytics' : 'analytics-outline'}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
+
       <Tabs.Screen
         name="profile"
         options={{
           title: 'Profil',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.crop.circle.fill" color={color} />,
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? 'person' : 'person-outline'}
+              size={size}
+              color={color}
+            />
+          ),
         }}
       />
     </Tabs>

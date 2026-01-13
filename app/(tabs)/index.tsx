@@ -1,94 +1,84 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
+import { ScrollView, Text, View } from "react-native";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { styles } from "../../styles";
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal"> 
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <ScrollView contentContainerStyle={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.appName}>Subtrack AI</Text>
+          <Text style={styles.date}>13 Ocak Salı</Text>
+        </View>
+        <Ionicons name="notifications-outline" size={22} color="#374151" />
+      </View>
 
-        <ThemedText>
-          {`Alt sekmeleri kullanarak uygulamanın temel bölümlerini keşfedin.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      {/* Monthly Total Card */}
+      <LinearGradient
+        colors={["#22c55e", "#16a34a"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.totalCard}
+      >
+        <View style={styles.totalHeader}>
+          <Ionicons name="wallet-outline" size={18} color="#fff" />
+          <Text style={styles.totalLabel}>Bu Ay Toplam Harcama</Text>
+        </View>
+
+        <Text style={styles.totalAmount}>₺0.00</Text>
+
+        <View style={styles.totalFooter}>
+          <Ionicons name="trending-up-outline" size={16} color="#dcfce7" />
+          <Text style={styles.totalSubText}>Abonelikler dahil</Text>
+        </View>
+      </LinearGradient>
+
+      {/* Stats Cards */}
+      <View style={styles.statsRow}>
+        <View style={styles.statCard}>
+          <View style={styles.statHeader}>
+            <Text style={styles.statLabel}>Aktif Abonelik</Text>
+            <Ionicons name="card-outline" size={18} color="#6b7280" />
+          </View>
+          <Text style={styles.statValue}>0</Text>
+        </View>
+
+        <View style={styles.statCard}>
+          <View style={styles.statHeader}>
+            <Text style={styles.statLabel}>Günlük Ortalama</Text>
+            <Ionicons name="analytics-outline" size={18} color="#6b7280" />
+          </View>
+          <Text style={styles.statValue}>₺0</Text>
+        </View>
+      </View>
+
+      {/* Expense Distribution */}
+      <View style={styles.largeCard}>
+        <Text style={styles.cardTitle}>Harcama Dağılımı</Text>
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyIcon}>📊</Text>
+          <Text style={styles.emptyText}>Henüz harcama verisi yok</Text>
+        </View>
+      </View>
+
+      {/* Weekly Trend */}
+      <View style={styles.largeCard}>
+        <Text style={styles.cardTitle}>Haftalık Trend</Text>
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyIcon}>📈</Text>
+          <Text style={styles.emptyText}>Henüz trend verisi yok</Text>
+        </View>
+      </View>
+
+      {/* Ad Area */}
+      <View style={styles.adArea}>
+        <Text style={styles.adTitle}>REKLAM ALANI</Text>
+        <Text style={styles.adSubtitle}>AdMob Banner (320×50)</Text>
+      </View>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
