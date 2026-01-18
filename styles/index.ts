@@ -6,6 +6,11 @@ export const styles = StyleSheet.create({
     backgroundColor: "#f6f7f9",
     paddingBottom: 32,
   },
+  statHint: {
+    marginTop: 4,
+    fontSize: 12,
+    color: "#9CA3AF",
+  },
 
   header: {
     flexDirection: "row",
