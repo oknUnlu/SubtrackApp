@@ -15,14 +15,16 @@ import { styles } from "../../styles";
 
 export default function HomeScreen() {
   /* -------------------- */
-  /* STATE'LER            */
+  /* STATE                */
   /* -------------------- */
   const [monthlyTotal, setMonthlyTotal] = useState(0);
   const [subscriptionCount, setSubscriptionCount] = useState(0);
   const [dailyAverage, setDailyAverage] = useState(0);
+
   const [categories, setCategories] = useState<
     Array<{ category: string; total: number }>
   >([]);
+
   const [weeklyTrend, setWeeklyTrend] = useState<
     Array<{ day: string; total: number }>
   >([]);
@@ -43,13 +45,10 @@ export default function HomeScreen() {
       setMonthlyTotal(total);
       setSubscriptionCount(subs);
       setDailyAverage(avg);
-
-      // 🔥 EKSİK OLAN KISIM (HATA BURADAYDI)
       setCategories(cats);
       setWeeklyTrend(weekly);
 
-      console.log("Categories:", cats);
-      console.log("Weekly:", weekly);
+      console.log("Weekly Trend:", weekly);
     } catch (error) {
       console.error("Dashboard load error:", error);
     }
@@ -75,7 +74,7 @@ export default function HomeScreen() {
         <Ionicons name="notifications-outline" size={22} color="#374151" />
       </View>
 
-      {/* Monthly Total Card */}
+      {/* Monthly Total */}
       <LinearGradient
         colors={["#22c55e", "#16a34a"]}
         start={{ x: 0, y: 0 }}
@@ -87,9 +86,7 @@ export default function HomeScreen() {
           <Text style={styles.totalLabel}>Bu Ay Toplam Harcama</Text>
         </View>
 
-        <Text style={styles.totalAmount}>
-          ₺{monthlyTotal.toFixed(2)}
-        </Text>
+        <Text style={styles.totalAmount}>₺{monthlyTotal.toFixed(2)}</Text>
 
         <View style={styles.totalFooter}>
           <Ionicons name="trending-up-outline" size={16} color="#dcfce7" />
@@ -97,7 +94,7 @@ export default function HomeScreen() {
         </View>
       </LinearGradient>
 
-      {/* Stats Cards */}
+      {/* Stats */}
       <View style={styles.statsRow}>
         <View style={styles.statCard}>
           <View style={styles.statHeader}>
@@ -112,13 +109,11 @@ export default function HomeScreen() {
             <Text style={styles.statLabel}>Günlük Ortalama</Text>
             <Ionicons name="analytics-outline" size={18} color="#6b7280" />
           </View>
-          <Text style={styles.statValue}>
-            ₺{dailyAverage.toFixed(0)}
-          </Text>
+          <Text style={styles.statValue}>₺{dailyAverage.toFixed(0)}</Text>
         </View>
       </View>
 
-      {/* Expense Distribution */}
+      {/* Category Distribution */}
       <View style={styles.largeCard}>
         <Text style={styles.cardTitle}>Harcama Dağılımı</Text>
 
@@ -131,7 +126,7 @@ export default function HomeScreen() {
           (() => {
             const total = categories.reduce((s, c) => s + c.total, 0);
 
-            const iconMap: Record<string, string> = { 
+            const iconMap: Record<string, string> = {
               food: "🍔",
               transport: "🚗",
               fun: "🎮",
@@ -139,9 +134,8 @@ export default function HomeScreen() {
               bills: "📄",
               health: "💊",
               education: "📚",
-              tech: "💻"
-              ,
-            };    
+              tech: "💻",
+            };
 
             return categories.map((item) => {
               const percent = total > 0 ? item.total / total : 0;
@@ -156,49 +150,25 @@ export default function HomeScreen() {
                     marginBottom: 12,
                   }}
                 >
-                  {/* Top Row */}
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      marginBottom: 8,
-                    }}
-                  >
+                  <View style={{ flexDirection: "row", marginBottom: 8 }}>
                     <Text style={{ fontSize: 20, marginRight: 10 }}>
                       {iconMap[item.category] || "📌"}
                     </Text>
 
                     <View style={{ flex: 1 }}>
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          fontWeight: "600",
-                          color: "#111827",
-                        }}
-                      >
+                      <Text style={{ fontWeight: "600" }}>
                         {item.category}
                       </Text>
-                      <Text
-                        style={{
-                          fontSize: 12,
-                          color: "#6b7280",
-                        }}
-                      >
+                      <Text style={{ fontSize: 12, color: "#6b7280" }}>
                         %{Math.round(percent * 100)} bu ay
                       </Text>
                     </View>
 
-                    <Text
-                      style={{
-                        fontWeight: "700",
-                        fontSize: 14,
-                      }}
-                    >
+                    <Text style={{ fontWeight: "700" }}>
                       ₺{item.total.toFixed(0)}
                     </Text>
                   </View>
 
-                  {/* Progress */}
                   <View
                     style={{
                       height: 6,
@@ -222,8 +192,6 @@ export default function HomeScreen() {
         )}
       </View>
 
-
-
       {/* Weekly Trend */}
       <View style={styles.largeCard}>
         <Text style={styles.cardTitle}>Haftalık Trend</Text>
@@ -235,13 +203,15 @@ export default function HomeScreen() {
           </View>
         ) : (
           (() => {
-            const max = Math.max(...weeklyTrend.map((d) => d.total));
+            const max = Math.max(...weeklyTrend.map((d) => d.total), 1);
             const days = ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cts"];
+            const todayIndex = new Date().getDay();
 
             return (
               <View style={{ marginTop: 16 }}>
                 {weeklyTrend.map((item, index) => {
-                  const percent = max > 0 ? item.total / max : 0;
+                  const percent = item.total / max;
+                  const isToday = Number(item.day) === todayIndex;
 
                   return (
                     <View
@@ -250,20 +220,13 @@ export default function HomeScreen() {
                         flexDirection: "row",
                         alignItems: "center",
                         marginBottom: 10,
+                        opacity: item.total === 0 ? 0.4 : 1,
                       }}
                     >
-                      {/* Day */}
-                      <Text
-                        style={{
-                          width: 36,
-                          fontSize: 12,
-                          color: "#6b7280",
-                        }}
-                      >
+                      <Text style={{ width: 36, fontSize: 12 }}>
                         {days[Number(item.day)]}
                       </Text>
 
-                      {/* Bar */}
                       <View
                         style={{
                           flex: 1,
@@ -278,12 +241,13 @@ export default function HomeScreen() {
                           style={{
                             width: `${percent * 100}%`,
                             height: "100%",
-                            backgroundColor: "#22c55e",
+                            backgroundColor: isToday
+                              ? "#16a34a"
+                              : "#22c55e",
                           }}
                         />
                       </View>
 
-                      {/* Value */}
                       <Text
                         style={{
                           width: 60,
@@ -303,9 +267,7 @@ export default function HomeScreen() {
         )}
       </View>
 
-
-
-      {/* Ad Area */}
+      {/* Ad */}
       <View style={styles.adArea}>
         <Text style={styles.adTitle}>REKLAM ALANI</Text>
         <Text style={styles.adSubtitle}>AdMob Banner (320×50)</Text>

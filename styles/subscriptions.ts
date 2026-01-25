@@ -101,4 +101,20 @@ export const styles = StyleSheet.create({
     color: "#999",
     marginTop: 4,
   },
+  input: {
+  borderWidth: 1,
+  borderColor: "#e5e7eb",
+  borderRadius: 10,
+  padding: 10,
+  marginBottom: 12,
+},
+
+pickerWrapper: {
+  borderWidth: 1,
+  borderColor: "#e5e7eb",
+  borderRadius: 10,
+  marginBottom: 12,
+  overflow: "hidden",
+},
+
 });

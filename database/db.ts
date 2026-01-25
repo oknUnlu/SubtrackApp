@@ -16,6 +16,12 @@ export type SubscriptionItem = {
   nextDate?: string;
 };
 
+export type SettingItem = {
+  key: string;
+  value: string;
+};
+
+
 const DB_NAME = "subtrack.db";
 const db = SQLite.openDatabaseSync(DB_NAME);
 
@@ -56,6 +62,13 @@ export async function initDB(): Promise<void> {
       interval TEXT,
       nextDate TEXT
     )`
+  );
+
+  await executeSql(
+    `CREATE TABLE IF NOT EXISTS settings (
+    key TEXT PRIMARY KEY NOT NULL,
+    value TEXT
+  )`
   );
 }
 
@@ -155,3 +168,23 @@ export async function getWeeklyTrend() {
   );
 }
 
+
+export async function setSetting(key: string, value: string) {
+  await executeSql(
+    `INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)`,
+    [key, value]
+  );
+}
+
+export async function getSetting(key: string): Promise<string | null> {
+  const result = await db.getFirstAsync<{ value: string }>(
+    `SELECT value FROM settings WHERE key = ?`,
+    [key]
+  );
+  return result?.value ?? null;
+}
+
+export async function clearAllData() {
+  await executeSql(`DELETE FROM transactions`);
+  await executeSql(`DELETE FROM subscriptions`);
+}
