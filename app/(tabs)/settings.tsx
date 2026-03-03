@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import {
   Alert,
   Modal,
-  SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from 'react-i18next';
+import { changeLanguage } from '../../i18n/i18n';
 
 import {
   clearAllData,
@@ -19,11 +21,12 @@ import {
 import { styles } from "../../styles/settings";
 
 export default function SettingsScreen() {
+  const { t, i18n } = useTranslation();
   const [currency, setCurrency] = useState("TRY");
   const [interval, setInterval] = useState("monthly");
   const [mainView, setMainView] = useState("monthly");
 
-  const [modal, setModal] = useState<null | "currency" | "interval" | "view">(null);
+  const [modal, setModal] = useState<null | "currency" | "interval" | "view" | "language">(null);
 
   useEffect(() => {
     load();
@@ -49,16 +52,16 @@ export default function SettingsScreen() {
 
   const reset = () => {
     Alert.alert(
-      "Tüm veriler silinsin mi?",
-      "Bu işlem geri alınamaz.",
+      t('settings.deleteAllConfirm'),
+      t('settings.deleteAllWarning'),
       [
-        { text: "İptal", style: "cancel" },
+        { text: t('common.cancel'), style: "cancel" },
         {
-          text: "Sil",
+          text: t('common.delete'),
           style: "destructive",
           onPress: async () => {
             await clearAllData();
-            Alert.alert("Silindi");
+            Alert.alert(t('common.deleted'));
           },
         },
       ]
@@ -70,7 +73,7 @@ export default function SettingsScreen() {
       <ScrollView contentContainerStyle={styles.content}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>Kontrol Merkezi</Text>
+          <Text style={styles.title}>{t('settings.title')}</Text>
           <Ionicons name="settings-outline" size={22} />
         </View>
 
@@ -78,8 +81,8 @@ export default function SettingsScreen() {
         <View style={styles.card}>
           <SettingRow
             icon="cash-outline"
-            label="Para Birimi"
-            value={currencyLabel(currency)}
+            label={t('settings.currency')}
+            value={currencyLabel(currency, t)}
             onPress={() => setModal("currency")}
           />
 
@@ -87,8 +90,8 @@ export default function SettingsScreen() {
 
           <SettingRow
             icon="repeat-outline"
-            label="Varsayılan Abonelik"
-            value={interval === "monthly" ? "Aylık" : "Yıllık"}
+            label={t('settings.defaultSubscription')}
+            value={interval === "monthly" ? t('common.monthly') : t('common.yearly')}
             onPress={() => setModal("interval")}
           />
 
@@ -96,19 +99,27 @@ export default function SettingsScreen() {
 
           <SettingRow
             icon="stats-chart-outline"
-            label="Ana Gösterim"
-            value={mainView === "monthly" ? "Aylık" : "Yıllık"}
+            label={t('settings.mainView')}
+            value={mainView === "monthly" ? t('common.monthly') : t('common.yearly')}
             onPress={() => setModal("view")}
+          />
+
+          <Divider />
+          <SettingRow
+            icon="language-outline"
+            label={t('settings.language')}
+            value={languageLabel(i18n.language)}
+            onPress={() => setModal("language")}
           />
         </View>
 
         {/* Danger Zone */}
         <View style={styles.dangerCard}>
-          <Text style={styles.dangerTitle}>Tehlikeli Alan</Text>
+          <Text style={styles.dangerTitle}>{t('settings.dangerZone')}</Text>
 
           <TouchableOpacity style={styles.dangerButton} onPress={reset}>
             <Ionicons name="trash-outline" size={18} color="#fff" />
-            <Text style={styles.dangerText}>Tüm Verileri Sil</Text>
+            <Text style={styles.dangerText}>{t('settings.deleteAllData')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -116,11 +127,11 @@ export default function SettingsScreen() {
       {/* Modals */}
       <OptionModal
         visible={modal === "currency"}
-        title="Para Birimi"
+        title={t('settings.currency')}
         options={[
-          { label: "Türk Lirası (₺)", value: "TRY" },
-          { label: "Dolar ($)", value: "USD" },
-          { label: "Euro (€)", value: "EUR" },
+          { label: t('settings.currencyTRY'), value: "TRY" },
+          { label: t('settings.currencyUSD'), value: "USD" },
+          { label: t('settings.currencyEUR'), value: "EUR" },
         ]}
         onSelect={(v: string) => select("currency", v)}
         onClose={() => setModal(null)}
@@ -128,10 +139,10 @@ export default function SettingsScreen() {
 
       <OptionModal
         visible={modal === "interval"}
-        title="Varsayılan Abonelik"
+        title={t('settings.defaultSubscription')}
         options={[
-          { label: "Aylık", value: "monthly" },
-          { label: "Yıllık", value: "yearly" },
+          { label: t('common.monthly'), value: "monthly" },
+          { label: t('common.yearly'), value: "yearly" },
         ]}
         onSelect={(v: string) => select("interval", v)}
         onClose={() => setModal(null)}
@@ -139,18 +150,43 @@ export default function SettingsScreen() {
 
       <OptionModal
         visible={modal === "view"}
-        title="Ana Gösterim"
+        title={t('settings.mainView')}
         options={[
-          { label: "Aylık", value: "monthly" },
-          { label: "Yıllık", value: "yearly" },
+          { label: t('common.monthly'), value: "monthly" },
+          { label: t('common.yearly'), value: "yearly" },
         ]}
         onSelect={(v: string) => select("mainView", v)}
+        onClose={() => setModal(null)}
+      />
+
+      <OptionModal
+        visible={modal === "language"}
+        title={t('settings.language')}
+        options={[
+          { label: "Türkçe", value: "tr" },
+          { label: "English", value: "en" },
+          { label: "Español", value: "es" },
+          { label: "Português", value: "pt" },
+          { label: "हिन्दी", value: "hi" },
+          { label: "Bahasa Indonesia", value: "id" },
+          { label: "日本語", value: "ja" },
+          { label: "한국어", value: "ko" },
+        ]}
+        onSelect={async (v: string) => {
+          await changeLanguage(v);
+          setModal(null);
+        }}
         onClose={() => setModal(null)}
       />
     </SafeAreaView>
   );
 }
-function SettingRow({ icon, label, value, onPress }: any) {
+function SettingRow({ icon, label, value, onPress }: {
+  icon: keyof typeof Ionicons.glyphMap;
+  label: string;
+  value: string;
+  onPress: () => void;
+}) {
   return (
     <TouchableOpacity style={styles.row} onPress={onPress}>
       <Ionicons name={icon} size={20} color="#22c55e" />
@@ -166,14 +202,20 @@ function Divider() {
   return <View style={styles.divider} />;
 }
 
-function OptionModal({ visible, title, options, onSelect, onClose }: any) {
+function OptionModal({ visible, title, options, onSelect, onClose }: {
+  visible: boolean;
+  title: string;
+  options: { label: string; value: string }[];
+  onSelect: (value: string) => void;
+  onClose: () => void;
+}) {
   return (
     <Modal visible={visible} transparent animationType="slide">
       <TouchableOpacity style={styles.modalOverlay} onPress={onClose}>
         <View style={styles.modal}>
           <Text style={styles.modalTitle}>{title}</Text>
 
-          {options.map((o: any) => (
+          {options.map((o) => (
             <TouchableOpacity
               key={o.value}
               style={styles.option}
@@ -188,8 +230,22 @@ function OptionModal({ visible, title, options, onSelect, onClose }: any) {
   );
 }
 
-function currencyLabel(v: string) {
-  if (v === "USD") return "Dolar ($)";
-  if (v === "EUR") return "Euro (€)";
-  return "Türk Lirası (₺)";
+function currencyLabel(v: string, t: any) {
+  if (v === "USD") return t('settings.currencyUSD');
+  if (v === "EUR") return t('settings.currencyEUR');
+  return t('settings.currencyTRY');
+}
+
+function languageLabel(code: string): string {
+  const labels: Record<string, string> = {
+    tr: "Türkçe",
+    en: "English",
+    es: "Español",
+    pt: "Português",
+    hi: "हिन्दी",
+    id: "Bahasa Indonesia",
+    ja: "日本語",
+    ko: "한국어",
+  };
+  return labels[code] || code;
 }

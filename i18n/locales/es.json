@@ -1,0 +1,100 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "update": "Actualizar",
+    "error": "Error",
+    "success": "Exitoso",
+    "monthly": "Mensual",
+    "yearly": "Anual",
+    "adArea": "AREA DE ANUNCIOS",
+    "adBanner": "AdMob Banner (320×50)",
+    "deleteConfirm": "¿Eliminar \"{{name}}\"?",
+    "deleted": "Eliminado"
+  },
+  "tabs": {
+    "home": "Inicio",
+    "subscriptions": "Suscripciones",
+    "aiAnalysis": "Análisis IA",
+    "settings": "Ajustes"
+  },
+  "categories": {
+    "food": "Comida",
+    "transport": "Transporte",
+    "fun": "Entretenimiento",
+    "shopping": "Compras",
+    "bills": "Facturas",
+    "health": "Salud",
+    "education": "Educación",
+    "tech": "Tecnología",
+    "other": "Otro"
+  },
+  "home": {
+    "totalSpending": "Gasto Total Este Mes",
+    "includingSubs": "Incluyendo suscripciones",
+    "activeSubscriptions": "Suscripciones Activas",
+    "dailyAverage": "Promedio Diario",
+    "spendingDistribution": "Distribución de Gastos",
+    "noSpendingData": "Aún no hay datos de gastos",
+    "percentThisMonth": "{{percent}}% este mes",
+    "weeklyTrend": "Tendencia Semanal",
+    "noTrendData": "Aún no hay datos de tendencia",
+    "recentTransactions": "Transacciones Recientes",
+    "noTransactions": "Aún no hay transacciones",
+    "deleteTransaction": "Eliminar Transacción"
+  },
+  "subscriptions": {
+    "title": "Suscripciones",
+    "activeCount": "{{count}} suscripciones activas",
+    "monthlyTotal": "Total Mensual",
+    "yearlyTotal": "Anual",
+    "addNew": "Agregar Nueva Suscripción",
+    "noSubscriptions": "Aún no hay suscripciones",
+    "trackTip": "Agrega tus suscripciones para rastrear tus gastos",
+    "deleteSubscription": "Eliminar Suscripción",
+    "editSubscription": "Editar Suscripción",
+    "newSubscription": "Nueva Suscripción",
+    "namePlaceholder": "Nombre de suscripción",
+    "amountPlaceholder": "Monto ({{symbol}})",
+    "fillAllFields": "Por favor completa todos los campos",
+    "validAmount": "Ingresa un monto válido"
+  },
+  "add": {
+    "title": "Agregar Gasto",
+    "subtitle": "Registra tus gastos diarios",
+    "expenseTitle": "Título del Gasto",
+    "titlePlaceholder": "Ej: Café, Compras del supermercado...",
+    "amount": "Monto ({{symbol}})",
+    "category": "Categoría",
+    "saveExpense": "Guardar Gasto",
+    "fillAllFields": "Por favor completa todos los campos",
+    "validAmount": "Ingresa un monto válido",
+    "saved": "Gasto guardado",
+    "saveFailed": "Error al guardar"
+  },
+  "ai": {
+    "title": "Análisis IA",
+    "subtitle": "Sugerencias inteligentes de gastos",
+    "heroTitle": "Análisis con Inteligencia Artificial",
+    "heroText": "Analiza tus hábitos de gasto con Gemini AI y obtén recomendaciones personalizadas.",
+    "savingsOpportunities": "Oportunidades de Ahorro",
+    "smartSuggestions": "Sugerencias Inteligentes",
+    "analyzeExpenses": "Analizar Mis Gastos",
+    "apiPlaceholder": "Marcador de posición para la integración de Gemini API. Se activará cuando se agregue la clave API."
+  },
+  "settings": {
+    "title": "Centro de Control",
+    "currency": "Moneda",
+    "defaultSubscription": "Suscripción Predeterminada",
+    "mainView": "Vista Principal",
+    "dangerZone": "Zona de Peligro",
+    "deleteAllData": "Eliminar Todos los Datos",
+    "deleteAllConfirm": "¿Eliminar todos los datos?",
+    "deleteAllWarning": "Esta acción no se puede deshacer.",
+    "language": "Idioma",
+    "currencyTRY": "Lira Turca (₺)",
+    "currencyUSD": "Dólar ($)",
+    "currencyEUR": "Euro (€)"
+  }
+}

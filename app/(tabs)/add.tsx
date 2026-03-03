@@ -1,45 +1,65 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback, useState } from "react";
 import {
   Alert,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from 'react-i18next';
 
 import { randomUUID } from "expo-crypto";
-import { addTransaction } from "../../database/db";
+import { addTransaction, getCurrencySymbol, getSetting } from "../../database/db";
 import { styles } from "../../styles/add";
 
-const categories = [
-  { key: "food", label: "Yemek", icon: "🍔" },
-  { key: "transport", label: "Ulaşım", icon: "🚗" },
-  { key: "fun", label: "Eğlence", icon: "🎮" },
-  { key: "shopping", label: "Alışveriş", icon: "🛍️" },
-  { key: "bills", label: "Faturalar", icon: "📄" },
-  { key: "health", label: "Sağlık", icon: "💊" },
-  { key: "education", label: "Eğitim", icon: "📚" },
-  { key: "tech", label: "Teknoloji", icon: "💻" },
-  { key: "other", label: "Diğer", icon: "📌" },
+const CATEGORY_DATA = [
+  { key: "food", icon: "🍔" },
+  { key: "transport", icon: "🚗" },
+  { key: "fun", icon: "🎮" },
+  { key: "shopping", icon: "🛍️" },
+  { key: "bills", icon: "📄" },
+  { key: "health", icon: "💊" },
+  { key: "education", icon: "📚" },
+  { key: "tech", icon: "💻" },
+  { key: "other", icon: "📌" },
 ];
 
 export default function AddExpenseScreen() {
+  const { t } = useTranslation();
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("other");
+  const [currSymbol, setCurrSymbol] = useState("₺");
+
+  useFocusEffect(
+    useCallback(() => {
+      getSetting("currency").then((c) => {
+        setCurrSymbol(getCurrencySymbol(c ?? "TRY"));
+      });
+    }, [])
+  );
+
+  const localizedCategories = CATEGORY_DATA.map(c => ({
+    ...c,
+    label: t(`categories.${c.key}`),
+  }));
 
   const handleSave = async () => {
     if (!title.trim() || !amount) {
-      Alert.alert("Hata", "Lütfen tüm alanları doldurun");
+      Alert.alert(t('common.error'), t('add.fillAllFields'));
       return;
     }
 
     const parsedAmount = parseFloat(amount.replace(",", "."));
 
     if (isNaN(parsedAmount)) {
-      Alert.alert("Hata", "Geçerli bir tutar girin");
+      Alert.alert(t('common.error'), t('add.validAmount'));
       return;
     }
 
@@ -52,7 +72,7 @@ export default function AddExpenseScreen() {
         category,
       });
 
-      Alert.alert("Başarılı", "Harcama kaydedildi");
+      Alert.alert(t('common.success'), t('add.saved'));
 
       // Formu sıfırla
       setTitle("");
@@ -60,34 +80,39 @@ export default function AddExpenseScreen() {
       setCategory("other");
     } catch (err) {
       console.error(err);
-      Alert.alert("Hata", "Kayıt eklenemedi");
+      Alert.alert(t('common.error'), t('add.saveFailed'));
     }
   };
 
 
   return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#f6f7f9" }} edges={["top"]}>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
     <ScrollView contentContainerStyle={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <View>
-          <Text style={styles.title}>Harcama Ekle</Text>
-          <Text style={styles.subtitle}>Günlük harcamanızı kaydedin</Text>
+          <Text style={styles.title}>{t('add.title')}</Text>
+          <Text style={styles.subtitle}>{t('add.subtitle')}</Text>
         </View>
         <Ionicons name="notifications-outline" size={22} color="#222" />
       </View>
 
       {/* Title Input */}
-      <Text style={styles.label}>Harcama Başlığı</Text>
+      <Text style={styles.label}>{t('add.expenseTitle')}</Text>
       <TextInput
         style={styles.input}
-        placeholder="Örn: Kahve, Market alışverişi..."
+        placeholder={t('add.titlePlaceholder')}
         placeholderTextColor="#9ca3af"
         value={title}
         onChangeText={setTitle}
       />
 
       {/* Amount Input */}
-      <Text style={styles.label}>Tutar (₺)</Text>
+      <Text style={styles.label}>{t('add.amount', { symbol: currSymbol })}</Text>
       <TextInput
         style={styles.amountInput}
         keyboardType="numeric"
@@ -98,9 +123,9 @@ export default function AddExpenseScreen() {
       />
 
       {/* Categories */}
-      <Text style={styles.label}>Kategori</Text>
+      <Text style={styles.label}>{t('add.category')}</Text>
       <View style={styles.categoryGrid}>
-        {categories.map((item) => {
+        {localizedCategories.map((item) => {
           const selected = item.key === category;
           return (
             <TouchableOpacity
@@ -128,14 +153,16 @@ export default function AddExpenseScreen() {
       {/* Save Button */}
       <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
         <Ionicons name="checkmark" size={20} color="#fff" />
-        <Text style={styles.saveButtonText}>Harcama Kaydet</Text>
+        <Text style={styles.saveButtonText}>{t('add.saveExpense')}</Text>
       </TouchableOpacity>
 
 
       {/* Ad Area */}
       <View style={styles.adArea}>
-        <Text style={styles.adText}>REKLAM ALANI</Text>
+        <Text style={styles.adText}>{t('common.adArea')}</Text>
       </View>
     </ScrollView>
+    </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }

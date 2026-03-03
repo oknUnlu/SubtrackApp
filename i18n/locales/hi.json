@@ -1,0 +1,100 @@
+{
+  "common": {
+    "cancel": "रद्द करें",
+    "delete": "हटाएं",
+    "save": "सहेजें",
+    "update": "अपडेट करें",
+    "error": "त्रुटि",
+    "success": "सफल",
+    "monthly": "मासिक",
+    "yearly": "वार्षिक",
+    "adArea": "विज्ञापन क्षेत्र",
+    "adBanner": "AdMob Banner (320×50)",
+    "deleteConfirm": "\"{{name}}\" को हटाएं?",
+    "deleted": "हटाया गया"
+  },
+  "tabs": {
+    "home": "होम",
+    "subscriptions": "सदस्यताएं",
+    "aiAnalysis": "AI विश्लेषण",
+    "settings": "सेटिंग्स"
+  },
+  "categories": {
+    "food": "खाना",
+    "transport": "परिवहन",
+    "fun": "मनोरंजन",
+    "shopping": "खरीदारी",
+    "bills": "बिल",
+    "health": "स्वास्थ्य",
+    "education": "शिक्षा",
+    "tech": "प्रौद्योगिकी",
+    "other": "अन्य"
+  },
+  "home": {
+    "totalSpending": "इस माह कुल खर्च",
+    "includingSubs": "सदस्यताएं शामिल",
+    "activeSubscriptions": "सक्रिय सदस्यताएं",
+    "dailyAverage": "दैनिक औसत",
+    "spendingDistribution": "खर्च वितरण",
+    "noSpendingData": "अभी तक कोई खर्च डेटा नहीं",
+    "percentThisMonth": "{{percent}}% इस माह",
+    "weeklyTrend": "साप्ताहिक रुझान",
+    "noTrendData": "अभी तक कोई रुझान डेटा नहीं",
+    "recentTransactions": "हाल के लेनदेन",
+    "noTransactions": "अभी तक कोई लेनदेन नहीं",
+    "deleteTransaction": "लेनदेन हटाएं"
+  },
+  "subscriptions": {
+    "title": "सदस्यताएं",
+    "activeCount": "{{count}} सक्रिय सदस्यताएं",
+    "monthlyTotal": "मासिक कुल",
+    "yearlyTotal": "वार्षिक",
+    "addNew": "नई सदस्यता जोड़ें",
+    "noSubscriptions": "अभी तक कोई सदस्यता नहीं",
+    "trackTip": "अपने खर्चों को ट्रैक करने के लिए सदस्यताएं जोड़ें",
+    "deleteSubscription": "सदस्यता हटाएं",
+    "editSubscription": "सदस्यता संपादित करें",
+    "newSubscription": "नई सदस्यता",
+    "namePlaceholder": "सदस्यता का नाम",
+    "amountPlaceholder": "राशि ({{symbol}})",
+    "fillAllFields": "कृपया सभी फ़ील्ड भरें",
+    "validAmount": "एक मान्य राशि दर्ज करें"
+  },
+  "add": {
+    "title": "खर्च जोड़ें",
+    "subtitle": "अपने दैनिक खर्चों को रिकॉर्ड करें",
+    "expenseTitle": "खर्च शीर्षक",
+    "titlePlaceholder": "उदा: कॉफी, किराना खरीदारी...",
+    "amount": "राशि ({{symbol}})",
+    "category": "श्रेणी",
+    "saveExpense": "खर्च सहेजें",
+    "fillAllFields": "कृपया सभी फ़ील्ड भरें",
+    "validAmount": "एक मान्य राशि दर्ज करें",
+    "saved": "खर्च सहेजा गया",
+    "saveFailed": "सहेजने में विफल"
+  },
+  "ai": {
+    "title": "AI विश्लेषण",
+    "subtitle": "स्मार्ट खर्च सुझाव",
+    "heroTitle": "AI-संचालित विश्लेषण",
+    "heroText": "Gemini AI के साथ अपनी खर्च की आदतों का विश्लेषण करें और व्यक्तिगत सिफारिशें प्राप्त करें।",
+    "savingsOpportunities": "बचत के अवसर",
+    "smartSuggestions": "स्मार्ट सुझाव",
+    "analyzeExpenses": "मेरे खर्चों का विश्लेषण करें",
+    "apiPlaceholder": "Gemini API एकीकरण के लिए प्लेसहोल्डर। API कुंजी जोड़ने पर सक्रिय होगा।"
+  },
+  "settings": {
+    "title": "नियंत्रण केंद्र",
+    "currency": "मुद्रा",
+    "defaultSubscription": "डिफ़ॉल्ट सदस्यता",
+    "mainView": "मुख्य दृश्य",
+    "dangerZone": "खतरनाक क्षेत्र",
+    "deleteAllData": "सभी डेटा हटाएं",
+    "deleteAllConfirm": "सभी डेटा हटाएं?",
+    "deleteAllWarning": "यह क्रिया पूर्ववत नहीं की जा सकती।",
+    "language": "भाषा",
+    "currencyTRY": "तुर्की लीरा (₺)",
+    "currencyUSD": "डॉलर ($)",
+    "currencyEUR": "यूरो (€)"
+  }
+}

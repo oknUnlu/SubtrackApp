@@ -1,0 +1,100 @@
+{
+  "common": {
+    "cancel": "취소",
+    "delete": "삭제",
+    "save": "저장",
+    "update": "업데이트",
+    "error": "오류",
+    "success": "성공",
+    "monthly": "월간",
+    "yearly": "연간",
+    "adArea": "광고 영역",
+    "adBanner": "AdMob Banner (320×50)",
+    "deleteConfirm": "\"{{name}}\"을(를) 삭제하시겠습니까?",
+    "deleted": "삭제됨"
+  },
+  "tabs": {
+    "home": "홈",
+    "subscriptions": "구독",
+    "aiAnalysis": "AI 분석",
+    "settings": "설정"
+  },
+  "categories": {
+    "food": "식비",
+    "transport": "교통비",
+    "fun": "오락",
+    "shopping": "쇼핑",
+    "bills": "청구서",
+    "health": "건강",
+    "education": "교육",
+    "tech": "기술",
+    "other": "기타"
+  },
+  "home": {
+    "totalSpending": "이번 달 총 지출",
+    "includingSubs": "구독 포함",
+    "activeSubscriptions": "활성 구독",
+    "dailyAverage": "일 평균",
+    "spendingDistribution": "지출 분포",
+    "noSpendingData": "아직 지출 데이터가 없습니다",
+    "percentThisMonth": "이번 달 {{percent}}%",
+    "weeklyTrend": "주간 트렌드",
+    "noTrendData": "아직 트렌드 데이터가 없습니다",
+    "recentTransactions": "최근 거래",
+    "noTransactions": "아직 거래가 없습니다",
+    "deleteTransaction": "거래 삭제"
+  },
+  "subscriptions": {
+    "title": "구독",
+    "activeCount": "{{count}}개 활성 구독",
+    "monthlyTotal": "월간 합계",
+    "yearlyTotal": "연간",
+    "addNew": "새 구독 추가",
+    "noSubscriptions": "아직 구독이 없습니다",
+    "trackTip": "구독을 추가하여 지출을 관리하세요",
+    "deleteSubscription": "구독 삭제",
+    "editSubscription": "구독 편집",
+    "newSubscription": "새 구독",
+    "namePlaceholder": "구독 이름",
+    "amountPlaceholder": "금액 ({{symbol}})",
+    "fillAllFields": "모든 항목을 입력해주세요",
+    "validAmount": "유효한 금액을 입력해주세요"
+  },
+  "add": {
+    "title": "지출 추가",
+    "subtitle": "일일 지출을 기록하세요",
+    "expenseTitle": "지출 제목",
+    "titlePlaceholder": "예: 커피, 장보기...",
+    "amount": "금액 ({{symbol}})",
+    "category": "카테고리",
+    "saveExpense": "지출 저장",
+    "fillAllFields": "모든 항목을 입력해주세요",
+    "validAmount": "유효한 금액을 입력해주세요",
+    "saved": "지출이 저장되었습니다",
+    "saveFailed": "저장에 실패했습니다"
+  },
+  "ai": {
+    "title": "AI 분석",
+    "subtitle": "스마트 지출 제안",
+    "heroTitle": "AI 기반 분석",
+    "heroText": "Gemini AI로 지출 습관을 분석하고 맞춤형 추천을 받으세요.",
+    "savingsOpportunities": "절약 기회",
+    "smartSuggestions": "스마트 제안",
+    "analyzeExpenses": "내 지출 분석하기",
+    "apiPlaceholder": "Gemini API 통합 플레이스홀더. API 키가 추가되면 활성화됩니다."
+  },
+  "settings": {
+    "title": "제어 센터",
+    "currency": "통화",
+    "defaultSubscription": "기본 구독",
+    "mainView": "메인 보기",
+    "dangerZone": "위험 영역",
+    "deleteAllData": "모든 데이터 삭제",
+    "deleteAllConfirm": "모든 데이터를 삭제하시겠습니까?",
+    "deleteAllWarning": "이 작업은 되돌릴 수 없습니다.",
+    "language": "언어",
+    "currencyTRY": "터키 리라 (₺)",
+    "currencyUSD": "달러 ($)",
+    "currencyEUR": "유로 (€)"
+  }
+}

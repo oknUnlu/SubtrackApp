@@ -1,0 +1,100 @@
+{
+  "common": {
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "save": "保存",
+    "update": "更新",
+    "error": "エラー",
+    "success": "成功",
+    "monthly": "月額",
+    "yearly": "年額",
+    "adArea": "広告エリア",
+    "adBanner": "AdMob Banner (320×50)",
+    "deleteConfirm": "\"{{name}}\"を削除しますか？",
+    "deleted": "削除しました"
+  },
+  "tabs": {
+    "home": "ホーム",
+    "subscriptions": "サブスク",
+    "aiAnalysis": "AI分析",
+    "settings": "設定"
+  },
+  "categories": {
+    "food": "食費",
+    "transport": "交通費",
+    "fun": "娯楽",
+    "shopping": "買い物",
+    "bills": "請求書",
+    "health": "健康",
+    "education": "教育",
+    "tech": "テクノロジー",
+    "other": "その他"
+  },
+  "home": {
+    "totalSpending": "今月の合計支出",
+    "includingSubs": "サブスク含む",
+    "activeSubscriptions": "有効なサブスク",
+    "dailyAverage": "日平均",
+    "spendingDistribution": "支出の内訳",
+    "noSpendingData": "まだ支出データがありません",
+    "percentThisMonth": "今月{{percent}}%",
+    "weeklyTrend": "週間トレンド",
+    "noTrendData": "まだトレンドデータがありません",
+    "recentTransactions": "最近の取引",
+    "noTransactions": "まだ取引がありません",
+    "deleteTransaction": "取引を削除"
+  },
+  "subscriptions": {
+    "title": "サブスクリプション",
+    "activeCount": "{{count}}件のサブスク",
+    "monthlyTotal": "月額合計",
+    "yearlyTotal": "年額",
+    "addNew": "新しいサブスクを追加",
+    "noSubscriptions": "まだサブスクがありません",
+    "trackTip": "サブスクを追加して支出を管理しましょう",
+    "deleteSubscription": "サブスクを削除",
+    "editSubscription": "サブスクを編集",
+    "newSubscription": "新しいサブスク",
+    "namePlaceholder": "サブスク名",
+    "amountPlaceholder": "金額 ({{symbol}})",
+    "fillAllFields": "すべての項目を入力してください",
+    "validAmount": "有効な金額を入力してください"
+  },
+  "add": {
+    "title": "支出を追加",
+    "subtitle": "日々の支出を記録",
+    "expenseTitle": "支出タイトル",
+    "titlePlaceholder": "例：コーヒー、食料品の買い物...",
+    "amount": "金額 ({{symbol}})",
+    "category": "カテゴリー",
+    "saveExpense": "支出を保存",
+    "fillAllFields": "すべての項目を入力してください",
+    "validAmount": "有効な金額を入力してください",
+    "saved": "支出を保存しました",
+    "saveFailed": "保存に失敗しました"
+  },
+  "ai": {
+    "title": "AI分析",
+    "subtitle": "スマートな支出提案",
+    "heroTitle": "AI搭載分析",
+    "heroText": "Gemini AIで支出習慣を分析し、パーソナライズされたアドバイスを受けましょう。",
+    "savingsOpportunities": "節約チャンス",
+    "smartSuggestions": "スマート提案",
+    "analyzeExpenses": "支出を分析する",
+    "apiPlaceholder": "Gemini API統合のプレースホルダー。APIキーが追加されると有効になります。"
+  },
+  "settings": {
+    "title": "コントロールセンター",
+    "currency": "通貨",
+    "defaultSubscription": "デフォルトサブスク",
+    "mainView": "メイン表示",
+    "dangerZone": "危険ゾーン",
+    "deleteAllData": "すべてのデータを削除",
+    "deleteAllConfirm": "すべてのデータを削除しますか？",
+    "deleteAllWarning": "この操作は元に戻せません。",
+    "language": "言語",
+    "currencyTRY": "トルコリラ (₺)",
+    "currencyUSD": "ドル ($)",
+    "currencyEUR": "ユーロ (€)"
+  }
+}

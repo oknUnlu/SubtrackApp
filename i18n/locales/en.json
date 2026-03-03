@@ -1,0 +1,100 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "save": "Save",
+    "update": "Update",
+    "error": "Error",
+    "success": "Success",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "adArea": "AD AREA",
+    "adBanner": "AdMob Banner (320×50)",
+    "deleteConfirm": "Delete \"{{name}}\"?",
+    "deleted": "Deleted"
+  },
+  "tabs": {
+    "home": "Home",
+    "subscriptions": "Subscriptions",
+    "aiAnalysis": "AI Analysis",
+    "settings": "Settings"
+  },
+  "categories": {
+    "food": "Food",
+    "transport": "Transport",
+    "fun": "Entertainment",
+    "shopping": "Shopping",
+    "bills": "Bills",
+    "health": "Health",
+    "education": "Education",
+    "tech": "Technology",
+    "other": "Other"
+  },
+  "home": {
+    "totalSpending": "Total Spending This Month",
+    "includingSubs": "Including subscriptions",
+    "activeSubscriptions": "Active Subscriptions",
+    "dailyAverage": "Daily Average",
+    "spendingDistribution": "Spending Distribution",
+    "noSpendingData": "No spending data yet",
+    "percentThisMonth": "{{percent}}% this month",
+    "weeklyTrend": "Weekly Trend",
+    "noTrendData": "No trend data yet",
+    "recentTransactions": "Recent Transactions",
+    "noTransactions": "No transactions yet",
+    "deleteTransaction": "Delete Transaction"
+  },
+  "subscriptions": {
+    "title": "Subscriptions",
+    "activeCount": "{{count}} active subscriptions",
+    "monthlyTotal": "Monthly Total",
+    "yearlyTotal": "Yearly",
+    "addNew": "Add New Subscription",
+    "noSubscriptions": "No subscriptions yet",
+    "trackTip": "Add your subscriptions to track your expenses",
+    "deleteSubscription": "Delete Subscription",
+    "editSubscription": "Edit Subscription",
+    "newSubscription": "New Subscription",
+    "namePlaceholder": "Subscription name",
+    "amountPlaceholder": "Amount ({{symbol}})",
+    "fillAllFields": "Please fill in all fields",
+    "validAmount": "Enter a valid amount"
+  },
+  "add": {
+    "title": "Add Expense",
+    "subtitle": "Record your daily expenses",
+    "expenseTitle": "Expense Title",
+    "titlePlaceholder": "E.g: Coffee, Grocery shopping...",
+    "amount": "Amount ({{symbol}})",
+    "category": "Category",
+    "saveExpense": "Save Expense",
+    "fillAllFields": "Please fill in all fields",
+    "validAmount": "Enter a valid amount",
+    "saved": "Expense saved",
+    "saveFailed": "Failed to save"
+  },
+  "ai": {
+    "title": "AI Analysis",
+    "subtitle": "Smart spending suggestions",
+    "heroTitle": "AI-Powered Analysis",
+    "heroText": "Analyze your spending habits with Gemini AI and get personalized recommendations.",
+    "savingsOpportunities": "Savings Opportunities",
+    "smartSuggestions": "Smart Suggestions",
+    "analyzeExpenses": "Analyze My Expenses",
+    "apiPlaceholder": "Placeholder for Gemini API integration. Will be active when API key is added."
+  },
+  "settings": {
+    "title": "Control Center",
+    "currency": "Currency",
+    "defaultSubscription": "Default Subscription",
+    "mainView": "Main View",
+    "dangerZone": "Danger Zone",
+    "deleteAllData": "Delete All Data",
+    "deleteAllConfirm": "Delete all data?",
+    "deleteAllWarning": "This action cannot be undone.",
+    "language": "Language",
+    "currencyTRY": "Turkish Lira (₺)",
+    "currencyUSD": "Dollar ($)",
+    "currencyEUR": "Euro (€)"
+  }
+}

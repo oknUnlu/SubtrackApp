@@ -1,0 +1,100 @@
+{
+  "common": {
+    "cancel": "İptal",
+    "delete": "Sil",
+    "save": "Kaydet",
+    "update": "Güncelle",
+    "error": "Hata",
+    "success": "Başarılı",
+    "monthly": "Aylık",
+    "yearly": "Yıllık",
+    "adArea": "REKLAM ALANI",
+    "adBanner": "AdMob Banner (320×50)",
+    "deleteConfirm": "\"{{name}}\" silinsin mi?",
+    "deleted": "Silindi"
+  },
+  "tabs": {
+    "home": "Ana Sayfa",
+    "subscriptions": "Abonelikler",
+    "aiAnalysis": "AI Analiz",
+    "settings": "Ayarlar"
+  },
+  "categories": {
+    "food": "Yemek",
+    "transport": "Ulaşım",
+    "fun": "Eğlence",
+    "shopping": "Alışveriş",
+    "bills": "Faturalar",
+    "health": "Sağlık",
+    "education": "Eğitim",
+    "tech": "Teknoloji",
+    "other": "Diğer"
+  },
+  "home": {
+    "totalSpending": "Bu Ay Toplam Harcama",
+    "includingSubs": "Abonelikler dahil",
+    "activeSubscriptions": "Aktif Abonelik",
+    "dailyAverage": "Günlük Ortalama",
+    "spendingDistribution": "Harcama Dağılımı",
+    "noSpendingData": "Henüz harcama verisi yok",
+    "percentThisMonth": "%{{percent}} bu ay",
+    "weeklyTrend": "Haftalık Trend",
+    "noTrendData": "Henüz trend verisi yok",
+    "recentTransactions": "Son Harcamalar",
+    "noTransactions": "Henüz harcama yok",
+    "deleteTransaction": "Harcamayı Sil"
+  },
+  "subscriptions": {
+    "title": "Abonelikler",
+    "activeCount": "{{count}} aktif abonelik",
+    "monthlyTotal": "Aylık Toplam",
+    "yearlyTotal": "Yıllık",
+    "addNew": "Yeni Abonelik Ekle",
+    "noSubscriptions": "Henüz abonelik yok",
+    "trackTip": "Aboneliklerini ekleyerek harcamalarını takip et",
+    "deleteSubscription": "Aboneliği Sil",
+    "editSubscription": "Aboneliği Düzenle",
+    "newSubscription": "Yeni Abonelik",
+    "namePlaceholder": "Abonelik adı",
+    "amountPlaceholder": "Tutar ({{symbol}})",
+    "fillAllFields": "Lütfen tüm alanları doldur",
+    "validAmount": "Geçerli bir tutar gir"
+  },
+  "add": {
+    "title": "Harcama Ekle",
+    "subtitle": "Günlük harcamanızı kaydedin",
+    "expenseTitle": "Harcama Başlığı",
+    "titlePlaceholder": "Örn: Kahve, Market alışverişi...",
+    "amount": "Tutar ({{symbol}})",
+    "category": "Kategori",
+    "saveExpense": "Harcama Kaydet",
+    "fillAllFields": "Lütfen tüm alanları doldurun",
+    "validAmount": "Geçerli bir tutar girin",
+    "saved": "Harcama kaydedildi",
+    "saveFailed": "Kayıt eklenemedi"
+  },
+  "ai": {
+    "title": "AI Analiz",
+    "subtitle": "Akıllı harcama önerileri",
+    "heroTitle": "Yapay Zeka Destekli Analiz",
+    "heroText": "Gemini AI ile harcama alışkanlıklarınızı analiz edin ve kişiselleştirilmiş öneriler alın.",
+    "savingsOpportunities": "Tasarruf Fırsatları",
+    "smartSuggestions": "Akıllı Öneriler",
+    "analyzeExpenses": "Harcamalarımı Yorumla",
+    "apiPlaceholder": "Gemini API entegrasyonu için placeholder. Gerçek API anahtarı eklendiğinde aktif olacak."
+  },
+  "settings": {
+    "title": "Kontrol Merkezi",
+    "currency": "Para Birimi",
+    "defaultSubscription": "Varsayılan Abonelik",
+    "mainView": "Ana Gösterim",
+    "dangerZone": "Tehlikeli Alan",
+    "deleteAllData": "Tüm Verileri Sil",
+    "deleteAllConfirm": "Tüm veriler silinsin mi?",
+    "deleteAllWarning": "Bu işlem geri alınamaz.",
+    "language": "Dil",
+    "currencyTRY": "Türk Lirası (₺)",
+    "currencyUSD": "Dolar ($)",
+    "currencyEUR": "Euro (€)"
+  }
+}

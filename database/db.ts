@@ -96,6 +96,17 @@ export async function getTransactions(): Promise<TransactionItem[]> {
   );
 }
 
+export async function getRecentTransactions(limit: number = 5): Promise<TransactionItem[]> {
+  return await db.getAllAsync(
+    "SELECT * FROM transactions ORDER BY date DESC LIMIT ?",
+    [limit]
+  );
+}
+
+export async function deleteTransaction(id: string) {
+  await executeSql("DELETE FROM transactions WHERE id = ?", [id]);
+}
+
 /* -------------------- */
 /*  SUBSCRIPTIONS       */
 /* -------------------- */
@@ -120,8 +131,19 @@ export async function getSubscriptions(): Promise<SubscriptionItem[]> {
   );
 }
 
+export async function deleteSubscription(id: string) {
+  await executeSql("DELETE FROM subscriptions WHERE id = ?", [id]);
+}
+
+export async function updateSubscription(item: SubscriptionItem) {
+  await executeSql(
+    `UPDATE subscriptions SET title = ?, amount = ?, interval = ? WHERE id = ?`,
+    [item.title, item.amount, item.interval, item.id]
+  );
+}
+
 export async function getMonthlyTotal(): Promise<number> {
-  const result = await db.getFirstAsync<{ total: number }>(
+  const txResult = await db.getFirstAsync<{ total: number }>(
     `
     SELECT SUM(amount) as total
     FROM transactions
@@ -129,7 +151,16 @@ export async function getMonthlyTotal(): Promise<number> {
     `
   );
 
-  return result?.total ?? 0;
+  const subResult = await db.getAllAsync<{ amount: number; interval: string }>(
+    `SELECT amount, interval FROM subscriptions`
+  );
+
+  let subMonthly = 0;
+  for (const sub of subResult) {
+    subMonthly += sub.interval === "monthly" ? sub.amount : sub.amount / 12;
+  }
+
+  return (txResult?.total ?? 0) + subMonthly;
 }
 
 export async function getSubscriptionCount(): Promise<number> {
@@ -182,6 +213,14 @@ export async function getSetting(key: string): Promise<string | null> {
     [key]
   );
   return result?.value ?? null;
+}
+
+export function getCurrencySymbol(currency: string): string {
+  switch (currency) {
+    case "USD": return "$";
+    case "EUR": return "€";
+    default: return "₺";
+  }
 }
 
 export async function clearAllData() {

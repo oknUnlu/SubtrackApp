@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -9,6 +10,7 @@ import { useColorScheme } from '@/hooks/use-color-scheme';
 export default function TabLayout() {
   const colorScheme = useColorScheme() ?? 'light';
   const tintColor = Colors[colorScheme].tint;
+  const { t } = useTranslation();
 
   return (
     <Tabs
@@ -22,7 +24,7 @@ export default function TabLayout() {
           paddingTop: 8,
           borderTopWidth: 1,
           borderTopColor: colorScheme === 'dark' ? '#374151' : '#E5E7EB',
-          overflow: 'visible', // 🔴 KRİTİK
+          overflow: 'visible',
         },
         tabBarItemStyle: {
           paddingVertical: 6,
@@ -32,7 +34,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Ana Sayfa',
+          title: t('tabs.home'),
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? 'home' : 'home-outline'}
@@ -46,7 +48,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="subscriptions"
         options={{
-          title: 'Abonelikler',
+          title: t('tabs.subscriptions'),
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? 'card' : 'card-outline'}
@@ -57,12 +59,11 @@ export default function TabLayout() {
         }}
       />
 
-      {/* ORTA FAB BENZERİ EKLE BUTONU */}
       <Tabs.Screen
         name="add"
         options={{
           title: '',
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: () => (
             <View
               style={{
                 position: 'absolute',
@@ -73,8 +74,8 @@ export default function TabLayout() {
                 backgroundColor: tintColor,
                 justifyContent: 'center',
                 alignItems: 'center',
-                elevation: 5, // Android shadow
-                shadowColor: '#000', // iOS shadow
+                elevation: 5,
+                shadowColor: '#000',
                 shadowOpacity: 0.2,
                 shadowRadius: 4,
                 shadowOffset: { width: 0, height: 2 },
@@ -93,7 +94,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="ai"
         options={{
-          title: 'AI Analiz',
+          title: t('tabs.aiAnalysis'),
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? 'analytics' : 'analytics-outline'}
@@ -107,7 +108,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Settings',
+          title: t('tabs.settings'),
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons
               name={focused ? 'settings' : 'person-outline'}

@@ -102,19 +102,76 @@ export const styles = StyleSheet.create({
     marginTop: 4,
   },
   input: {
-  borderWidth: 1,
-  borderColor: "#e5e7eb",
-  borderRadius: 10,
-  padding: 10,
-  marginBottom: 12,
-},
-
-pickerWrapper: {
-  borderWidth: 1,
-  borderColor: "#e5e7eb",
-  borderRadius: 10,
-  marginBottom: 12,
-  overflow: "hidden",
-},
-
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 12,
+  },
+  pickerWrapper: {
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    borderRadius: 10,
+    marginBottom: 12,
+    overflow: "hidden" as const,
+  },
+  subCard: {
+    backgroundColor: "#fff",
+    borderRadius: 14,
+    padding: 14,
+    marginBottom: 10,
+    flexDirection: "row" as const,
+    alignItems: "center" as const,
+  },
+  subCardTitle: {
+    fontWeight: "600" as const,
+    fontSize: 16,
+  },
+  subCardInterval: {
+    color: "#6b7280",
+    fontSize: 13,
+    marginTop: 2,
+  },
+  subCardAmount: {
+    fontWeight: "700" as const,
+    fontSize: 16,
+    marginRight: 12,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.4)",
+    justifyContent: "center" as const,
+    padding: 20,
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 16,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "700" as const,
+    marginBottom: 12,
+  },
+  intervalRow: {
+    flexDirection: "row" as const,
+    marginBottom: 12,
+  },
+  intervalButton: {
+    flex: 1,
+    padding: 10,
+    marginRight: 6,
+    borderRadius: 10,
+  },
+  intervalButtonText: {
+    textAlign: "center" as const,
+    fontWeight: "600" as const,
+  },
+  modalActions: {
+    flexDirection: "row" as const,
+  },
+  modalActionButton: {
+    flex: 1,
+    padding: 12,
+  },
 });

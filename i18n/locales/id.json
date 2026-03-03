@@ -1,0 +1,100 @@
+{
+  "common": {
+    "cancel": "Batal",
+    "delete": "Hapus",
+    "save": "Simpan",
+    "update": "Perbarui",
+    "error": "Kesalahan",
+    "success": "Berhasil",
+    "monthly": "Bulanan",
+    "yearly": "Tahunan",
+    "adArea": "AREA IKLAN",
+    "adBanner": "AdMob Banner (320×50)",
+    "deleteConfirm": "Hapus \"{{name}}\"?",
+    "deleted": "Dihapus"
+  },
+  "tabs": {
+    "home": "Beranda",
+    "subscriptions": "Langganan",
+    "aiAnalysis": "Analisis AI",
+    "settings": "Pengaturan"
+  },
+  "categories": {
+    "food": "Makanan",
+    "transport": "Transportasi",
+    "fun": "Hiburan",
+    "shopping": "Belanja",
+    "bills": "Tagihan",
+    "health": "Kesehatan",
+    "education": "Pendidikan",
+    "tech": "Teknologi",
+    "other": "Lainnya"
+  },
+  "home": {
+    "totalSpending": "Total Pengeluaran Bulan Ini",
+    "includingSubs": "Termasuk langganan",
+    "activeSubscriptions": "Langganan Aktif",
+    "dailyAverage": "Rata-rata Harian",
+    "spendingDistribution": "Distribusi Pengeluaran",
+    "noSpendingData": "Belum ada data pengeluaran",
+    "percentThisMonth": "{{percent}}% bulan ini",
+    "weeklyTrend": "Tren Mingguan",
+    "noTrendData": "Belum ada data tren",
+    "recentTransactions": "Transaksi Terbaru",
+    "noTransactions": "Belum ada transaksi",
+    "deleteTransaction": "Hapus Transaksi"
+  },
+  "subscriptions": {
+    "title": "Langganan",
+    "activeCount": "{{count}} langganan aktif",
+    "monthlyTotal": "Total Bulanan",
+    "yearlyTotal": "Tahunan",
+    "addNew": "Tambah Langganan Baru",
+    "noSubscriptions": "Belum ada langganan",
+    "trackTip": "Tambahkan langganan Anda untuk melacak pengeluaran",
+    "deleteSubscription": "Hapus Langganan",
+    "editSubscription": "Edit Langganan",
+    "newSubscription": "Langganan Baru",
+    "namePlaceholder": "Nama langganan",
+    "amountPlaceholder": "Jumlah ({{symbol}})",
+    "fillAllFields": "Harap isi semua kolom",
+    "validAmount": "Masukkan jumlah yang valid"
+  },
+  "add": {
+    "title": "Tambah Pengeluaran",
+    "subtitle": "Catat pengeluaran harian Anda",
+    "expenseTitle": "Judul Pengeluaran",
+    "titlePlaceholder": "Cth: Kopi, Belanja bahan makanan...",
+    "amount": "Jumlah ({{symbol}})",
+    "category": "Kategori",
+    "saveExpense": "Simpan Pengeluaran",
+    "fillAllFields": "Harap isi semua kolom",
+    "validAmount": "Masukkan jumlah yang valid",
+    "saved": "Pengeluaran disimpan",
+    "saveFailed": "Gagal menyimpan"
+  },
+  "ai": {
+    "title": "Analisis AI",
+    "subtitle": "Saran pengeluaran cerdas",
+    "heroTitle": "Analisis Bertenaga AI",
+    "heroText": "Analisis kebiasaan pengeluaran Anda dengan Gemini AI dan dapatkan rekomendasi yang dipersonalisasi.",
+    "savingsOpportunities": "Peluang Penghematan",
+    "smartSuggestions": "Saran Cerdas",
+    "analyzeExpenses": "Analisis Pengeluaran Saya",
+    "apiPlaceholder": "Placeholder untuk integrasi Gemini API. Akan aktif saat kunci API ditambahkan."
+  },
+  "settings": {
+    "title": "Pusat Kontrol",
+    "currency": "Mata Uang",
+    "defaultSubscription": "Langganan Default",
+    "mainView": "Tampilan Utama",
+    "dangerZone": "Zona Bahaya",
+    "deleteAllData": "Hapus Semua Data",
+    "deleteAllConfirm": "Hapus semua data?",
+    "deleteAllWarning": "Tindakan ini tidak dapat dibatalkan.",
+    "language": "Bahasa",
+    "currencyTRY": "Lira Turki (₺)",
+    "currencyUSD": "Dolar ($)",
+    "currencyEUR": "Euro (€)"
+  }
+}

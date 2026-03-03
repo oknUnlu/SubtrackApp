@@ -2,18 +2,37 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useFocusEffect } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useCallback, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 import {
+  deleteTransaction,
   getCategoryDistribution,
+  getCurrencySymbol,
   getMonthlyTotal,
+  getRecentTransactions,
+  getSetting,
   getSubscriptionCount,
   getWeeklyTrend,
+  TransactionItem,
 } from "../../database/db";
 
 import { styles } from "../../styles";
 
+const CATEGORY_ICONS: Record<string, string> = {
+  food: "🍔", transport: "🚗", fun: "🎮", shopping: "🛍️",
+  bills: "📄", health: "💊", education: "📚", tech: "💻", other: "📌",
+};
+
+function getShortDayName(dayIndex: number, locale: string): string {
+  const refDate = new Date(2024, 0, 7 + dayIndex); // Jan 7, 2024 is Sunday
+  return new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(refDate);
+}
+
 export default function HomeScreen() {
+  const { t, i18n } = useTranslation();
+
   /* -------------------- */
   /* STATE                */
   /* -------------------- */
@@ -22,12 +41,15 @@ export default function HomeScreen() {
   const [dailyAverage, setDailyAverage] = useState(0);
 
   const [categories, setCategories] = useState<
-    Array<{ category: string; total: number }>
+    { category: string; total: number }[]
   >([]);
 
   const [weeklyTrend, setWeeklyTrend] = useState<
-    Array<{ day: string; total: number }>
+    { day: string; total: number }[]
   >([]);
+
+  const [currSymbol, setCurrSymbol] = useState("₺");
+  const [recentTransactions, setRecentTransactions] = useState<TransactionItem[]>([]);
 
   /* -------------------- */
   /* DATA LOAD            */
@@ -38,6 +60,8 @@ export default function HomeScreen() {
       const subs = await getSubscriptionCount();
       const cats = await getCategoryDistribution();
       const weekly = await getWeeklyTrend();
+      const recent = await getRecentTransactions(5);
+      const currency = await getSetting("currency");
 
       const today = new Date().getDate();
       const avg = today > 0 ? total / today : 0;
@@ -47,8 +71,8 @@ export default function HomeScreen() {
       setDailyAverage(avg);
       setCategories(cats);
       setWeeklyTrend(weekly);
-
-      console.log("Weekly Trend:", weekly);
+      setRecentTransactions(recent);
+      setCurrSymbol(getCurrencySymbol(currency ?? "TRY"));
     } catch (error) {
       console.error("Dashboard load error:", error);
     }
@@ -64,12 +88,19 @@ export default function HomeScreen() {
   /* UI                  */
   /* -------------------- */
   return (
+  <SafeAreaView style={{ flex: 1, backgroundColor: '#fff'}} edges={["top"]}>
     <ScrollView contentContainerStyle={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <View>
           <Text style={styles.appName}>Subtrack AI</Text>
-          <Text style={styles.date}>13 Ocak Salı</Text>
+          <Text style={styles.date}>
+            {new Intl.DateTimeFormat(i18n.language, {
+              day: 'numeric',
+              month: 'long',
+              weekday: 'long',
+            }).format(new Date())}
+          </Text>
         </View>
         <Ionicons name="notifications-outline" size={22} color="#374151" />
       </View>
@@ -83,14 +114,14 @@ export default function HomeScreen() {
       >
         <View style={styles.totalHeader}>
           <Ionicons name="wallet-outline" size={18} color="#fff" />
-          <Text style={styles.totalLabel}>Bu Ay Toplam Harcama</Text>
+          <Text style={styles.totalLabel}>{t('home.totalSpending')}</Text>
         </View>
 
-        <Text style={styles.totalAmount}>₺{monthlyTotal.toFixed(2)}</Text>
+        <Text style={styles.totalAmount}>{currSymbol}{monthlyTotal.toFixed(2)}</Text>
 
         <View style={styles.totalFooter}>
           <Ionicons name="trending-up-outline" size={16} color="#dcfce7" />
-          <Text style={styles.totalSubText}>Abonelikler dahil</Text>
+          <Text style={styles.totalSubText}>{t('home.includingSubs')}</Text>
         </View>
       </LinearGradient>
 
@@ -98,7 +129,7 @@ export default function HomeScreen() {
       <View style={styles.statsRow}>
         <View style={styles.statCard}>
           <View style={styles.statHeader}>
-            <Text style={styles.statLabel}>Aktif Abonelik</Text>
+            <Text style={styles.statLabel}>{t('home.activeSubscriptions')}</Text>
             <Ionicons name="card-outline" size={18} color="#6b7280" />
           </View>
           <Text style={styles.statValue}>{subscriptionCount}</Text>
@@ -106,39 +137,32 @@ export default function HomeScreen() {
 
         <View style={styles.statCard}>
           <View style={styles.statHeader}>
-            <Text style={styles.statLabel}>Günlük Ortalama</Text>
+            <Text style={styles.statLabel}>{t('home.dailyAverage')}</Text>
             <Ionicons name="analytics-outline" size={18} color="#6b7280" />
           </View>
-          <Text style={styles.statValue}>₺{dailyAverage.toFixed(0)}</Text>
+          <Text style={styles.statValue}>{currSymbol}{dailyAverage.toFixed(0)}</Text>
         </View>
       </View>
 
       {/* Category Distribution */}
       <View style={styles.largeCard}>
-        <Text style={styles.cardTitle}>Harcama Dağılımı</Text>
+        <Text style={styles.cardTitle}>{t('home.spendingDistribution')}</Text>
 
         {categories.length === 0 ? (
           <View style={styles.emptyState}>
             <Text style={styles.emptyIcon}>📊</Text>
-            <Text style={styles.emptyText}>Henüz harcama verisi yok</Text>
+            <Text style={styles.emptyText}>{t('home.noSpendingData')}</Text>
           </View>
         ) : (
           (() => {
             const total = categories.reduce((s, c) => s + c.total, 0);
 
-            const iconMap: Record<string, string> = {
-              food: "🍔",
-              transport: "🚗",
-              fun: "🎮",
-              shopping: "🛍️",
-              bills: "📄",
-              health: "💊",
-              education: "📚",
-              tech: "💻",
-            };
-
             return categories.map((item) => {
               const percent = total > 0 ? item.total / total : 0;
+              const cat = {
+                icon: CATEGORY_ICONS[item.category] || "📌",
+                label: t(`categories.${item.category}`, { defaultValue: item.category }),
+              };
 
               return (
                 <View
@@ -152,20 +176,20 @@ export default function HomeScreen() {
                 >
                   <View style={{ flexDirection: "row", marginBottom: 8 }}>
                     <Text style={{ fontSize: 20, marginRight: 10 }}>
-                      {iconMap[item.category] || "📌"}
+                      {cat.icon}
                     </Text>
 
                     <View style={{ flex: 1 }}>
                       <Text style={{ fontWeight: "600" }}>
-                        {item.category}
+                        {cat.label}
                       </Text>
                       <Text style={{ fontSize: 12, color: "#6b7280" }}>
-                        %{Math.round(percent * 100)} bu ay
+                        {t('home.percentThisMonth', { percent: Math.round(percent * 100) })}
                       </Text>
                     </View>
 
                     <Text style={{ fontWeight: "700" }}>
-                      ₺{item.total.toFixed(0)}
+                      {currSymbol}{item.total.toFixed(0)}
                     </Text>
                   </View>
 
@@ -194,17 +218,16 @@ export default function HomeScreen() {
 
       {/* Weekly Trend */}
       <View style={styles.largeCard}>
-        <Text style={styles.cardTitle}>Haftalık Trend</Text>
+        <Text style={styles.cardTitle}>{t('home.weeklyTrend')}</Text>
 
         {weeklyTrend.length === 0 ? (
           <View style={styles.emptyState}>
             <Text style={styles.emptyIcon}>📈</Text>
-            <Text style={styles.emptyText}>Henüz trend verisi yok</Text>
+            <Text style={styles.emptyText}>{t('home.noTrendData')}</Text>
           </View>
         ) : (
           (() => {
             const max = Math.max(...weeklyTrend.map((d) => d.total), 1);
-            const days = ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cts"];
             const todayIndex = new Date().getDay();
 
             return (
@@ -224,7 +247,7 @@ export default function HomeScreen() {
                       }}
                     >
                       <Text style={{ width: 36, fontSize: 12 }}>
-                        {days[Number(item.day)]}
+                        {getShortDayName(Number(item.day), i18n.language)}
                       </Text>
 
                       <View
@@ -256,7 +279,7 @@ export default function HomeScreen() {
                           fontWeight: "600",
                         }}
                       >
-                        ₺{item.total.toFixed(0)}
+                        {currSymbol}{item.total.toFixed(0)}
                       </Text>
                     </View>
                   );
@@ -267,11 +290,77 @@ export default function HomeScreen() {
         )}
       </View>
 
+      {/* Recent Transactions */}
+      <View style={styles.largeCard}>
+        <Text style={styles.cardTitle}>{t('home.recentTransactions')}</Text>
+
+        {recentTransactions.length === 0 ? (
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyIcon}>💸</Text>
+            <Text style={styles.emptyText}>{t('home.noTransactions')}</Text>
+          </View>
+        ) : (
+          recentTransactions.map((tx) => {
+            const cat = {
+              icon: CATEGORY_ICONS[tx.category ?? "other"] || "📌",
+              label: t(`categories.${tx.category ?? "other"}`, { defaultValue: tx.category ?? "other" }),
+            };
+            const txDate = new Date(tx.date);
+            const dateStr = new Intl.DateTimeFormat(i18n.language, { day: 'numeric', month: 'numeric' }).format(txDate);
+
+            return (
+              <View
+                key={tx.id}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  backgroundColor: "#f9fafb",
+                  borderRadius: 12,
+                  padding: 12,
+                  marginBottom: 8,
+                }}
+              >
+                <Text style={{ fontSize: 20, marginRight: 10 }}>{cat.icon}</Text>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontWeight: "600" }}>{tx.title}</Text>
+                  <Text style={{ fontSize: 12, color: "#6b7280" }}>{dateStr} - {cat.label}</Text>
+                </View>
+                <Text style={{ fontWeight: "700", marginRight: 10 }}>
+                  {currSymbol}{tx.amount.toFixed(2)}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    Alert.alert(
+                      t('home.deleteTransaction'),
+                      t('common.deleteConfirm', { name: tx.title }),
+                      [
+                        { text: t('common.cancel'), style: "cancel" },
+                        {
+                          text: t('common.delete'),
+                          style: "destructive",
+                          onPress: async () => {
+                            await deleteTransaction(tx.id);
+                            loadDashboard();
+                          },
+                        },
+                      ]
+                    );
+                  }}
+                >
+                  <Ionicons name="trash-outline" size={18} color="#ef4444" />
+                </TouchableOpacity>
+              </View>
+            );
+          })
+        )}
+      </View>
+
       {/* Ad */}
       <View style={styles.adArea}>
-        <Text style={styles.adTitle}>REKLAM ALANI</Text>
-        <Text style={styles.adSubtitle}>AdMob Banner (320×50)</Text>
+        <Text style={styles.adTitle}>{t('common.adArea')}</Text>
+        <Text style={styles.adSubtitle}>{t('common.adBanner')}</Text>
       </View>
     </ScrollView>
+  </SafeAreaView>
   );
 }
