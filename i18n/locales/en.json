@@ -42,7 +42,12 @@
     "noTrendData": "No trend data yet",
     "recentTransactions": "Recent Transactions",
     "noTransactions": "No transactions yet",
-    "deleteTransaction": "Delete Transaction"
+    "deleteTransaction": "Delete Transaction",
+    "monthlyComparison": "Monthly Comparison",
+    "thisMonth": "This Month",
+    "lastMonth": "Last Month",
+    "vsLastMonth": "vs last month",
+    "totalLabel": "Total"
   },
   "subscriptions": {
     "title": "Subscriptions",
@@ -58,7 +63,13 @@
     "namePlaceholder": "Subscription name",
     "amountPlaceholder": "Amount ({{symbol}})",
     "fillAllFields": "Please fill in all fields",
-    "validAmount": "Enter a valid amount"
+    "validAmount": "Enter a valid amount",
+    "detectedRecurring": "Detected Recurring",
+    "detectedRecurringDesc": "These expenses appear to recur monthly",
+    "occurredTimes": "{{count}} times",
+    "daysInterval": "days apart",
+    "addAsSubscription": "Add as Subscription",
+    "dismiss": "Dismiss"
   },
   "add": {
     "title": "Add Expense",
@@ -73,17 +84,54 @@
     "notes": "Notes (optional)",
     "notesPlaceholder": "Add a note...",
     "saved": "Expense saved",
-    "saveFailed": "Failed to save"
+    "saveFailed": "Failed to save",
+    "templates": "Quick Templates",
+    "saveAsTemplate": "Save as Template",
+    "templateSaved": "Template saved",
+    "longPressToDelete": "Long press to delete",
+    "tags": "Tags",
+    "tagName": "Tag name",
+    "createTag": "Create Tag"
   },
   "ai": {
     "title": "AI Analysis",
     "subtitle": "Smart spending suggestions",
-    "heroTitle": "AI-Powered Analysis",
+    "heroTitle": "Smart Analysis",
     "heroText": "Analyze your spending habits with Gemini AI and get personalized recommendations.",
-    "savingsOpportunities": "Savings Opportunities",
-    "smartSuggestions": "Smart Suggestions",
-    "analyzeExpenses": "Analyze My Expenses",
-    "apiPlaceholder": "Placeholder for Gemini API integration. Will be active when API key is added."
+    "heroTextLocal": "Your spending data is analyzed locally to provide smart insights and savings tips.",
+    "refreshAnalysis": "Refresh Analysis",
+    "analyzing": "Analyzing your data...",
+    "noDataYet": "No spending data yet",
+    "addExpensesFirst": "Add some expenses to get smart insights",
+    "noInsights": "No insights available yet. Add more data!",
+    "insightsCount": "{{count}} insights found",
+    "topCategory": "Top Spending Category",
+    "topCategoryDesc": "{{category}} makes up {{percent}}% of your spending",
+    "spikeDetected": "Unusual Expense Detected",
+    "spikeDesc": "\"{{title}}\" ({{amount}}) is much higher than your average ({{average}})",
+    "monthTrendUp": "Spending Increased",
+    "monthTrendUpDesc": "Your spending is up {{percent}}% compared to last month",
+    "monthTrendDown": "Great Savings!",
+    "monthTrendDownDesc": "You spent {{percent}}% less than last month. Keep it up!",
+    "budgetWarning": "Budget Alert",
+    "budgetWarningDesc": "You've used {{percent}}% of your monthly budget",
+    "categoryBudgetWarning": "Category Budget Alert",
+    "categoryBudgetWarningDesc": "{{category}} has reached {{percent}}% of its budget limit",
+    "subscriptionBurden": "Subscription Load",
+    "subscriptionBurdenDesc": "Subscriptions make up {{percent}}% of your spending ({{count}} active)",
+    "weekdayPattern": "Spending Pattern",
+    "weekdayPatternDesc": "You tend to spend the most on {{day}}s",
+    "savingsTip": "Savings Opportunity",
+    "savingsTipDesc": "{{category}} accounts for {{percent}}% of your spending. Consider setting a budget limit.",
+    "days": {
+      "sunday": "Sunday",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday"
+    }
   },
   "settings": {
     "title": "Control Center",
@@ -97,7 +145,9 @@
     "language": "Language",
     "currencyTRY": "Turkish Lira (₺)",
     "currencyUSD": "Dollar ($)",
-    "currencyEUR": "Euro (€)"
+    "currencyEUR": "Euro (€)",
+    "exportExpenses": "Export Expenses",
+    "exportSubscriptions": "Export Subscriptions"
   },
   "budget": {
     "title": "Budget",
@@ -113,5 +163,18 @@
     "noLimit": "No limit",
     "validAmount": "Enter a valid amount",
     "limit": "limit"
+  },
+  "history": {
+    "title": "Transaction History",
+    "searchPlaceholder": "Search transactions...",
+    "thisWeek": "This Week",
+    "thisMonth": "This Month",
+    "thisYear": "This Year",
+    "allTime": "All Time",
+    "noResults": "No transactions found",
+    "allCategories": "All",
+    "totalResults": "{{count}} transactions",
+    "viewAll": "View All",
+    "deleteTransaction": "Delete Transaction"
   }
 }

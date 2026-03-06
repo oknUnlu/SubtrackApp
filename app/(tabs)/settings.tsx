@@ -19,6 +19,7 @@ import {
 } from "../../database/db";
 
 import { styles } from "../../styles/settings";
+import { exportTransactionsCsv, exportSubscriptionsCsv } from "../../utils/csvExport";
 
 export default function SettingsScreen() {
   const { t, i18n } = useTranslation();
@@ -111,6 +112,37 @@ export default function SettingsScreen() {
             value={languageLabel(i18n.language)}
             onPress={() => setModal("language")}
           />
+        </View>
+
+        {/* Data Export */}
+        <View style={styles.card}>
+          <TouchableOpacity
+            style={styles.row}
+            onPress={async () => {
+              try { await exportTransactionsCsv(); }
+              catch (e) { console.error(e); Alert.alert(t('common.error')); }
+            }}
+          >
+            <Ionicons name="download-outline" size={20} color="#22c55e" />
+            <Text style={styles.rowLabel}>{t('settings.exportExpenses')}</Text>
+            <View style={{ flex: 1 }} />
+            <Text style={styles.rowValue}>CSV</Text>
+            <Ionicons name="chevron-forward" size={16} color="#9ca3af" />
+          </TouchableOpacity>
+          <Divider />
+          <TouchableOpacity
+            style={styles.row}
+            onPress={async () => {
+              try { await exportSubscriptionsCsv(); }
+              catch (e) { console.error(e); Alert.alert(t('common.error')); }
+            }}
+          >
+            <Ionicons name="cloud-download-outline" size={20} color="#22c55e" />
+            <Text style={styles.rowLabel}>{t('settings.exportSubscriptions')}</Text>
+            <View style={{ flex: 1 }} />
+            <Text style={styles.rowValue}>CSV</Text>
+            <Ionicons name="chevron-forward" size={16} color="#9ca3af" />
+          </TouchableOpacity>
         </View>
 
         {/* Danger Zone */}

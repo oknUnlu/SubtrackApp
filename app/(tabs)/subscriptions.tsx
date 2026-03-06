@@ -20,10 +20,13 @@ import {
   getCurrencySymbol,
   getSetting,
   getSubscriptions,
+  getTransactions,
   SubscriptionItem,
   updateSubscription,
 } from "../../database/db";
 import { styles } from "../../styles/subscriptions";
+import { detectRecurringExpenses, RecurringPattern } from "../../utils/recurringDetection";
+import { scheduleSubscriptionReminder, cancelSubscriptionReminder } from "../../utils/notifications";
 
 const OTHER_KEY = "__other__";
 
@@ -55,6 +58,9 @@ export default function SubscriptionsScreen() {
   const [title, setTitle] = useState("Netflix");
   const [amount, setAmount] = useState("");
   const [interval, setInterval] = useState<"monthly" | "yearly">("monthly");
+  const [nextDate, setNextDate] = useState("");
+  const [recurring, setRecurring] = useState<RecurringPattern[]>([]);
+  const [dismissed, setDismissed] = useState<Set<string>>(new Set());
 
   /* ---------------- LOAD ---------------- */
   const loadSubscriptions = async () => {
@@ -79,6 +85,14 @@ export default function SubscriptionsScreen() {
 
     setMonthlyTotal(monthly);
     setYearlyTotal(yearly);
+
+    // Detect recurring expenses
+    const allTx = await getTransactions();
+    const existingTitles = new Set(data.map(s => s.title.toLowerCase()));
+    const detected = detectRecurringExpenses(allTx).filter(
+      r => !existingTitles.has(r.title.toLowerCase())
+    );
+    setRecurring(detected);
   };
 
   useFocusEffect(
@@ -95,6 +109,7 @@ export default function SubscriptionsScreen() {
     setInterval("monthly");
     setSelectedPreset("Netflix");
     setTitle("Netflix");
+    setNextDate("");
   };
 
   const openEditModal = (sub: SubscriptionItem) => {
@@ -102,6 +117,7 @@ export default function SubscriptionsScreen() {
     setTitle(sub.title);
     setAmount(sub.amount.toString());
     setInterval(sub.interval as "monthly" | "yearly");
+    setNextDate(sub.nextDate ?? "");
     const isPreset = presetSubscriptions.includes(sub.title);
     setSelectedPreset(isPreset ? sub.title : OTHER_KEY);
     setShowModal(true);
@@ -119,20 +135,28 @@ export default function SubscriptionsScreen() {
       return;
     }
 
+    const subId = editingId || Date.now().toString();
+    const subItem: SubscriptionItem = {
+      id: subId,
+      title: title.trim(),
+      amount: parsedAmount,
+      interval,
+      nextDate: nextDate || undefined,
+    };
+
     if (editingId) {
-      await updateSubscription({
-        id: editingId,
-        title: title.trim(),
-        amount: parsedAmount,
-        interval,
-      });
+      await updateSubscription(subItem);
     } else {
-      await addSubscription({
-        id: Date.now().toString(),
-        title: title.trim(),
-        amount: parsedAmount,
-        interval,
-      });
+      await addSubscription(subItem);
+    }
+
+    // Schedule or cancel reminder
+    if (nextDate) {
+      const daysSetting = await getSetting("reminderDaysBefore");
+      const daysBefore = daysSetting ? parseInt(daysSetting, 10) : 1;
+      await scheduleSubscriptionReminder(subId, title.trim(), parsedAmount, nextDate, daysBefore, currSymbol);
+    } else {
+      await cancelSubscriptionReminder(subId);
     }
 
     resetForm();
@@ -223,6 +247,85 @@ export default function SubscriptionsScreen() {
               </TouchableOpacity>
             </View>
           ))
+        )}
+        {/* Detected Recurring */}
+        {recurring.filter(r => !dismissed.has(r.title)).length > 0 && (
+          <View style={{ marginTop: 24 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
+              <Ionicons name="repeat-outline" size={20} color="#7c3aed" />
+              <Text style={{ fontSize: 18, fontWeight: "700", color: "#222", marginLeft: 8 }}>
+                {t('subscriptions.detectedRecurring')}
+              </Text>
+            </View>
+            <Text style={{ fontSize: 13, color: "#6b7280", marginBottom: 12 }}>
+              {t('subscriptions.detectedRecurringDesc')}
+            </Text>
+            {recurring
+              .filter(r => !dismissed.has(r.title))
+              .map((r) => (
+              <View
+                key={r.title}
+                style={{
+                  backgroundColor: "#faf5ff",
+                  borderRadius: 16,
+                  padding: 14,
+                  marginBottom: 10,
+                  borderWidth: 1,
+                  borderColor: "#e9d5ff",
+                }}
+              >
+                <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 8 }}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ fontWeight: "600", fontSize: 15, color: "#222" }}>{r.title}</Text>
+                    <Text style={{ fontSize: 12, color: "#7c3aed", marginTop: 2 }}>
+                      {t('subscriptions.occurredTimes', { count: r.occurrences })} · ~{r.avgIntervalDays} {t('subscriptions.daysInterval')}
+                    </Text>
+                  </View>
+                  <Text style={{ fontWeight: "700", fontSize: 16, color: "#7c3aed" }}>
+                    {currSymbol}{r.amount.toFixed(2)}
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "row", gap: 8 }}>
+                  <TouchableOpacity
+                    style={{
+                      flex: 1,
+                      backgroundColor: "#7c3aed",
+                      borderRadius: 10,
+                      paddingVertical: 8,
+                      alignItems: "center",
+                    }}
+                    onPress={async () => {
+                      await addSubscription({
+                        id: Date.now().toString(),
+                        title: r.title,
+                        amount: r.amount,
+                        interval: "monthly",
+                      });
+                      loadSubscriptions();
+                    }}
+                  >
+                    <Text style={{ color: "#fff", fontWeight: "600", fontSize: 13 }}>
+                      {t('subscriptions.addAsSubscription')}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      paddingHorizontal: 16,
+                      paddingVertical: 8,
+                      backgroundColor: "#f3f4f6",
+                      borderRadius: 10,
+                      alignItems: "center",
+                    }}
+                    onPress={() => setDismissed(prev => new Set(prev).add(r.title))}
+                  >
+                    <Text style={{ color: "#6b7280", fontWeight: "500", fontSize: 13 }}>
+                      {t('subscriptions.dismiss')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
+          </View>
         )}
       </ScrollView>
 

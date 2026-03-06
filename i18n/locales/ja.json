@@ -42,7 +42,12 @@
     "noTrendData": "まだトレンドデータがありません",
     "recentTransactions": "最近の取引",
     "noTransactions": "まだ取引がありません",
-    "deleteTransaction": "取引を削除"
+    "deleteTransaction": "取引を削除",
+    "monthlyComparison": "月間比較",
+    "thisMonth": "今月",
+    "lastMonth": "先月",
+    "vsLastMonth": "先月比",
+    "totalLabel": "合計"
   },
   "subscriptions": {
     "title": "サブスクリプション",
@@ -58,7 +63,13 @@
     "namePlaceholder": "サブスク名",
     "amountPlaceholder": "金額 ({{symbol}})",
     "fillAllFields": "すべての項目を入力してください",
-    "validAmount": "有効な金額を入力してください"
+    "validAmount": "有効な金額を入力してください",
+    "detectedRecurring": "定期的な支出を検出",
+    "detectedRecurringDesc": "これらの支出は毎月繰り返されているようです",
+    "occurredTimes": "{{count}}回",
+    "daysInterval": "日間隔",
+    "addAsSubscription": "サブスクとして追加",
+    "dismiss": "閉じる"
   },
   "add": {
     "title": "支出を追加",
@@ -73,17 +84,54 @@
     "notes": "メモ（任意）",
     "notesPlaceholder": "メモを追加...",
     "saved": "支出を保存しました",
-    "saveFailed": "保存に失敗しました"
+    "saveFailed": "保存に失敗しました",
+    "templates": "クイックテンプレート",
+    "saveAsTemplate": "テンプレートとして保存",
+    "templateSaved": "テンプレートを保存しました",
+    "longPressToDelete": "長押しで削除",
+    "tags": "タグ",
+    "tagName": "タグ名",
+    "createTag": "タグを作成"
   },
   "ai": {
     "title": "AI分析",
     "subtitle": "スマートな支出提案",
-    "heroTitle": "AI搭載分析",
+    "heroTitle": "スマート分析",
     "heroText": "Gemini AIで支出習慣を分析し、パーソナライズされたアドバイスを受けましょう。",
-    "savingsOpportunities": "節約チャンス",
-    "smartSuggestions": "スマート提案",
-    "analyzeExpenses": "支出を分析する",
-    "apiPlaceholder": "Gemini API統合のプレースホルダー。APIキーが追加されると有効になります。"
+    "heroTextLocal": "支出データをローカルで分析し、スマートな洞察と節約のヒントを提供します。",
+    "refreshAnalysis": "分析を更新",
+    "analyzing": "データを分析中...",
+    "noDataYet": "まだ支出データがありません",
+    "addExpensesFirst": "スマートな洞察を得るために支出を追加してください",
+    "noInsights": "まだ洞察がありません。もっとデータを追加してください！",
+    "insightsCount": "{{count}}件の洞察",
+    "topCategory": "最も支出の多いカテゴリー",
+    "topCategoryDesc": "{{category}}は支出の{{percent}}%を占めています",
+    "spikeDetected": "異常な支出を検出",
+    "spikeDesc": "「{{title}}」({{amount}})は平均({{average}})より大幅に高いです",
+    "monthTrendUp": "支出が増加",
+    "monthTrendUpDesc": "先月と比べて支出が{{percent}}%増加しました",
+    "monthTrendDown": "素晴らしい節約！",
+    "monthTrendDownDesc": "先月より{{percent}}%少ない支出です。この調子で！",
+    "budgetWarning": "予算アラート",
+    "budgetWarningDesc": "月間予算の{{percent}}%を使用しました",
+    "categoryBudgetWarning": "カテゴリー予算アラート",
+    "categoryBudgetWarningDesc": "{{category}}は予算上限の{{percent}}%に達しました",
+    "subscriptionBurden": "サブスク負担",
+    "subscriptionBurdenDesc": "サブスクは支出の{{percent}}%を占めています（{{count}}件有効）",
+    "weekdayPattern": "支出パターン",
+    "weekdayPatternDesc": "{{day}}に最も多く支出する傾向があります",
+    "savingsTip": "節約チャンス",
+    "savingsTipDesc": "{{category}}は支出の{{percent}}%を占めています。予算上限の設定を検討してください。",
+    "days": {
+      "sunday": "日曜日",
+      "monday": "月曜日",
+      "tuesday": "火曜日",
+      "wednesday": "水曜日",
+      "thursday": "木曜日",
+      "friday": "金曜日",
+      "saturday": "土曜日"
+    }
   },
   "settings": {
     "title": "コントロールセンター",
@@ -97,7 +145,9 @@
     "language": "言語",
     "currencyTRY": "トルコリラ (₺)",
     "currencyUSD": "ドル ($)",
-    "currencyEUR": "ユーロ (€)"
+    "currencyEUR": "ユーロ (€)",
+    "exportExpenses": "支出をエクスポート",
+    "exportSubscriptions": "サブスクをエクスポート"
   },
   "budget": {
     "title": "予算",
@@ -113,5 +163,18 @@
     "noLimit": "上限なし",
     "validAmount": "有効な金額を入力してください",
     "limit": "上限"
+  },
+  "history": {
+    "title": "取引履歴",
+    "searchPlaceholder": "取引を検索...",
+    "thisWeek": "今週",
+    "thisMonth": "今月",
+    "thisYear": "今年",
+    "allTime": "すべて",
+    "noResults": "取引が見つかりません",
+    "allCategories": "すべて",
+    "totalResults": "{{count}}件の取引",
+    "viewAll": "すべて見る",
+    "deleteTransaction": "取引を削除"
   }
 }

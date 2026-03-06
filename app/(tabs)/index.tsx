@@ -7,16 +7,22 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 
+import ExpenseDonutChart from '../../components/ExpenseDonutChart';
+import WeeklyBarChart from '../../components/WeeklyBarChart';
+
 import {
   deleteTransaction,
   getBudgetVsActual,
   getCategoryDistribution,
   getCurrencySymbol,
+  getMonthlyComparison,
   getMonthlyTotal,
   getRecentTransactions,
   getSetting,
   getSubscriptionCount,
+  getTagsForTransactions,
   getWeeklyTrend,
+  TagItem,
   TransactionItem,
 } from "../../database/db";
 
@@ -25,6 +31,11 @@ import { styles } from "../../styles";
 const CATEGORY_ICONS: Record<string, string> = {
   food: "🍔", transport: "🚗", fun: "🎮", shopping: "🛍️",
   bills: "📄", health: "💊", education: "📚", tech: "💻", other: "📌",
+};
+
+const CATEGORY_COLORS: Record<string, string> = {
+  food: "#f97316", transport: "#3b82f6", fun: "#8b5cf6", shopping: "#ec4899",
+  bills: "#6366f1", health: "#ef4444", education: "#14b8a6", tech: "#06b6d4", other: "#6b7280",
 };
 
 function getShortDayName(dayIndex: number, locale: string): string {
@@ -54,6 +65,8 @@ export default function HomeScreen() {
   const [recentTransactions, setRecentTransactions] = useState<TransactionItem[]>([]);
   const [budgetInfo, setBudgetInfo] = useState<{ budget: number; actual: number } | null>(null);
   const [categoryBudgets, setCategoryBudgets] = useState<Map<string, { budget: number; actual: number }>>(new Map());
+  const [comparison, setComparison] = useState<{ thisMonth: number; lastMonth: number; changePercent: number } | null>(null);
+  const [transactionTags, setTransactionTags] = useState<Map<string, TagItem[]>>(new Map());
 
   /* -------------------- */
   /* DATA LOAD            */
@@ -85,6 +98,14 @@ export default function HomeScreen() {
         catBudgetMap.set(cb.category, { budget: cb.budget, actual: cb.actual });
       }
       setCategoryBudgets(catBudgetMap);
+
+      const comp = await getMonthlyComparison();
+      setComparison(comp);
+
+      if (recent.length > 0) {
+        const tagMap = await getTagsForTransactions(recent.map(r => r.id));
+        setTransactionTags(tagMap);
+      }
     } catch (error) {
       console.error("Dashboard load error:", error);
     }
@@ -185,6 +206,43 @@ export default function HomeScreen() {
         </View>
       </View>
 
+      {/* Monthly Comparison */}
+      {comparison && (comparison.thisMonth > 0 || comparison.lastMonth > 0) && (
+        <View style={styles.largeCard}>
+          <Text style={styles.cardTitle}>{t('home.monthlyComparison')}</Text>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 12 }}>
+            <View style={{ flex: 1, backgroundColor: "#dcfce7", borderRadius: 14, padding: 14, marginRight: 6 }}>
+              <Text style={{ fontSize: 12, color: "#16a34a", fontWeight: "500" }}>{t('home.thisMonth')}</Text>
+              <Text style={{ fontSize: 20, fontWeight: "700", color: "#16a34a", marginTop: 4 }}>
+                {currSymbol}{comparison.thisMonth.toFixed(0)}
+              </Text>
+            </View>
+            <View style={{ flex: 1, backgroundColor: "#f3f4f6", borderRadius: 14, padding: 14, marginLeft: 6 }}>
+              <Text style={{ fontSize: 12, color: "#6b7280", fontWeight: "500" }}>{t('home.lastMonth')}</Text>
+              <Text style={{ fontSize: 20, fontWeight: "700", color: "#374151", marginTop: 4 }}>
+                {currSymbol}{comparison.lastMonth.toFixed(0)}
+              </Text>
+            </View>
+          </View>
+          {comparison.lastMonth > 0 && (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Ionicons
+                name={comparison.changePercent > 0 ? "trending-up-outline" : "trending-down-outline"}
+                size={18}
+                color={comparison.changePercent > 0 ? "#ef4444" : "#22c55e"}
+              />
+              <Text style={{
+                marginLeft: 6,
+                fontWeight: "600",
+                color: comparison.changePercent > 0 ? "#ef4444" : "#22c55e",
+              }}>
+                {comparison.changePercent > 0 ? "+" : ""}{comparison.changePercent.toFixed(1)}% {t('home.vsLastMonth')}
+              </Text>
+            </View>
+          )}
+        </View>
+      )}
+
       {/* Category Distribution */}
       <View style={styles.largeCard}>
         <Text style={styles.cardTitle}>{t('home.spendingDistribution')}</Text>
@@ -198,7 +256,21 @@ export default function HomeScreen() {
           (() => {
             const total = categories.reduce((s, c) => s + c.total, 0);
 
-            return categories.map((item) => {
+            const chartData = categories.map((item) => ({
+              category: t(`categories.${item.category}`, { defaultValue: item.category }),
+              total: item.total,
+              color: CATEGORY_COLORS[item.category] || "#6b7280",
+            }));
+
+            return (
+              <>
+                <ExpenseDonutChart
+                  data={chartData}
+                  total={total}
+                  currencySymbol={currSymbol}
+                  totalLabel={t('home.totalLabel')}
+                />
+                {categories.map((item) => {
               const percent = total > 0 ? item.total / total : 0;
               const cat = {
                 icon: CATEGORY_ICONS[item.category] || "📌",
@@ -256,7 +328,9 @@ export default function HomeScreen() {
                   </View>
                 </View>
               );
-            });
+            })}
+              </>
+            );
           })()
         )}
       </View>
@@ -271,73 +345,25 @@ export default function HomeScreen() {
             <Text style={styles.emptyText}>{t('home.noTrendData')}</Text>
           </View>
         ) : (
-          (() => {
-            const max = Math.max(...weeklyTrend.map((d) => d.total), 1);
-            const todayIndex = new Date().getDay();
-
-            return (
-              <View style={{ marginTop: 16 }}>
-                {weeklyTrend.map((item, index) => {
-                  const percent = item.total / max;
-                  const isToday = Number(item.day) === todayIndex;
-
-                  return (
-                    <View
-                      key={index}
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        marginBottom: 10,
-                        opacity: item.total === 0 ? 0.4 : 1,
-                      }}
-                    >
-                      <Text style={{ width: 36, fontSize: 12 }}>
-                        {getShortDayName(Number(item.day), i18n.language)}
-                      </Text>
-
-                      <View
-                        style={{
-                          flex: 1,
-                          height: 8,
-                          backgroundColor: "#e5e7eb",
-                          borderRadius: 6,
-                          marginHorizontal: 8,
-                          overflow: "hidden",
-                        }}
-                      >
-                        <View
-                          style={{
-                            width: `${percent * 100}%`,
-                            height: "100%",
-                            backgroundColor: isToday
-                              ? "#16a34a"
-                              : "#22c55e",
-                          }}
-                        />
-                      </View>
-
-                      <Text
-                        style={{
-                          width: 60,
-                          textAlign: "right",
-                          fontSize: 12,
-                          fontWeight: "600",
-                        }}
-                      >
-                        {currSymbol}{item.total.toFixed(0)}
-                      </Text>
-                    </View>
-                  );
-                })}
-              </View>
-            );
-          })()
+          <WeeklyBarChart
+            data={weeklyTrend.map((item) => ({
+              day: item.day,
+              total: item.total,
+              label: getShortDayName(Number(item.day), i18n.language),
+            }))}
+            currencySymbol={currSymbol}
+          />
         )}
       </View>
 
       {/* Recent Transactions */}
       <View style={styles.largeCard}>
-        <Text style={styles.cardTitle}>{t('home.recentTransactions')}</Text>
+        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+          <Text style={[styles.cardTitle, { marginBottom: 0 }]}>{t('home.recentTransactions')}</Text>
+          <TouchableOpacity onPress={() => router.push('/history')}>
+            <Text style={{ color: "#22c55e", fontWeight: "600", fontSize: 14 }}>{t('history.viewAll')}</Text>
+          </TouchableOpacity>
+        </View>
 
         {recentTransactions.length === 0 ? (
           <View style={styles.emptyState}>
@@ -370,6 +396,15 @@ export default function HomeScreen() {
                   <Text style={{ fontWeight: "600" }}>{tx.title}</Text>
                   <Text style={{ fontSize: 12, color: "#6b7280" }}>{dateStr} - {cat.label}</Text>
                   {tx.notes ? <Text style={{ fontSize: 11, color: "#9ca3af", marginTop: 2 }} numberOfLines={1}>{tx.notes}</Text> : null}
+                  {(transactionTags.get(tx.id) ?? []).length > 0 && (
+                    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 4, marginTop: 3 }}>
+                      {(transactionTags.get(tx.id) ?? []).map(tag => (
+                        <View key={tag.id} style={{ backgroundColor: tag.color + "20", borderRadius: 8, paddingHorizontal: 6, paddingVertical: 1 }}>
+                          <Text style={{ fontSize: 10, color: tag.color, fontWeight: "600" }}>{tag.name}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  )}
                 </View>
                 <Text style={{ fontWeight: "700", marginRight: 10 }}>
                   {currSymbol}{tx.amount.toFixed(2)}

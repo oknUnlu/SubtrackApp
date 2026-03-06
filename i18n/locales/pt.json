@@ -42,7 +42,12 @@
     "noTrendData": "Sem dados de tendência ainda",
     "recentTransactions": "Transações Recentes",
     "noTransactions": "Sem transações ainda",
-    "deleteTransaction": "Excluir Transação"
+    "deleteTransaction": "Excluir Transação",
+    "monthlyComparison": "Comparação Mensal",
+    "thisMonth": "Este Mês",
+    "lastMonth": "Mês Passado",
+    "vsLastMonth": "vs mês passado",
+    "totalLabel": "Total"
   },
   "subscriptions": {
     "title": "Assinaturas",
@@ -58,7 +63,13 @@
     "namePlaceholder": "Nome da assinatura",
     "amountPlaceholder": "Valor ({{symbol}})",
     "fillAllFields": "Por favor preencha todos os campos",
-    "validAmount": "Insira um valor válido"
+    "validAmount": "Insira um valor válido",
+    "detectedRecurring": "Recorrentes Detectados",
+    "detectedRecurringDesc": "Estes gastos parecem se repetir mensalmente",
+    "occurredTimes": "{{count}} vezes",
+    "daysInterval": "dias de intervalo",
+    "addAsSubscription": "Adicionar como Assinatura",
+    "dismiss": "Dispensar"
   },
   "add": {
     "title": "Adicionar Gasto",
@@ -73,17 +84,54 @@
     "notes": "Notas (opcional)",
     "notesPlaceholder": "Adicionar uma nota...",
     "saved": "Gasto salvo",
-    "saveFailed": "Falha ao salvar"
+    "saveFailed": "Falha ao salvar",
+    "templates": "Modelos Rápidos",
+    "saveAsTemplate": "Salvar como Modelo",
+    "templateSaved": "Modelo salvo",
+    "longPressToDelete": "Pressione longo para excluir",
+    "tags": "Tags",
+    "tagName": "Nome da tag",
+    "createTag": "Criar Tag"
   },
   "ai": {
     "title": "Análise IA",
     "subtitle": "Sugestões inteligentes de gastos",
-    "heroTitle": "Análise com Inteligência Artificial",
+    "heroTitle": "Análise Inteligente",
     "heroText": "Analise seus hábitos de consumo com Gemini AI e receba recomendações personalizadas.",
-    "savingsOpportunities": "Oportunidades de Economia",
-    "smartSuggestions": "Sugestões Inteligentes",
-    "analyzeExpenses": "Analisar Meus Gastos",
-    "apiPlaceholder": "Espaço reservado para integração da API Gemini. Será ativado quando a chave API for adicionada."
+    "heroTextLocal": "Seus dados de gastos são analisados localmente para fornecer insights e dicas de economia.",
+    "refreshAnalysis": "Atualizar Análise",
+    "analyzing": "Analisando seus dados...",
+    "noDataYet": "Ainda não há dados de gastos",
+    "addExpensesFirst": "Adicione gastos para obter insights inteligentes",
+    "noInsights": "Nenhum insight disponível ainda. Adicione mais dados!",
+    "insightsCount": "{{count}} insights encontrados",
+    "topCategory": "Categoria de Maior Gasto",
+    "topCategoryDesc": "{{category}} representa {{percent}}% dos seus gastos",
+    "spikeDetected": "Gasto Incomum Detectado",
+    "spikeDesc": "\"{{title}}\" ({{amount}}) é muito maior que sua média ({{average}})",
+    "monthTrendUp": "Gastos Aumentaram",
+    "monthTrendUpDesc": "Seus gastos aumentaram {{percent}}% em relação ao mês passado",
+    "monthTrendDown": "Ótima Economia!",
+    "monthTrendDownDesc": "Você gastou {{percent}}% menos que no mês passado. Continue assim!",
+    "budgetWarning": "Alerta de Orçamento",
+    "budgetWarningDesc": "Você usou {{percent}}% do seu orçamento mensal",
+    "categoryBudgetWarning": "Alerta de Orçamento por Categoria",
+    "categoryBudgetWarningDesc": "{{category}} atingiu {{percent}}% do seu limite",
+    "subscriptionBurden": "Carga de Assinaturas",
+    "subscriptionBurdenDesc": "Assinaturas representam {{percent}}% dos seus gastos ({{count}} ativas)",
+    "weekdayPattern": "Padrão de Gastos",
+    "weekdayPatternDesc": "Você tende a gastar mais às {{day}}",
+    "savingsTip": "Oportunidade de Economia",
+    "savingsTipDesc": "{{category}} representa {{percent}}% dos seus gastos. Considere definir um limite.",
+    "days": {
+      "sunday": "domingo",
+      "monday": "segunda-feira",
+      "tuesday": "terça-feira",
+      "wednesday": "quarta-feira",
+      "thursday": "quinta-feira",
+      "friday": "sexta-feira",
+      "saturday": "sábado"
+    }
   },
   "settings": {
     "title": "Centro de Controle",
@@ -97,7 +145,9 @@
     "language": "Idioma",
     "currencyTRY": "Lira Turca (₺)",
     "currencyUSD": "Dólar ($)",
-    "currencyEUR": "Euro (€)"
+    "currencyEUR": "Euro (€)",
+    "exportExpenses": "Exportar Gastos",
+    "exportSubscriptions": "Exportar Assinaturas"
   },
   "budget": {
     "title": "Orçamento",
@@ -113,5 +163,18 @@
     "noLimit": "Sem limite",
     "validAmount": "Insira um valor válido",
     "limit": "limite"
+  },
+  "history": {
+    "title": "Histórico de Transações",
+    "searchPlaceholder": "Buscar transações...",
+    "thisWeek": "Esta Semana",
+    "thisMonth": "Este Mês",
+    "thisYear": "Este Ano",
+    "allTime": "Tudo",
+    "noResults": "Nenhuma transação encontrada",
+    "allCategories": "Todas",
+    "totalResults": "{{count}} transações",
+    "viewAll": "Ver Tudo",
+    "deleteTransaction": "Excluir Transação"
   }
 }

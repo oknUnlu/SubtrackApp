@@ -17,7 +17,10 @@ import {
   deleteTransaction,
   getCurrencySymbol,
   getSetting,
+  getTagsForTransactions,
+  getTags,
   searchTransactions,
+  TagItem,
   TransactionItem,
 } from "../database/db";
 import { styles } from "../styles/history";
@@ -36,6 +39,9 @@ export default function HistoryScreen() {
   const [dateFilter, setDateFilter] = useState<DateFilter>("all");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [currSymbol, setCurrSymbol] = useState("₺");
+  const [allTags, setAllTags] = useState<TagItem[]>([]);
+  const [tagFilter, setTagFilter] = useState<string | null>(null);
+  const [txTags, setTxTags] = useState<Map<string, TagItem[]>>(new Map());
 
   const getDateRange = (filter: DateFilter): { from?: string; to?: string } => {
     const now = new Date();
@@ -59,19 +65,37 @@ export default function HistoryScreen() {
     const currency = await getSetting("currency");
     setCurrSymbol(getCurrencySymbol(currency ?? "TRY"));
 
+    const tags = await getTags();
+    setAllTags(tags);
+
     const range = getDateRange(dateFilter);
-    const results = await searchTransactions({
+    let results = await searchTransactions({
       search: search || undefined,
       category: categoryFilter || undefined,
       dateFrom: range.from,
       dateTo: range.to,
     });
+
+    // Load tags for all results
+    if (results.length > 0) {
+      const tagMap = await getTagsForTransactions(results.map(r => r.id));
+      setTxTags(tagMap);
+
+      // Filter by tag if selected
+      if (tagFilter) {
+        results = results.filter(r => {
+          const tags = tagMap.get(r.id) ?? [];
+          return tags.some(t => t.id === tagFilter);
+        });
+      }
+    }
+
     setTransactions(results);
   };
 
   useEffect(() => {
     loadData();
-  }, [search, dateFilter, categoryFilter]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [search, dateFilter, categoryFilter, tagFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleDelete = (tx: TransactionItem) => {
     Alert.alert(
@@ -121,6 +145,15 @@ export default function HistoryScreen() {
           {tx.notes ? (
             <Text style={styles.txNotes} numberOfLines={1}>{tx.notes}</Text>
           ) : null}
+          {(txTags.get(tx.id) ?? []).length > 0 && (
+            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 4, marginTop: 3 }}>
+              {(txTags.get(tx.id) ?? []).map(tag => (
+                <View key={tag.id} style={{ backgroundColor: tag.color + "20", borderRadius: 8, paddingHorizontal: 6, paddingVertical: 1 }}>
+                  <Text style={{ fontSize: 10, color: tag.color, fontWeight: "600" }}>{tag.name}</Text>
+                </View>
+              ))}
+            </View>
+          )}
         </View>
         <Text style={styles.txAmount}>
           {currSymbol}{tx.amount.toFixed(2)}
@@ -202,6 +235,34 @@ export default function HistoryScreen() {
             </TouchableOpacity>
           ))}
         </ScrollView>
+
+        {/* Tag Filters */}
+        {allTags.length > 0 && (
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryFilterRow}>
+            <TouchableOpacity
+              style={[styles.filterChip, !tagFilter && styles.filterChipActive]}
+              onPress={() => setTagFilter(null)}
+            >
+              <Text style={[styles.filterChipText, !tagFilter && styles.filterChipTextActive]}>
+                {t("add.tags")}
+              </Text>
+            </TouchableOpacity>
+            {allTags.map((tag) => (
+              <TouchableOpacity
+                key={tag.id}
+                style={[
+                  styles.filterChip,
+                  tagFilter === tag.id && { backgroundColor: tag.color, borderColor: tag.color },
+                ]}
+                onPress={() => setTagFilter(tagFilter === tag.id ? null : tag.id)}
+              >
+                <Text style={[styles.filterChipText, tagFilter === tag.id && { color: "#fff" }]}>
+                  {tag.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        )}
       </View>
 
       {/* List */}

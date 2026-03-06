@@ -42,7 +42,12 @@
     "noTrendData": "अभी तक कोई रुझान डेटा नहीं",
     "recentTransactions": "हाल के लेनदेन",
     "noTransactions": "अभी तक कोई लेनदेन नहीं",
-    "deleteTransaction": "लेनदेन हटाएं"
+    "deleteTransaction": "लेनदेन हटाएं",
+    "monthlyComparison": "मासिक तुलना",
+    "thisMonth": "इस माह",
+    "lastMonth": "पिछले माह",
+    "vsLastMonth": "पिछले माह की तुलना में",
+    "totalLabel": "कुल"
   },
   "subscriptions": {
     "title": "सदस्यताएं",
@@ -58,7 +63,13 @@
     "namePlaceholder": "सदस्यता का नाम",
     "amountPlaceholder": "राशि ({{symbol}})",
     "fillAllFields": "कृपया सभी फ़ील्ड भरें",
-    "validAmount": "एक मान्य राशि दर्ज करें"
+    "validAmount": "एक मान्य राशि दर्ज करें",
+    "detectedRecurring": "पुनरावर्ती पहचाना गया",
+    "detectedRecurringDesc": "ये खर्च मासिक रूप से दोहराते प्रतीत होते हैं",
+    "occurredTimes": "{{count}} बार",
+    "daysInterval": "दिन का अंतर",
+    "addAsSubscription": "सदस्यता के रूप में जोड़ें",
+    "dismiss": "खारिज करें"
   },
   "add": {
     "title": "खर्च जोड़ें",
@@ -73,17 +84,54 @@
     "notes": "नोट्स (वैकल्पिक)",
     "notesPlaceholder": "एक नोट जोड़ें...",
     "saved": "खर्च सहेजा गया",
-    "saveFailed": "सहेजने में विफल"
+    "saveFailed": "सहेजने में विफल",
+    "templates": "त्वरित टेम्पलेट",
+    "saveAsTemplate": "टेम्पलेट के रूप में सहेजें",
+    "templateSaved": "टेम्पलेट सहेजा गया",
+    "longPressToDelete": "हटाने के लिए लंबा दबाएं",
+    "tags": "टैग",
+    "tagName": "टैग नाम",
+    "createTag": "टैग बनाएं"
   },
   "ai": {
     "title": "AI विश्लेषण",
     "subtitle": "स्मार्ट खर्च सुझाव",
-    "heroTitle": "AI-संचालित विश्लेषण",
+    "heroTitle": "स्मार्ट विश्लेषण",
     "heroText": "Gemini AI के साथ अपनी खर्च की आदतों का विश्लेषण करें और व्यक्तिगत सिफारिशें प्राप्त करें।",
-    "savingsOpportunities": "बचत के अवसर",
-    "smartSuggestions": "स्मार्ट सुझाव",
-    "analyzeExpenses": "मेरे खर्चों का विश्लेषण करें",
-    "apiPlaceholder": "Gemini API एकीकरण के लिए प्लेसहोल्डर। API कुंजी जोड़ने पर सक्रिय होगा।"
+    "heroTextLocal": "स्मार्ट अंतर्दृष्टि और बचत सुझाव प्रदान करने के लिए आपके खर्च डेटा का स्थानीय रूप से विश्लेषण किया जाता है।",
+    "refreshAnalysis": "विश्लेषण रीफ्रेश करें",
+    "analyzing": "आपके डेटा का विश्लेषण हो रहा है...",
+    "noDataYet": "अभी तक कोई खर्च डेटा नहीं",
+    "addExpensesFirst": "स्मार्ट अंतर्दृष्टि प्राप्त करने के लिए खर्च जोड़ें",
+    "noInsights": "अभी तक कोई अंतर्दृष्टि उपलब्ध नहीं। और डेटा जोड़ें!",
+    "insightsCount": "{{count}} अंतर्दृष्टि मिली",
+    "topCategory": "सबसे ज्यादा खर्च वाली श्रेणी",
+    "topCategoryDesc": "{{category}} आपके खर्च का {{percent}}% है",
+    "spikeDetected": "असामान्य खर्च पाया गया",
+    "spikeDesc": "\"{{title}}\" ({{amount}}) आपके औसत ({{average}}) से बहुत अधिक है",
+    "monthTrendUp": "खर्च बढ़ा",
+    "monthTrendUpDesc": "आपका खर्च पिछले महीने की तुलना में {{percent}}% बढ़ा है",
+    "monthTrendDown": "शानदार बचत!",
+    "monthTrendDownDesc": "आपने पिछले महीने से {{percent}}% कम खर्च किया। ऐसे ही चलते रहें!",
+    "budgetWarning": "बजट चेतावनी",
+    "budgetWarningDesc": "आपने अपने मासिक बजट का {{percent}}% उपयोग कर लिया है",
+    "categoryBudgetWarning": "श्रेणी बजट चेतावनी",
+    "categoryBudgetWarningDesc": "{{category}} अपनी बजट सीमा के {{percent}}% पर पहुंच गया है",
+    "subscriptionBurden": "सदस्यता भार",
+    "subscriptionBurdenDesc": "सदस्यताएं आपके खर्च का {{percent}}% हैं ({{count}} सक्रिय)",
+    "weekdayPattern": "खर्च पैटर्न",
+    "weekdayPatternDesc": "आप {{day}} को सबसे ज्यादा खर्च करते हैं",
+    "savingsTip": "बचत का अवसर",
+    "savingsTipDesc": "{{category}} आपके खर्च का {{percent}}% है। बजट सीमा निर्धारित करने पर विचार करें।",
+    "days": {
+      "sunday": "रविवार",
+      "monday": "सोमवार",
+      "tuesday": "मंगलवार",
+      "wednesday": "बुधवार",
+      "thursday": "गुरुवार",
+      "friday": "शुक्रवार",
+      "saturday": "शनिवार"
+    }
   },
   "settings": {
     "title": "नियंत्रण केंद्र",
@@ -97,7 +145,9 @@
     "language": "भाषा",
     "currencyTRY": "तुर्की लीरा (₺)",
     "currencyUSD": "डॉलर ($)",
-    "currencyEUR": "यूरो (€)"
+    "currencyEUR": "यूरो (€)",
+    "exportExpenses": "खर्च निर्यात करें",
+    "exportSubscriptions": "सदस्यता निर्यात करें"
   },
   "budget": {
     "title": "बजट",
@@ -113,5 +163,18 @@
     "noLimit": "कोई सीमा नहीं",
     "validAmount": "एक मान्य राशि दर्ज करें",
     "limit": "सीमा"
+  },
+  "history": {
+    "title": "लेनदेन इतिहास",
+    "searchPlaceholder": "लेनदेन खोजें...",
+    "thisWeek": "इस सप्ताह",
+    "thisMonth": "इस माह",
+    "thisYear": "इस वर्ष",
+    "allTime": "सभी",
+    "noResults": "कोई लेनदेन नहीं मिला",
+    "allCategories": "सभी",
+    "totalResults": "{{count}} लेनदेन",
+    "viewAll": "सभी देखें",
+    "deleteTransaction": "लेनदेन हटाएं"
   }
 }

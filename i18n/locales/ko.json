@@ -42,7 +42,12 @@
     "noTrendData": "아직 트렌드 데이터가 없습니다",
     "recentTransactions": "최근 거래",
     "noTransactions": "아직 거래가 없습니다",
-    "deleteTransaction": "거래 삭제"
+    "deleteTransaction": "거래 삭제",
+    "monthlyComparison": "월간 비교",
+    "thisMonth": "이번 달",
+    "lastMonth": "지난 달",
+    "vsLastMonth": "지난 달 대비",
+    "totalLabel": "합계"
   },
   "subscriptions": {
     "title": "구독",
@@ -58,7 +63,13 @@
     "namePlaceholder": "구독 이름",
     "amountPlaceholder": "금액 ({{symbol}})",
     "fillAllFields": "모든 항목을 입력해주세요",
-    "validAmount": "유효한 금액을 입력해주세요"
+    "validAmount": "유효한 금액을 입력해주세요",
+    "detectedRecurring": "반복 지출 감지",
+    "detectedRecurringDesc": "이 지출은 매달 반복되는 것으로 보입니다",
+    "occurredTimes": "{{count}}회",
+    "daysInterval": "일 간격",
+    "addAsSubscription": "구독으로 추가",
+    "dismiss": "무시"
   },
   "add": {
     "title": "지출 추가",
@@ -73,17 +84,54 @@
     "notes": "메모 (선택사항)",
     "notesPlaceholder": "메모 추가...",
     "saved": "지출이 저장되었습니다",
-    "saveFailed": "저장에 실패했습니다"
+    "saveFailed": "저장에 실패했습니다",
+    "templates": "빠른 템플릿",
+    "saveAsTemplate": "템플릿으로 저장",
+    "templateSaved": "템플릿이 저장되었습니다",
+    "longPressToDelete": "삭제하려면 길게 누르세요",
+    "tags": "태그",
+    "tagName": "태그 이름",
+    "createTag": "태그 만들기"
   },
   "ai": {
     "title": "AI 분석",
     "subtitle": "스마트 지출 제안",
-    "heroTitle": "AI 기반 분석",
+    "heroTitle": "스마트 분석",
     "heroText": "Gemini AI로 지출 습관을 분석하고 맞춤형 추천을 받으세요.",
-    "savingsOpportunities": "절약 기회",
-    "smartSuggestions": "스마트 제안",
-    "analyzeExpenses": "내 지출 분석하기",
-    "apiPlaceholder": "Gemini API 통합 플레이스홀더. API 키가 추가되면 활성화됩니다."
+    "heroTextLocal": "지출 데이터를 로컬에서 분석하여 스마트한 인사이트와 절약 팁을 제공합니다.",
+    "refreshAnalysis": "분석 새로고침",
+    "analyzing": "데이터 분석 중...",
+    "noDataYet": "아직 지출 데이터가 없습니다",
+    "addExpensesFirst": "스마트 인사이트를 위해 지출을 추가하세요",
+    "noInsights": "아직 인사이트가 없습니다. 더 많은 데이터를 추가하세요!",
+    "insightsCount": "{{count}}개의 인사이트",
+    "topCategory": "최다 지출 카테고리",
+    "topCategoryDesc": "{{category}}이(가) 지출의 {{percent}}%를 차지합니다",
+    "spikeDetected": "비정상 지출 감지",
+    "spikeDesc": "\"{{title}}\" ({{amount}})이(가) 평균({{average}})보다 훨씬 높습니다",
+    "monthTrendUp": "지출 증가",
+    "monthTrendUpDesc": "지난 달 대비 지출이 {{percent}}% 증가했습니다",
+    "monthTrendDown": "훌륭한 절약!",
+    "monthTrendDownDesc": "지난 달보다 {{percent}}% 적게 지출했습니다. 계속 이렇게!",
+    "budgetWarning": "예산 경고",
+    "budgetWarningDesc": "월간 예산의 {{percent}}%를 사용했습니다",
+    "categoryBudgetWarning": "카테고리 예산 경고",
+    "categoryBudgetWarningDesc": "{{category}}이(가) 예산 한도의 {{percent}}%에 도달했습니다",
+    "subscriptionBurden": "구독 부담",
+    "subscriptionBurdenDesc": "구독이 지출의 {{percent}}%를 차지합니다 ({{count}}개 활성)",
+    "weekdayPattern": "지출 패턴",
+    "weekdayPatternDesc": "{{day}}에 가장 많이 지출하는 경향이 있습니다",
+    "savingsTip": "절약 기회",
+    "savingsTipDesc": "{{category}}이(가) 지출의 {{percent}}%를 차지합니다. 예산 한도 설정을 고려하세요.",
+    "days": {
+      "sunday": "일요일",
+      "monday": "월요일",
+      "tuesday": "화요일",
+      "wednesday": "수요일",
+      "thursday": "목요일",
+      "friday": "금요일",
+      "saturday": "토요일"
+    }
   },
   "settings": {
     "title": "제어 센터",
@@ -97,7 +145,9 @@
     "language": "언어",
     "currencyTRY": "터키 리라 (₺)",
     "currencyUSD": "달러 ($)",
-    "currencyEUR": "유로 (€)"
+    "currencyEUR": "유로 (€)",
+    "exportExpenses": "지출 내보내기",
+    "exportSubscriptions": "구독 내보내기"
   },
   "budget": {
     "title": "예산",
@@ -113,5 +163,18 @@
     "noLimit": "한도 없음",
     "validAmount": "유효한 금액을 입력해주세요",
     "limit": "한도"
+  },
+  "history": {
+    "title": "거래 내역",
+    "searchPlaceholder": "거래 검색...",
+    "thisWeek": "이번 주",
+    "thisMonth": "이번 달",
+    "thisYear": "올해",
+    "allTime": "전체",
+    "noResults": "거래를 찾을 수 없습니다",
+    "allCategories": "전체",
+    "totalResults": "{{count}}건의 거래",
+    "viewAll": "전체 보기",
+    "deleteTransaction": "거래 삭제"
   }
 }

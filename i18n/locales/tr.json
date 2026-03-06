@@ -42,7 +42,12 @@
     "noTrendData": "Henüz trend verisi yok",
     "recentTransactions": "Son Harcamalar",
     "noTransactions": "Henüz harcama yok",
-    "deleteTransaction": "Harcamayı Sil"
+    "deleteTransaction": "Harcamayı Sil",
+    "monthlyComparison": "Aylık Karşılaştırma",
+    "thisMonth": "Bu Ay",
+    "lastMonth": "Geçen Ay",
+    "vsLastMonth": "geçen aya göre",
+    "totalLabel": "Toplam"
   },
   "subscriptions": {
     "title": "Abonelikler",
@@ -58,7 +63,13 @@
     "namePlaceholder": "Abonelik adı",
     "amountPlaceholder": "Tutar ({{symbol}})",
     "fillAllFields": "Lütfen tüm alanları doldur",
-    "validAmount": "Geçerli bir tutar gir"
+    "validAmount": "Geçerli bir tutar gir",
+    "detectedRecurring": "Tekrarlayan Tespit Edildi",
+    "detectedRecurringDesc": "Bu harcamalar aylık tekrar ediyor gibi görünüyor",
+    "occurredTimes": "{{count}} kez",
+    "daysInterval": "gün aralıklı",
+    "addAsSubscription": "Abonelik Olarak Ekle",
+    "dismiss": "Kapat"
   },
   "add": {
     "title": "Harcama Ekle",
@@ -73,17 +84,54 @@
     "notes": "Notlar (isteğe bağlı)",
     "notesPlaceholder": "Not ekle...",
     "saved": "Harcama kaydedildi",
-    "saveFailed": "Kayıt eklenemedi"
+    "saveFailed": "Kayıt eklenemedi",
+    "templates": "Hızlı Şablonlar",
+    "saveAsTemplate": "Şablon Olarak Kaydet",
+    "templateSaved": "Şablon kaydedildi",
+    "longPressToDelete": "Silmek için uzun basın",
+    "tags": "Etiketler",
+    "tagName": "Etiket adı",
+    "createTag": "Etiket Oluştur"
   },
   "ai": {
     "title": "AI Analiz",
     "subtitle": "Akıllı harcama önerileri",
-    "heroTitle": "Yapay Zeka Destekli Analiz",
+    "heroTitle": "Akıllı Analiz",
     "heroText": "Gemini AI ile harcama alışkanlıklarınızı analiz edin ve kişiselleştirilmiş öneriler alın.",
-    "savingsOpportunities": "Tasarruf Fırsatları",
-    "smartSuggestions": "Akıllı Öneriler",
-    "analyzeExpenses": "Harcamalarımı Yorumla",
-    "apiPlaceholder": "Gemini API entegrasyonu için placeholder. Gerçek API anahtarı eklendiğinde aktif olacak."
+    "heroTextLocal": "Harcama verileriniz akıllı öngörüler ve tasarruf ipuçları sunmak için yerel olarak analiz edilir.",
+    "refreshAnalysis": "Analizi Yenile",
+    "analyzing": "Verileriniz analiz ediliyor...",
+    "noDataYet": "Henüz harcama verisi yok",
+    "addExpensesFirst": "Akıllı öngörüler almak için harcama ekleyin",
+    "noInsights": "Henüz öngörü yok. Daha fazla veri ekleyin!",
+    "insightsCount": "{{count}} öngörü bulundu",
+    "topCategory": "En Çok Harcanan Kategori",
+    "topCategoryDesc": "{{category}} harcamalarınızın %{{percent}}'ini oluşturuyor",
+    "spikeDetected": "Olağandışı Harcama Tespit Edildi",
+    "spikeDesc": "\"{{title}}\" ({{amount}}) ortalamanızdan ({{average}}) çok yüksek",
+    "monthTrendUp": "Harcamalar Arttı",
+    "monthTrendUpDesc": "Harcamalarınız geçen aya göre %{{percent}} arttı",
+    "monthTrendDown": "Harika Tasarruf!",
+    "monthTrendDownDesc": "Geçen aya göre %{{percent}} daha az harcadınız. Böyle devam edin!",
+    "budgetWarning": "Bütçe Uyarısı",
+    "budgetWarningDesc": "Aylık bütçenizin %{{percent}}'ini kullandınız",
+    "categoryBudgetWarning": "Kategori Bütçe Uyarısı",
+    "categoryBudgetWarningDesc": "{{category}} bütçe limitinin %{{percent}}'ine ulaştı",
+    "subscriptionBurden": "Abonelik Yükü",
+    "subscriptionBurdenDesc": "Abonelikler harcamalarınızın %{{percent}}'ini oluşturuyor ({{count}} aktif)",
+    "weekdayPattern": "Harcama Kalıbı",
+    "weekdayPatternDesc": "En çok {{day}} günleri harcama yapıyorsunuz",
+    "savingsTip": "Tasarruf Fırsatı",
+    "savingsTipDesc": "{{category}} harcamalarınızın %{{percent}}'ini oluşturuyor. Bütçe limiti belirlemeyi düşünün.",
+    "days": {
+      "sunday": "Pazar",
+      "monday": "Pazartesi",
+      "tuesday": "Salı",
+      "wednesday": "Çarşamba",
+      "thursday": "Perşembe",
+      "friday": "Cuma",
+      "saturday": "Cumartesi"
+    }
   },
   "settings": {
     "title": "Kontrol Merkezi",
@@ -97,7 +145,9 @@
     "language": "Dil",
     "currencyTRY": "Türk Lirası (₺)",
     "currencyUSD": "Dolar ($)",
-    "currencyEUR": "Euro (€)"
+    "currencyEUR": "Euro (€)",
+    "exportExpenses": "Harcamaları Dışa Aktar",
+    "exportSubscriptions": "Abonelikleri Dışa Aktar"
   },
   "budget": {
     "title": "Bütçe",
@@ -113,5 +163,18 @@
     "noLimit": "Limit yok",
     "validAmount": "Geçerli bir tutar girin",
     "limit": "limit"
+  },
+  "history": {
+    "title": "Harcama Geçmişi",
+    "searchPlaceholder": "Harcama ara...",
+    "thisWeek": "Bu Hafta",
+    "thisMonth": "Bu Ay",
+    "thisYear": "Bu Yıl",
+    "allTime": "Tümü",
+    "noResults": "Harcama bulunamadı",
+    "allCategories": "Tümü",
+    "totalResults": "{{count}} harcama",
+    "viewAll": "Tümünü Gör",
+    "deleteTransaction": "Harcamayı Sil"
   }
 }

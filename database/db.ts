@@ -22,6 +22,21 @@ export type SettingItem = {
   value: string;
 };
 
+export type TemplateItem = {
+  id: string;
+  title: string;
+  amount: number;
+  category: string;
+  notes?: string;
+  useCount: number;
+};
+
+export type TagItem = {
+  id: string;
+  name: string;
+  color: string;
+};
+
 
 const DB_NAME = "subtrack.db";
 const db = SQLite.openDatabaseSync(DB_NAME);
@@ -79,6 +94,33 @@ export async function initDB(): Promise<void> {
       category TEXT,
       amount REAL NOT NULL,
       month TEXT
+    )`
+  );
+
+  await executeSql(
+    `CREATE TABLE IF NOT EXISTS templates (
+      id TEXT PRIMARY KEY NOT NULL,
+      title TEXT NOT NULL,
+      amount REAL NOT NULL,
+      category TEXT NOT NULL,
+      notes TEXT,
+      useCount INTEGER DEFAULT 0
+    )`
+  );
+
+  await executeSql(
+    `CREATE TABLE IF NOT EXISTS tags (
+      id TEXT PRIMARY KEY NOT NULL,
+      name TEXT NOT NULL,
+      color TEXT NOT NULL
+    )`
+  );
+
+  await executeSql(
+    `CREATE TABLE IF NOT EXISTS transaction_tags (
+      transactionId TEXT NOT NULL,
+      tagId TEXT NOT NULL,
+      PRIMARY KEY (transactionId, tagId)
     )`
   );
 
@@ -294,6 +336,32 @@ export async function getWeeklyTrend() {
 }
 
 
+export async function getMonthlyTotalForMonth(yearMonth: string): Promise<number> {
+  const result = await db.getFirstAsync<{ total: number }>(
+    `SELECT COALESCE(SUM(amount), 0) as total FROM transactions WHERE strftime('%Y-%m', date) = ?`,
+    [yearMonth]
+  );
+  return result?.total ?? 0;
+}
+
+export async function getMonthlyComparison(): Promise<{
+  thisMonth: number;
+  lastMonth: number;
+  changePercent: number;
+}> {
+  const now = new Date();
+  const thisYM = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+  const lastDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const lastYM = `${lastDate.getFullYear()}-${String(lastDate.getMonth() + 1).padStart(2, "0")}`;
+
+  const thisMonth = await getMonthlyTotalForMonth(thisYM);
+  const lastMonth = await getMonthlyTotalForMonth(lastYM);
+
+  const changePercent = lastMonth > 0 ? ((thisMonth - lastMonth) / lastMonth) * 100 : 0;
+
+  return { thisMonth, lastMonth, changePercent };
+}
+
 export async function setSetting(key: string, value: string) {
   await executeSql(
     `INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)`,
@@ -403,8 +471,86 @@ export async function getBudgetVsActual(month?: string): Promise<{
   };
 }
 
+/* -------------------- */
+/*  TEMPLATES            */
+/* -------------------- */
+export async function addTemplate(item: TemplateItem) {
+  await executeSql(
+    `INSERT INTO templates (id, title, amount, category, notes, useCount) VALUES (?, ?, ?, ?, ?, ?)`,
+    [item.id, item.title, item.amount, item.category, item.notes ?? null, item.useCount ?? 0]
+  );
+}
+
+export async function getTemplates(): Promise<TemplateItem[]> {
+  return await db.getAllAsync<TemplateItem>(
+    `SELECT * FROM templates ORDER BY useCount DESC, title ASC`
+  );
+}
+
+export async function deleteTemplate(id: string) {
+  await executeSql(`DELETE FROM templates WHERE id = ?`, [id]);
+}
+
+export async function incrementTemplateUseCount(id: string) {
+  await executeSql(`UPDATE templates SET useCount = useCount + 1 WHERE id = ?`, [id]);
+}
+
+/* -------------------- */
+/*  TAGS                 */
+/* -------------------- */
+export async function createTag(tag: TagItem) {
+  await executeSql(
+    `INSERT INTO tags (id, name, color) VALUES (?, ?, ?)`,
+    [tag.id, tag.name, tag.color]
+  );
+}
+
+export async function getTags(): Promise<TagItem[]> {
+  return await db.getAllAsync<TagItem>(`SELECT * FROM tags ORDER BY name ASC`);
+}
+
+export async function deleteTag(id: string) {
+  await executeSql(`DELETE FROM transaction_tags WHERE tagId = ?`, [id]);
+  await executeSql(`DELETE FROM tags WHERE id = ?`, [id]);
+}
+
+export async function addTagsToTransaction(transactionId: string, tagIds: string[]) {
+  for (const tagId of tagIds) {
+    await executeSql(
+      `INSERT OR IGNORE INTO transaction_tags (transactionId, tagId) VALUES (?, ?)`,
+      [transactionId, tagId]
+    );
+  }
+}
+
+export async function getTagsForTransaction(transactionId: string): Promise<TagItem[]> {
+  return await db.getAllAsync<TagItem>(
+    `SELECT t.* FROM tags t INNER JOIN transaction_tags tt ON t.id = tt.tagId WHERE tt.transactionId = ?`,
+    [transactionId]
+  );
+}
+
+export async function getTagsForTransactions(transactionIds: string[]): Promise<Map<string, TagItem[]>> {
+  if (transactionIds.length === 0) return new Map();
+  const placeholders = transactionIds.map(() => '?').join(',');
+  const rows = await db.getAllAsync<{ transactionId: string; id: string; name: string; color: string }>(
+    `SELECT tt.transactionId, t.id, t.name, t.color FROM tags t INNER JOIN transaction_tags tt ON t.id = tt.tagId WHERE tt.transactionId IN (${placeholders})`,
+    transactionIds
+  );
+  const map = new Map<string, TagItem[]>();
+  for (const row of rows) {
+    const list = map.get(row.transactionId) ?? [];
+    list.push({ id: row.id, name: row.name, color: row.color });
+    map.set(row.transactionId, list);
+  }
+  return map;
+}
+
 export async function clearAllData() {
   await executeSql(`DELETE FROM transactions`);
   await executeSql(`DELETE FROM subscriptions`);
   await executeSql(`DELETE FROM budgets`);
+  await executeSql(`DELETE FROM templates`);
+  await executeSql(`DELETE FROM tags`);
+  await executeSql(`DELETE FROM transaction_tags`);
 }
