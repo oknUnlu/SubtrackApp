@@ -70,6 +70,8 @@
     "saveExpense": "支出を保存",
     "fillAllFields": "すべての項目を入力してください",
     "validAmount": "有効な金額を入力してください",
+    "notes": "メモ（任意）",
+    "notesPlaceholder": "メモを追加...",
     "saved": "支出を保存しました",
     "saveFailed": "保存に失敗しました"
   },
@@ -96,5 +98,20 @@
     "currencyTRY": "トルコリラ (₺)",
     "currencyUSD": "ドル ($)",
     "currencyEUR": "ユーロ (€)"
+  },
+  "budget": {
+    "title": "予算",
+    "subtitle": "支出上限を設定",
+    "monthlyBudget": "月間予算",
+    "categoryLimits": "カテゴリー別上限",
+    "setBudgetAction": "予算を設定",
+    "editBudget": "予算を編集",
+    "remaining": "残り",
+    "exceeded": "予算超過！",
+    "spent": "使用済み",
+    "saved": "予算を保存しました",
+    "noLimit": "上限なし",
+    "validAmount": "有効な金額を入力してください",
+    "limit": "上限"
   }
 }

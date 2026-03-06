@@ -70,6 +70,8 @@
     "saveExpense": "Save Expense",
     "fillAllFields": "Please fill in all fields",
     "validAmount": "Enter a valid amount",
+    "notes": "Notes (optional)",
+    "notesPlaceholder": "Add a note...",
     "saved": "Expense saved",
     "saveFailed": "Failed to save"
   },
@@ -96,5 +98,20 @@
     "currencyTRY": "Turkish Lira (₺)",
     "currencyUSD": "Dollar ($)",
     "currencyEUR": "Euro (€)"
+  },
+  "budget": {
+    "title": "Budget",
+    "subtitle": "Set your spending limits",
+    "monthlyBudget": "Monthly Budget",
+    "categoryLimits": "Category Limits",
+    "setBudgetAction": "Set Budget",
+    "editBudget": "Edit Budget",
+    "remaining": "Remaining",
+    "exceeded": "Budget Exceeded!",
+    "spent": "Spent",
+    "saved": "Budget saved",
+    "noLimit": "No limit",
+    "validAmount": "Enter a valid amount",
+    "limit": "limit"
   }
 }

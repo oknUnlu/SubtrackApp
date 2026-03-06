@@ -70,6 +70,8 @@
     "saveExpense": "Simpan Pengeluaran",
     "fillAllFields": "Harap isi semua kolom",
     "validAmount": "Masukkan jumlah yang valid",
+    "notes": "Catatan (opsional)",
+    "notesPlaceholder": "Tambahkan catatan...",
     "saved": "Pengeluaran disimpan",
     "saveFailed": "Gagal menyimpan"
   },
@@ -96,5 +98,20 @@
     "currencyTRY": "Lira Turki (₺)",
     "currencyUSD": "Dolar ($)",
     "currencyEUR": "Euro (€)"
+  },
+  "budget": {
+    "title": "Anggaran",
+    "subtitle": "Tetapkan batas pengeluaran Anda",
+    "monthlyBudget": "Anggaran Bulanan",
+    "categoryLimits": "Batas Kategori",
+    "setBudgetAction": "Tetapkan Anggaran",
+    "editBudget": "Edit Anggaran",
+    "remaining": "Sisa",
+    "exceeded": "Anggaran Terlampaui!",
+    "spent": "Dibelanjakan",
+    "saved": "Anggaran disimpan",
+    "noLimit": "Tanpa batas",
+    "validAmount": "Masukkan jumlah yang valid",
+    "limit": "batas"
   }
 }

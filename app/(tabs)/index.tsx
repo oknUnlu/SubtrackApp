@@ -5,9 +5,11 @@ import React, { useCallback, useState } from "react";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { router } from 'expo-router';
 
 import {
   deleteTransaction,
+  getBudgetVsActual,
   getCategoryDistribution,
   getCurrencySymbol,
   getMonthlyTotal,
@@ -50,6 +52,8 @@ export default function HomeScreen() {
 
   const [currSymbol, setCurrSymbol] = useState("₺");
   const [recentTransactions, setRecentTransactions] = useState<TransactionItem[]>([]);
+  const [budgetInfo, setBudgetInfo] = useState<{ budget: number; actual: number } | null>(null);
+  const [categoryBudgets, setCategoryBudgets] = useState<Map<string, { budget: number; actual: number }>>(new Map());
 
   /* -------------------- */
   /* DATA LOAD            */
@@ -73,6 +77,14 @@ export default function HomeScreen() {
       setWeeklyTrend(weekly);
       setRecentTransactions(recent);
       setCurrSymbol(getCurrencySymbol(currency ?? "TRY"));
+
+      const budgetData = await getBudgetVsActual();
+      setBudgetInfo(budgetData.overall);
+      const catBudgetMap = new Map<string, { budget: number; actual: number }>();
+      for (const cb of budgetData.categories) {
+        catBudgetMap.set(cb.category, { budget: cb.budget, actual: cb.actual });
+      }
+      setCategoryBudgets(catBudgetMap);
     } catch (error) {
       console.error("Dashboard load error:", error);
     }
@@ -123,6 +135,35 @@ export default function HomeScreen() {
           <Ionicons name="trending-up-outline" size={16} color="#dcfce7" />
           <Text style={styles.totalSubText}>{t('home.includingSubs')}</Text>
         </View>
+
+        {budgetInfo && (
+          <View style={{ marginTop: 12 }}>
+            <View style={{ height: 6, backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 6, overflow: "hidden" }}>
+              <View style={{
+                width: `${Math.min((budgetInfo.actual / budgetInfo.budget) * 100, 100)}%`,
+                height: "100%",
+                backgroundColor: budgetInfo.actual > budgetInfo.budget ? "#fca5a5" : "#dcfce7",
+                borderRadius: 6,
+              }} />
+            </View>
+            <Text style={{ color: "#dcfce7", fontSize: 12, marginTop: 4 }}>
+              {budgetInfo.actual > budgetInfo.budget
+                ? t('budget.exceeded')
+                : `${t('budget.remaining')} ${currSymbol}${(budgetInfo.budget - budgetInfo.actual).toFixed(0)}`
+              }
+            </Text>
+          </View>
+        )}
+
+        <TouchableOpacity
+          onPress={() => router.push('/budget')}
+          style={{ marginTop: budgetInfo ? 8 : 12, flexDirection: "row", alignItems: "center" }}
+        >
+          <Ionicons name="wallet-outline" size={14} color="#dcfce7" />
+          <Text style={{ color: "#dcfce7", fontSize: 13, marginLeft: 6, fontWeight: "600" }}>
+            {budgetInfo ? t('budget.editBudget') : t('budget.setBudgetAction')}
+          </Text>
+        </TouchableOpacity>
       </LinearGradient>
 
       {/* Stats */}
@@ -163,6 +204,9 @@ export default function HomeScreen() {
                 icon: CATEGORY_ICONS[item.category] || "📌",
                 label: t(`categories.${item.category}`, { defaultValue: item.category }),
               };
+              const catBudget = categoryBudgets.get(item.category);
+              const budgetPercent = catBudget ? item.total / catBudget.budget : 0;
+              const budgetColor = budgetPercent >= 0.9 ? "#ef4444" : budgetPercent >= 0.7 ? "#f59e0b" : "#22c55e";
 
               return (
                 <View
@@ -185,6 +229,7 @@ export default function HomeScreen() {
                       </Text>
                       <Text style={{ fontSize: 12, color: "#6b7280" }}>
                         {t('home.percentThisMonth', { percent: Math.round(percent * 100) })}
+                        {catBudget ? ` · ${currSymbol}${catBudget.budget.toFixed(0)} ${t('budget.limit')}` : ''}
                       </Text>
                     </View>
 
@@ -203,9 +248,9 @@ export default function HomeScreen() {
                   >
                     <View
                       style={{
-                        width: `${percent * 100}%`,
+                        width: `${Math.min((catBudget ? budgetPercent : percent) * 100, 100)}%`,
                         height: "100%",
-                        backgroundColor: "#22c55e",
+                        backgroundColor: catBudget ? budgetColor : "#22c55e",
                       }}
                     />
                   </View>
@@ -324,6 +369,7 @@ export default function HomeScreen() {
                 <View style={{ flex: 1 }}>
                   <Text style={{ fontWeight: "600" }}>{tx.title}</Text>
                   <Text style={{ fontSize: 12, color: "#6b7280" }}>{dateStr} - {cat.label}</Text>
+                  {tx.notes ? <Text style={{ fontSize: 11, color: "#9ca3af", marginTop: 2 }} numberOfLines={1}>{tx.notes}</Text> : null}
                 </View>
                 <Text style={{ fontWeight: "700", marginRight: 10 }}>
                   {currSymbol}{tx.amount.toFixed(2)}

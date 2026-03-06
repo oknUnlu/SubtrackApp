@@ -70,6 +70,8 @@
     "saveExpense": "खर्च सहेजें",
     "fillAllFields": "कृपया सभी फ़ील्ड भरें",
     "validAmount": "एक मान्य राशि दर्ज करें",
+    "notes": "नोट्स (वैकल्पिक)",
+    "notesPlaceholder": "एक नोट जोड़ें...",
     "saved": "खर्च सहेजा गया",
     "saveFailed": "सहेजने में विफल"
   },
@@ -96,5 +98,20 @@
     "currencyTRY": "तुर्की लीरा (₺)",
     "currencyUSD": "डॉलर ($)",
     "currencyEUR": "यूरो (€)"
+  },
+  "budget": {
+    "title": "बजट",
+    "subtitle": "अपनी खर्च सीमा निर्धारित करें",
+    "monthlyBudget": "मासिक बजट",
+    "categoryLimits": "श्रेणी सीमाएं",
+    "setBudgetAction": "बजट निर्धारित करें",
+    "editBudget": "बजट संपादित करें",
+    "remaining": "शेष",
+    "exceeded": "बजट पार हो गया!",
+    "spent": "खर्च किया",
+    "saved": "बजट सहेजा गया",
+    "noLimit": "कोई सीमा नहीं",
+    "validAmount": "एक मान्य राशि दर्ज करें",
+    "limit": "सीमा"
   }
 }

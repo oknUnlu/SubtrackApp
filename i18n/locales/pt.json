@@ -70,6 +70,8 @@
     "saveExpense": "Salvar Gasto",
     "fillAllFields": "Por favor preencha todos os campos",
     "validAmount": "Insira um valor válido",
+    "notes": "Notas (opcional)",
+    "notesPlaceholder": "Adicionar uma nota...",
     "saved": "Gasto salvo",
     "saveFailed": "Falha ao salvar"
   },
@@ -96,5 +98,20 @@
     "currencyTRY": "Lira Turca (₺)",
     "currencyUSD": "Dólar ($)",
     "currencyEUR": "Euro (€)"
+  },
+  "budget": {
+    "title": "Orçamento",
+    "subtitle": "Defina seus limites de gastos",
+    "monthlyBudget": "Orçamento Mensal",
+    "categoryLimits": "Limites por Categoria",
+    "setBudgetAction": "Definir Orçamento",
+    "editBudget": "Editar Orçamento",
+    "remaining": "Restante",
+    "exceeded": "Orçamento Excedido!",
+    "spent": "Gasto",
+    "saved": "Orçamento salvo",
+    "noLimit": "Sem limite",
+    "validAmount": "Insira um valor válido",
+    "limit": "limite"
   }
 }

@@ -35,6 +35,7 @@ export default function AddExpenseScreen() {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("other");
+  const [notes, setNotes] = useState("");
   const [currSymbol, setCurrSymbol] = useState("₺");
 
   useFocusEffect(
@@ -70,6 +71,7 @@ export default function AddExpenseScreen() {
         amount: parsedAmount,
         date: new Date().toISOString(),
         category,
+        notes: notes.trim() || undefined,
       });
 
       Alert.alert(t('common.success'), t('add.saved'));
@@ -78,6 +80,7 @@ export default function AddExpenseScreen() {
       setTitle("");
       setAmount("");
       setCategory("other");
+      setNotes("");
     } catch (err) {
       console.error(err);
       Alert.alert(t('common.error'), t('add.saveFailed'));
@@ -149,6 +152,18 @@ export default function AddExpenseScreen() {
           );
         })}
       </View>
+
+      {/* Notes */}
+      <Text style={styles.label}>{t('add.notes')}</Text>
+      <TextInput
+        style={styles.notesInput}
+        placeholder={t('add.notesPlaceholder')}
+        placeholderTextColor="#9ca3af"
+        value={notes}
+        onChangeText={setNotes}
+        multiline
+        numberOfLines={3}
+      />
 
       {/* Save Button */}
       <TouchableOpacity style={styles.saveButton} onPress={handleSave}>

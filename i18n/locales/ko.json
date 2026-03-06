@@ -70,6 +70,8 @@
     "saveExpense": "지출 저장",
     "fillAllFields": "모든 항목을 입력해주세요",
     "validAmount": "유효한 금액을 입력해주세요",
+    "notes": "메모 (선택사항)",
+    "notesPlaceholder": "메모 추가...",
     "saved": "지출이 저장되었습니다",
     "saveFailed": "저장에 실패했습니다"
   },
@@ -96,5 +98,20 @@
     "currencyTRY": "터키 리라 (₺)",
     "currencyUSD": "달러 ($)",
     "currencyEUR": "유로 (€)"
+  },
+  "budget": {
+    "title": "예산",
+    "subtitle": "지출 한도를 설정하세요",
+    "monthlyBudget": "월간 예산",
+    "categoryLimits": "카테고리 한도",
+    "setBudgetAction": "예산 설정",
+    "editBudget": "예산 편집",
+    "remaining": "남은 금액",
+    "exceeded": "예산 초과!",
+    "spent": "사용",
+    "saved": "예산이 저장되었습니다",
+    "noLimit": "한도 없음",
+    "validAmount": "유효한 금액을 입력해주세요",
+    "limit": "한도"
   }
 }

@@ -70,6 +70,8 @@
     "saveExpense": "Harcama Kaydet",
     "fillAllFields": "Lütfen tüm alanları doldurun",
     "validAmount": "Geçerli bir tutar girin",
+    "notes": "Notlar (isteğe bağlı)",
+    "notesPlaceholder": "Not ekle...",
     "saved": "Harcama kaydedildi",
     "saveFailed": "Kayıt eklenemedi"
   },
@@ -96,5 +98,20 @@
     "currencyTRY": "Türk Lirası (₺)",
     "currencyUSD": "Dolar ($)",
     "currencyEUR": "Euro (€)"
+  },
+  "budget": {
+    "title": "Bütçe",
+    "subtitle": "Harcama limitlerini belirle",
+    "monthlyBudget": "Aylık Bütçe",
+    "categoryLimits": "Kategori Limitleri",
+    "setBudgetAction": "Bütçe Belirle",
+    "editBudget": "Bütçeyi Düzenle",
+    "remaining": "Kalan",
+    "exceeded": "Bütçe Aşıldı!",
+    "spent": "Harcanan",
+    "saved": "Bütçe kaydedildi",
+    "noLimit": "Limit yok",
+    "validAmount": "Geçerli bir tutar girin",
+    "limit": "limit"
   }
 }

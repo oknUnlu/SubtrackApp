@@ -74,6 +74,16 @@ export const styles = StyleSheet.create({
   categoryLabelSelected: {
     fontWeight: "700",
   },
+  notesInput: {
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 14,
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    minHeight: 80,
+    textAlignVertical: "top",
+  },
   saveButton: {
     marginTop: 24,
     backgroundColor: "#22c55e",
