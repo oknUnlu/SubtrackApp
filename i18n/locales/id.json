@@ -14,7 +14,7 @@
   "tabs": {
     "home": "Beranda",
     "subscriptions": "Langganan",
-    "aiAnalysis": "Analisis AI",
+    "aiAnalysis": "Tips Cerdas",
     "settings": "Pengaturan"
   },
   "categories": {
@@ -94,10 +94,9 @@
     "createTag": "Buat Tag"
   },
   "ai": {
-    "title": "Analisis AI",
+    "title": "Tips Cerdas",
     "subtitle": "Saran pengeluaran cerdas",
     "heroTitle": "Analisis Cerdas",
-    "heroText": "Analisis kebiasaan pengeluaran Anda dengan Gemini AI dan dapatkan rekomendasi personal.",
     "heroTextLocal": "Data pengeluaran Anda dianalisis secara lokal untuk memberikan wawasan dan tips hemat.",
     "refreshAnalysis": "Perbarui Analisis",
     "analyzing": "Menganalisis data Anda...",
@@ -180,7 +179,7 @@
     "welcomeTitle": "Selamat Datang di SubTrack",
     "welcomeSubtitle": "Lacak pengeluaran dan langganan Anda dengan mudah. Kendalikan keuangan Anda dengan wawasan cerdas.",
     "featuresTitle": "Fitur Cerdas",
-    "featuresSubtitle": "Analisis AI, pelacakan anggaran, manajemen langganan, dan laporan pengeluaran detail — semua dalam satu aplikasi.",
+    "featuresSubtitle": "Analisis cerdas, pelacakan anggaran, manajemen langganan, dan laporan pengeluaran detail — semua dalam satu aplikasi.",
     "currencyTitle": "Pilih Mata Uang Anda",
     "currencySubtitle": "Pilih mata uang utama Anda. Anda dapat mengubahnya nanti di pengaturan.",
     "next": "Selanjutnya",

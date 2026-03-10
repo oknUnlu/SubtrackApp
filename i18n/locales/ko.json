@@ -14,7 +14,7 @@
   "tabs": {
     "home": "홈",
     "subscriptions": "구독",
-    "aiAnalysis": "AI 분석",
+    "aiAnalysis": "스마트 팁",
     "settings": "설정"
   },
   "categories": {
@@ -94,10 +94,9 @@
     "createTag": "태그 만들기"
   },
   "ai": {
-    "title": "AI 분석",
+    "title": "스마트 팁",
     "subtitle": "스마트 지출 제안",
     "heroTitle": "스마트 분석",
-    "heroText": "Gemini AI로 지출 습관을 분석하고 맞춤형 추천을 받으세요.",
     "heroTextLocal": "지출 데이터를 로컬에서 분석하여 스마트한 인사이트와 절약 팁을 제공합니다.",
     "refreshAnalysis": "분석 새로고침",
     "analyzing": "데이터 분석 중...",
@@ -180,7 +179,7 @@
     "welcomeTitle": "SubTrack에 오신 것을 환영합니다",
     "welcomeSubtitle": "지출과 구독을 쉽게 추적하세요. 스마트한 인사이트로 재정을 관리하세요.",
     "featuresTitle": "스마트 기능",
-    "featuresSubtitle": "AI 분석, 예산 추적, 구독 관리, 상세 지출 보고서 — 모두 하나의 앱에서.",
+    "featuresSubtitle": "스마트 분석, 예산 추적, 구독 관리, 상세 지출 보고서 — 모두 하나의 앱에서.",
     "currencyTitle": "통화를 선택하세요",
     "currencySubtitle": "기본 통화를 선택하세요. 나중에 설정에서 변경할 수 있습니다.",
     "next": "다음",

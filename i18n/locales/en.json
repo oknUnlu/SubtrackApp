@@ -14,7 +14,7 @@
   "tabs": {
     "home": "Home",
     "subscriptions": "Subscriptions",
-    "aiAnalysis": "AI Analysis",
+    "aiAnalysis": "Smart Tips",
     "settings": "Settings"
   },
   "categories": {
@@ -94,10 +94,9 @@
     "createTag": "Create Tag"
   },
   "ai": {
-    "title": "AI Analysis",
+    "title": "Smart Tips",
     "subtitle": "Smart spending suggestions",
     "heroTitle": "Smart Analysis",
-    "heroText": "Analyze your spending habits with Gemini AI and get personalized recommendations.",
     "heroTextLocal": "Your spending data is analyzed locally to provide smart insights and savings tips.",
     "refreshAnalysis": "Refresh Analysis",
     "analyzing": "Analyzing your data...",
@@ -180,7 +179,7 @@
     "welcomeTitle": "Welcome to SubTrack",
     "welcomeSubtitle": "Track your expenses and subscriptions effortlessly. Take control of your finances with smart insights.",
     "featuresTitle": "Smart Features",
-    "featuresSubtitle": "AI-powered analysis, budget tracking, subscription management, and detailed spending reports — all in one app.",
+    "featuresSubtitle": "Smart analysis, budget tracking, subscription management, and detailed spending reports — all in one app.",
     "currencyTitle": "Choose Your Currency",
     "currencySubtitle": "Select your primary currency. You can change this later in settings.",
     "next": "Next",

@@ -14,7 +14,7 @@
   "tabs": {
     "home": "Ana Sayfa",
     "subscriptions": "Abonelikler",
-    "aiAnalysis": "AI Analiz",
+    "aiAnalysis": "Akıllı İpuçları",
     "settings": "Ayarlar"
   },
   "categories": {
@@ -94,10 +94,9 @@
     "createTag": "Etiket Oluştur"
   },
   "ai": {
-    "title": "AI Analiz",
+    "title": "Akıllı İpuçları",
     "subtitle": "Akıllı harcama önerileri",
     "heroTitle": "Akıllı Analiz",
-    "heroText": "Gemini AI ile harcama alışkanlıklarınızı analiz edin ve kişiselleştirilmiş öneriler alın.",
     "heroTextLocal": "Harcama verileriniz akıllı öngörüler ve tasarruf ipuçları sunmak için yerel olarak analiz edilir.",
     "refreshAnalysis": "Analizi Yenile",
     "analyzing": "Verileriniz analiz ediliyor...",
@@ -180,7 +179,7 @@
     "welcomeTitle": "SubTrack'e Hoş Geldiniz",
     "welcomeSubtitle": "Harcamalarınızı ve aboneliklerinizi kolayca takip edin. Akıllı öngörülerle finanslarınızı kontrol altına alın.",
     "featuresTitle": "Akıllı Özellikler",
-    "featuresSubtitle": "AI destekli analiz, bütçe takibi, abonelik yönetimi ve detaylı harcama raporları — hepsi tek bir uygulamada.",
+    "featuresSubtitle": "Akıllı analiz, bütçe takibi, abonelik yönetimi ve detaylı harcama raporları — hepsi tek bir uygulamada.",
     "currencyTitle": "Para Biriminizi Seçin",
     "currencySubtitle": "Birincil para biriminizi seçin. Bunu daha sonra ayarlardan değiştirebilirsiniz.",
     "next": "İleri",

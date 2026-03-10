@@ -14,7 +14,7 @@
   "tabs": {
     "home": "ホーム",
     "subscriptions": "サブスク",
-    "aiAnalysis": "AI分析",
+    "aiAnalysis": "スマートヒント",
     "settings": "設定"
   },
   "categories": {
@@ -94,10 +94,9 @@
     "createTag": "タグを作成"
   },
   "ai": {
-    "title": "AI分析",
+    "title": "スマートヒント",
     "subtitle": "スマートな支出提案",
     "heroTitle": "スマート分析",
-    "heroText": "Gemini AIで支出習慣を分析し、パーソナライズされたアドバイスを受けましょう。",
     "heroTextLocal": "支出データをローカルで分析し、スマートな洞察と節約のヒントを提供します。",
     "refreshAnalysis": "分析を更新",
     "analyzing": "データを分析中...",
@@ -180,7 +179,7 @@
     "welcomeTitle": "SubTrackへようこそ",
     "welcomeSubtitle": "支出とサブスクリプションを簡単に管理。スマートな分析で家計をコントロールしましょう。",
     "featuresTitle": "スマート機能",
-    "featuresSubtitle": "AI分析、予算管理、サブスク管理、詳細な支出レポート — すべてが一つのアプリに。",
+    "featuresSubtitle": "スマート分析、予算管理、サブスク管理、詳細な支出レポート — すべてが一つのアプリに。",
     "currencyTitle": "通貨を選択",
     "currencySubtitle": "メインの通貨を選択してください。後から設定で変更できます。",
     "next": "次へ",

@@ -14,7 +14,7 @@
   "tabs": {
     "home": "Inicio",
     "subscriptions": "Suscripciones",
-    "aiAnalysis": "Análisis IA",
+    "aiAnalysis": "Consejos",
     "settings": "Ajustes"
   },
   "categories": {
@@ -94,10 +94,9 @@
     "createTag": "Crear Etiqueta"
   },
   "ai": {
-    "title": "Análisis IA",
+    "title": "Consejos Inteligentes",
     "subtitle": "Sugerencias inteligentes de gastos",
     "heroTitle": "Análisis Inteligente",
-    "heroText": "Analiza tus hábitos de gasto con Gemini AI y obtén recomendaciones personalizadas.",
     "heroTextLocal": "Tus datos de gastos se analizan localmente para brindarte información y consejos de ahorro.",
     "refreshAnalysis": "Actualizar Análisis",
     "analyzing": "Analizando tus datos...",
@@ -180,7 +179,7 @@
     "welcomeTitle": "Bienvenido a SubTrack",
     "welcomeSubtitle": "Rastrea tus gastos y suscripciones sin esfuerzo. Toma el control de tus finanzas con sugerencias inteligentes.",
     "featuresTitle": "Funciones Inteligentes",
-    "featuresSubtitle": "Análisis con IA, control de presupuesto, gestión de suscripciones e informes detallados — todo en una app.",
+    "featuresSubtitle": "Análisis inteligente, control de presupuesto, gestión de suscripciones e informes detallados — todo en una app.",
     "currencyTitle": "Elige tu Moneda",
     "currencySubtitle": "Selecciona tu moneda principal. Puedes cambiarla después en ajustes.",
     "next": "Siguiente",
