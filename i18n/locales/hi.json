@@ -69,7 +69,9 @@
     "occurredTimes": "{{count}} बार",
     "daysInterval": "दिन का अंतर",
     "addAsSubscription": "सदस्यता के रूप में जोड़ें",
-    "dismiss": "खारिज करें"
+    "dismiss": "खारिज करें",
+    "nextRenewal": "अगली नवीनीकरण तिथि",
+    "renews": "नवीनीकरण"
   },
   "add": {
     "title": "खर्च जोड़ें",
@@ -147,7 +149,19 @@
     "currencyUSD": "डॉलर ($)",
     "currencyEUR": "यूरो (€)",
     "exportExpenses": "खर्च निर्यात करें",
-    "exportSubscriptions": "सदस्यता निर्यात करें"
+    "exportSubscriptions": "सदस्यता निर्यात करें",
+    "reminderDays": "नवीनीकरण अनुस्मारक",
+    "daysBefore": "{{count}} दिन पहले",
+    "darkMode": "डार्क मोड",
+    "darkModeSystem": "सिस्टम",
+    "darkModeLight": "लाइट",
+    "darkModeDark": "डार्क",
+    "biometricLock": "बायोमेट्रिक लॉक",
+    "biometricPrompt": "जारी रखने के लिए प्रमाणित करें",
+    "biometricFallback": "पासकोड का उपयोग करें",
+    "biometricLocked": "ऐप लॉक है",
+    "biometricLockedDesc": "अपने डेटा तक पहुंचने के लिए बायोमेट्रिक प्रमाणीकरण करें",
+    "biometricUnlock": "अनलॉक करें"
   },
   "budget": {
     "title": "बजट",
@@ -163,6 +177,17 @@
     "noLimit": "कोई सीमा नहीं",
     "validAmount": "एक मान्य राशि दर्ज करें",
     "limit": "सीमा"
+  },
+  "onboarding": {
+    "welcomeTitle": "SubTrack में आपका स्वागत है",
+    "welcomeSubtitle": "अपने खर्चों और सदस्यताओं को आसानी से ट्रैक करें। स्मार्ट अंतर्दृष्टि के साथ अपने वित्त पर नियंत्रण रखें।",
+    "featuresTitle": "स्मार्ट सुविधाएं",
+    "featuresSubtitle": "AI विश्लेषण, बजट ट्रैकिंग, सदस्यता प्रबंधन और विस्तृत खर्च रिपोर्ट — सब एक ऐप में।",
+    "currencyTitle": "अपनी मुद्रा चुनें",
+    "currencySubtitle": "अपनी प्राथमिक मुद्रा चुनें। आप इसे बाद में सेटिंग्स में बदल सकते हैं।",
+    "next": "अगला",
+    "skip": "छोड़ें",
+    "getStarted": "शुरू करें"
   },
   "history": {
     "title": "लेनदेन इतिहास",

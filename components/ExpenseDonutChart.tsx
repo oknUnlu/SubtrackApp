@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 
@@ -13,9 +12,12 @@ type Props = {
   total: number;
   currencySymbol: string;
   totalLabel: string;
+  innerCircleColor?: string;
+  textColor?: string;
+  textSecondaryColor?: string;
 };
 
-export default function ExpenseDonutChart({ data, total, currencySymbol, totalLabel }: Props) {
+export default function ExpenseDonutChart({ data, total, currencySymbol, totalLabel, innerCircleColor = "#fff", textColor = "#111827", textSecondaryColor = "#6b7280" }: Props) {
   const pieData = data.map((item) => ({
     value: item.total,
     color: item.color,
@@ -31,11 +33,11 @@ export default function ExpenseDonutChart({ data, total, currencySymbol, totalLa
         donut
         radius={100}
         innerRadius={65}
-        innerCircleColor="#fff"
+        innerCircleColor={innerCircleColor}
         centerLabelComponent={() => (
           <View style={{ alignItems: "center" }}>
-            <Text style={{ fontSize: 12, color: "#6b7280" }}>{totalLabel}</Text>
-            <Text style={{ fontSize: 18, fontWeight: "700", color: "#111827" }}>
+            <Text style={{ fontSize: 12, color: textSecondaryColor }}>{totalLabel}</Text>
+            <Text style={{ fontSize: 18, fontWeight: "700", color: textColor }}>
               {currencySymbol}{total.toFixed(0)}
             </Text>
           </View>

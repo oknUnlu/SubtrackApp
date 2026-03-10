@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Alert,
   FlatList,
@@ -23,7 +23,8 @@ import {
   TagItem,
   TransactionItem,
 } from "../database/db";
-import { styles } from "../styles/history";
+import { createStyles } from "../styles/history";
+import { useAppTheme } from '@/hooks/use-app-theme';
 
 const CATEGORY_ICONS: Record<string, string> = {
   food: "🍔", transport: "🚗", fun: "🎮", shopping: "🛍️",
@@ -34,6 +35,9 @@ type DateFilter = "week" | "month" | "year" | "all";
 
 export default function HistoryScreen() {
   const { t, i18n } = useTranslation();
+  const { colors } = useAppTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   const [transactions, setTransactions] = useState<TransactionItem[]>([]);
   const [search, setSearch] = useState("");
   const [dateFilter, setDateFilter] = useState<DateFilter>("all");
@@ -45,74 +49,40 @@ export default function HistoryScreen() {
 
   const getDateRange = (filter: DateFilter): { from?: string; to?: string } => {
     const now = new Date();
-    if (filter === "week") {
-      const from = new Date(now);
-      from.setDate(from.getDate() - 7);
-      return { from: from.toISOString() };
-    }
-    if (filter === "month") {
-      const from = new Date(now.getFullYear(), now.getMonth(), 1);
-      return { from: from.toISOString() };
-    }
-    if (filter === "year") {
-      const from = new Date(now.getFullYear(), 0, 1);
-      return { from: from.toISOString() };
-    }
+    if (filter === "week") { const from = new Date(now); from.setDate(from.getDate() - 7); return { from: from.toISOString() }; }
+    if (filter === "month") { const from = new Date(now.getFullYear(), now.getMonth(), 1); return { from: from.toISOString() }; }
+    if (filter === "year") { const from = new Date(now.getFullYear(), 0, 1); return { from: from.toISOString() }; }
     return {};
   };
 
   const loadData = async () => {
     const currency = await getSetting("currency");
     setCurrSymbol(getCurrencySymbol(currency ?? "TRY"));
-
     const tags = await getTags();
     setAllTags(tags);
-
     const range = getDateRange(dateFilter);
-    let results = await searchTransactions({
-      search: search || undefined,
-      category: categoryFilter || undefined,
-      dateFrom: range.from,
-      dateTo: range.to,
-    });
+    let results = await searchTransactions({ search: search || undefined, category: categoryFilter || undefined, dateFrom: range.from, dateTo: range.to });
 
-    // Load tags for all results
     if (results.length > 0) {
       const tagMap = await getTagsForTransactions(results.map(r => r.id));
       setTxTags(tagMap);
-
-      // Filter by tag if selected
       if (tagFilter) {
         results = results.filter(r => {
-          const tags = tagMap.get(r.id) ?? [];
-          return tags.some(t => t.id === tagFilter);
+          const t = tagMap.get(r.id) ?? [];
+          return t.some(tag => tag.id === tagFilter);
         });
       }
     }
-
     setTransactions(results);
   };
 
-  useEffect(() => {
-    loadData();
-  }, [search, dateFilter, categoryFilter, tagFilter]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { loadData(); }, [search, dateFilter, categoryFilter, tagFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleDelete = (tx: TransactionItem) => {
-    Alert.alert(
-      t("history.deleteTransaction"),
-      t("common.deleteConfirm", { name: tx.title }),
-      [
-        { text: t("common.cancel"), style: "cancel" },
-        {
-          text: t("common.delete"),
-          style: "destructive",
-          onPress: async () => {
-            await deleteTransaction(tx.id);
-            loadData();
-          },
-        },
-      ]
-    );
+    Alert.alert(t("history.deleteTransaction"), t("common.deleteConfirm", { name: tx.title }), [
+      { text: t("common.cancel"), style: "cancel" },
+      { text: t("common.delete"), style: "destructive", onPress: async () => { await deleteTransaction(tx.id); loadData(); } },
+    ]);
   };
 
   const dateFilters: { key: DateFilter; label: string }[] = [
@@ -130,11 +100,7 @@ export default function HistoryScreen() {
       label: t(`categories.${tx.category ?? "other"}`, { defaultValue: tx.category ?? "other" }),
     };
     const txDate = new Date(tx.date);
-    const dateStr = new Intl.DateTimeFormat(i18n.language, {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    }).format(txDate);
+    const dateStr = new Intl.DateTimeFormat(i18n.language, { day: "numeric", month: "short", year: "numeric" }).format(txDate);
 
     return (
       <View style={styles.transactionCard}>
@@ -142,9 +108,7 @@ export default function HistoryScreen() {
         <View style={styles.txInfo}>
           <Text style={styles.txTitle}>{tx.title}</Text>
           <Text style={styles.txSubtitle}>{dateStr} - {cat.label}</Text>
-          {tx.notes ? (
-            <Text style={styles.txNotes} numberOfLines={1}>{tx.notes}</Text>
-          ) : null}
+          {tx.notes ? <Text style={styles.txNotes} numberOfLines={1}>{tx.notes}</Text> : null}
           {(txTags.get(tx.id) ?? []).length > 0 && (
             <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 4, marginTop: 3 }}>
               {(txTags.get(tx.id) ?? []).map(tag => (
@@ -155,11 +119,9 @@ export default function HistoryScreen() {
             </View>
           )}
         </View>
-        <Text style={styles.txAmount}>
-          {currSymbol}{tx.amount.toFixed(2)}
-        </Text>
+        <Text style={styles.txAmount}>{currSymbol}{tx.amount.toFixed(2)}</Text>
         <TouchableOpacity onPress={() => handleDelete(tx)}>
-          <Ionicons name="trash-outline" size={18} color="#ef4444" />
+          <Ionicons name="trash-outline" size={18} color={colors.danger} />
         </TouchableOpacity>
       </View>
     );
@@ -167,105 +129,59 @@ export default function HistoryScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
-      {/* Header */}
       <View style={[styles.header, { paddingHorizontal: 16, paddingTop: 16 }]}>
         <View>
           <Text style={styles.title}>{t("history.title")}</Text>
-          <Text style={styles.subtitle}>
-            {t("history.totalResults", { count: transactions.length })}
-          </Text>
+          <Text style={styles.subtitle}>{t("history.totalResults", { count: transactions.length })}</Text>
         </View>
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="close" size={24} color="#222" />
+          <Ionicons name="close" size={24} color={colors.icon} />
         </TouchableOpacity>
       </View>
 
-      {/* Search */}
       <View style={{ paddingHorizontal: 16 }}>
         <View style={{ position: "relative" }}>
-          <Ionicons
-            name="search-outline"
-            size={18}
-            color="#9ca3af"
-            style={{ position: "absolute", left: 12, top: 14, zIndex: 1 }}
-          />
-          <TextInput
-            style={styles.searchBar}
-            placeholder={t("history.searchPlaceholder")}
-            placeholderTextColor="#9ca3af"
-            value={search}
-            onChangeText={setSearch}
-          />
+          <Ionicons name="search-outline" size={18} color={colors.textMuted} style={{ position: "absolute", left: 12, top: 14, zIndex: 1 }} />
+          <TextInput style={styles.searchBar} placeholder={t("history.searchPlaceholder")} placeholderTextColor={colors.placeholder} value={search} onChangeText={setSearch} />
         </View>
 
-        {/* Date Filters */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterRow}>
           {dateFilters.map((f) => (
-            <TouchableOpacity
-              key={f.key}
-              style={[styles.filterChip, dateFilter === f.key && styles.filterChipActive]}
-              onPress={() => setDateFilter(f.key)}
-            >
-              <Text style={[styles.filterChipText, dateFilter === f.key && styles.filterChipTextActive]}>
-                {f.label}
-              </Text>
+            <TouchableOpacity key={f.key} style={[styles.filterChip, dateFilter === f.key && styles.filterChipActive]} onPress={() => setDateFilter(f.key)}>
+              <Text style={[styles.filterChipText, dateFilter === f.key && styles.filterChipTextActive]}>{f.label}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
 
-        {/* Category Filters */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryFilterRow}>
-          <TouchableOpacity
-            style={[styles.filterChip, !categoryFilter && styles.filterChipActive]}
-            onPress={() => setCategoryFilter(null)}
-          >
-            <Text style={[styles.filterChipText, !categoryFilter && styles.filterChipTextActive]}>
-              {t("history.allCategories")}
-            </Text>
+          <TouchableOpacity style={[styles.filterChip, !categoryFilter && styles.filterChipActive]} onPress={() => setCategoryFilter(null)}>
+            <Text style={[styles.filterChipText, !categoryFilter && styles.filterChipTextActive]}>{t("history.allCategories")}</Text>
           </TouchableOpacity>
           {categories.map((c) => (
-            <TouchableOpacity
-              key={c}
-              style={[styles.filterChip, categoryFilter === c && styles.filterChipActive]}
-              onPress={() => setCategoryFilter(categoryFilter === c ? null : c)}
-            >
-              <Text style={[styles.filterChipText, categoryFilter === c && styles.filterChipTextActive]}>
-                {CATEGORY_ICONS[c]} {t(`categories.${c}`)}
-              </Text>
+            <TouchableOpacity key={c} style={[styles.filterChip, categoryFilter === c && styles.filterChipActive]} onPress={() => setCategoryFilter(categoryFilter === c ? null : c)}>
+              <Text style={[styles.filterChipText, categoryFilter === c && styles.filterChipTextActive]}>{CATEGORY_ICONS[c]} {t(`categories.${c}`)}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
 
-        {/* Tag Filters */}
         {allTags.length > 0 && (
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryFilterRow}>
-            <TouchableOpacity
-              style={[styles.filterChip, !tagFilter && styles.filterChipActive]}
-              onPress={() => setTagFilter(null)}
-            >
-              <Text style={[styles.filterChipText, !tagFilter && styles.filterChipTextActive]}>
-                {t("add.tags")}
-              </Text>
+            <TouchableOpacity style={[styles.filterChip, !tagFilter && styles.filterChipActive]} onPress={() => setTagFilter(null)}>
+              <Text style={[styles.filterChipText, !tagFilter && styles.filterChipTextActive]}>{t("add.tags")}</Text>
             </TouchableOpacity>
             {allTags.map((tag) => (
               <TouchableOpacity
                 key={tag.id}
-                style={[
-                  styles.filterChip,
-                  tagFilter === tag.id && { backgroundColor: tag.color, borderColor: tag.color },
-                ]}
+                style={[styles.filterChip, tagFilter === tag.id && { backgroundColor: tag.color, borderColor: tag.color }]}
                 onPress={() => setTagFilter(tagFilter === tag.id ? null : tag.id)}
               >
-                <Text style={[styles.filterChipText, tagFilter === tag.id && { color: "#fff" }]}>
-                  {tag.name}
-                </Text>
+                <Text style={[styles.filterChipText, tagFilter === tag.id && { color: "#fff" }]}>{tag.name}</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>
         )}
       </View>
 
-      {/* List */}
       <FlatList
         data={transactions}
         keyExtractor={(item) => item.id}

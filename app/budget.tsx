@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Alert,
   ScrollView,
@@ -20,7 +20,8 @@ import {
   getSetting,
   setBudget,
 } from "../database/db";
-import { styles } from "../styles/budget";
+import { createStyles } from "../styles/budget";
+import { useAppTheme } from '@/hooks/use-app-theme';
 
 const CATEGORIES = [
   { key: "food", icon: "🍔" },
@@ -36,6 +37,9 @@ const CATEGORIES = [
 
 export default function BudgetScreen() {
   const { t } = useTranslation();
+  const { colors } = useAppTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   const [currSymbol, setCurrSymbol] = useState("₺");
   const [overallAmount, setOverallAmount] = useState("");
   const [categoryAmounts, setCategoryAmounts] = useState<Record<string, string>>({});
@@ -49,24 +53,15 @@ export default function BudgetScreen() {
   const loadData = async () => {
     const currency = await getSetting("currency");
     setCurrSymbol(getCurrencySymbol(currency ?? "TRY"));
-
     const data = await getBudgetVsActual(currentMonth);
     setBudgetData(data);
-
-    if (data.overall) {
-      setOverallAmount(data.overall.budget.toString());
-    }
-
+    if (data.overall) { setOverallAmount(data.overall.budget.toString()); }
     const catMap: Record<string, string> = {};
-    for (const cat of data.categories) {
-      catMap[cat.category] = cat.budget.toString();
-    }
+    for (const cat of data.categories) { catMap[cat.category] = cat.budget.toString(); }
     setCategoryAmounts(catMap);
   };
 
-  useEffect(() => {
-    loadData();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { loadData(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const saveOverallBudget = async () => {
     const parsed = parseFloat(overallAmount.replace(",", "."));
@@ -74,15 +69,7 @@ export default function BudgetScreen() {
       Alert.alert(t("common.error"), t("budget.validAmount"));
       return;
     }
-
-    await setBudget({
-      id: `overall_${currentMonth}`,
-      type: "overall",
-      category: null,
-      amount: parsed,
-      month: currentMonth,
-    });
-
+    await setBudget({ id: `overall_${currentMonth}`, type: "overall", category: null, amount: parsed, month: currentMonth });
     Alert.alert(t("common.success"), t("budget.saved"));
     loadData();
   };
@@ -90,112 +77,68 @@ export default function BudgetScreen() {
   const saveCategoryBudget = async (categoryKey: string) => {
     const val = categoryAmounts[categoryKey];
     if (!val || val.trim() === "") {
-      // Remove budget
       await deleteBudget(`cat_${categoryKey}_${currentMonth}`);
       loadData();
       return;
     }
-
     const parsed = parseFloat(val.replace(",", "."));
     if (isNaN(parsed) || parsed <= 0) {
       Alert.alert(t("common.error"), t("budget.validAmount"));
       return;
     }
-
-    await setBudget({
-      id: `cat_${categoryKey}_${currentMonth}`,
-      type: "category",
-      category: categoryKey,
-      amount: parsed,
-      month: currentMonth,
-    });
-
+    await setBudget({ id: `cat_${categoryKey}_${currentMonth}`, type: "category", category: categoryKey, amount: parsed, month: currentMonth });
     loadData();
   };
 
   const getProgressColor = (percent: number) => {
-    if (percent >= 0.9) return "#ef4444";
-    if (percent >= 0.7) return "#f59e0b";
-    return "#22c55e";
+    if (percent >= 0.9) return colors.danger;
+    if (percent >= 0.7) return colors.warning;
+    return colors.primary;
   };
 
-  const getCategoryActual = (key: string): number => {
-    const found = budgetData.categories.find((c) => c.category === key);
-    return found?.actual ?? 0;
-  };
-
-  const getCategoryBudget = (key: string): number => {
-    const found = budgetData.categories.find((c) => c.category === key);
-    return found?.budget ?? 0;
-  };
+  const getCategoryActual = (key: string): number => budgetData.categories.find((c) => c.category === key)?.actual ?? 0;
+  const getCategoryBudget = (key: string): number => budgetData.categories.find((c) => c.category === key)?.budget ?? 0;
 
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
       <ScrollView contentContainerStyle={styles.content}>
-        {/* Header */}
         <View style={styles.header}>
           <View>
             <Text style={styles.title}>{t("budget.title")}</Text>
             <Text style={styles.subtitle}>{t("budget.subtitle")}</Text>
           </View>
           <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="close" size={24} color="#222" />
+            <Ionicons name="close" size={24} color={colors.icon} />
           </TouchableOpacity>
         </View>
 
-        {/* Overall Budget */}
-        <LinearGradient
-          colors={["#22c55e", "#16a34a"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.overallCard}
-        >
+        <LinearGradient colors={["#22c55e", "#16a34a"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.overallCard}>
           <Text style={styles.overallLabel}>{t("budget.monthlyBudget")}</Text>
           <View style={styles.overallInputRow}>
             <Text style={styles.overallCurrency}>{currSymbol}</Text>
-            <TextInput
-              style={styles.overallInput}
-              keyboardType="decimal-pad"
-              placeholder="0"
-              placeholderTextColor="rgba(255,255,255,0.5)"
-              value={overallAmount}
-              onChangeText={setOverallAmount}
-            />
-            <TouchableOpacity
-              style={styles.overallSave}
-              onPress={saveOverallBudget}
-            >
+            <TextInput style={styles.overallInput} keyboardType="decimal-pad" placeholder="0" placeholderTextColor="rgba(255,255,255,0.5)" value={overallAmount} onChangeText={setOverallAmount} />
+            <TouchableOpacity style={styles.overallSave} onPress={saveOverallBudget}>
               <Ionicons name="checkmark" size={22} color="#fff" />
             </TouchableOpacity>
           </View>
-
           {budgetData.overall && (
             <View style={{ marginTop: 14 }}>
               <View style={[styles.progressBar, { backgroundColor: "rgba(255,255,255,0.2)" }]}>
-                <View
-                  style={[
-                    styles.progressFill,
-                    {
-                      width: `${Math.min((budgetData.overall.actual / budgetData.overall.budget) * 100, 100)}%`,
-                      backgroundColor: budgetData.overall.actual > budgetData.overall.budget ? "#fca5a5" : "#dcfce7",
-                    },
-                  ]}
-                />
+                <View style={[styles.progressFill, {
+                  width: `${Math.min((budgetData.overall.actual / budgetData.overall.budget) * 100, 100)}%`,
+                  backgroundColor: budgetData.overall.actual > budgetData.overall.budget ? "#fca5a5" : "#dcfce7",
+                }]} />
               </View>
               <Text style={{ color: "#dcfce7", fontSize: 13, marginTop: 6 }}>
                 {t("budget.spent")} {currSymbol}{budgetData.overall.actual.toFixed(0)} / {currSymbol}{budgetData.overall.budget.toFixed(0)}
                 {budgetData.overall.actual > budgetData.overall.budget
-                  ? ` - ${t("budget.exceeded")}`
-                  : ` - ${t("budget.remaining")} ${currSymbol}${(budgetData.overall.budget - budgetData.overall.actual).toFixed(0)}`
-                }
+                  ? ` - ${t("budget.exceeded")}` : ` - ${t("budget.remaining")} ${currSymbol}${(budgetData.overall.budget - budgetData.overall.actual).toFixed(0)}`}
               </Text>
             </View>
           )}
         </LinearGradient>
 
-        {/* Category Budgets */}
         <Text style={styles.sectionTitle}>{t("budget.categoryLimits")}</Text>
-
         {CATEGORIES.map((cat) => {
           const actual = getCategoryActual(cat.key);
           const budget = getCategoryBudget(cat.key);
@@ -205,40 +148,24 @@ export default function BudgetScreen() {
             <View key={cat.key} style={styles.categoryCard}>
               <View style={styles.categoryHeader}>
                 <Text style={styles.categoryIcon}>{cat.icon}</Text>
-                <Text style={styles.categoryName}>
-                  {t(`categories.${cat.key}`)}
-                </Text>
+                <Text style={styles.categoryName}>{t(`categories.${cat.key}`)}</Text>
                 <TextInput
                   style={styles.categoryInput}
                   keyboardType="decimal-pad"
                   placeholder={t("budget.noLimit")}
-                  placeholderTextColor="#9ca3af"
+                  placeholderTextColor={colors.placeholder}
                   value={categoryAmounts[cat.key] ?? ""}
-                  onChangeText={(v) =>
-                    setCategoryAmounts((prev) => ({ ...prev, [cat.key]: v }))
-                  }
+                  onChangeText={(v) => setCategoryAmounts((prev) => ({ ...prev, [cat.key]: v }))}
                   onBlur={() => saveCategoryBudget(cat.key)}
                 />
-                <TouchableOpacity
-                  style={styles.saveCategoryButton}
-                  onPress={() => saveCategoryBudget(cat.key)}
-                >
-                  <Ionicons name="checkmark-circle-outline" size={20} color="#22c55e" />
+                <TouchableOpacity style={styles.saveCategoryButton} onPress={() => saveCategoryBudget(cat.key)}>
+                  <Ionicons name="checkmark-circle-outline" size={20} color={colors.primary} />
                 </TouchableOpacity>
               </View>
-
               {budget > 0 && (
                 <>
                   <View style={styles.progressBar}>
-                    <View
-                      style={[
-                        styles.progressFill,
-                        {
-                          width: `${Math.min(percent * 100, 100)}%`,
-                          backgroundColor: getProgressColor(percent),
-                        },
-                      ]}
-                    />
+                    <View style={[styles.progressFill, { width: `${Math.min(percent * 100, 100)}%`, backgroundColor: getProgressColor(percent) }]} />
                   </View>
                   <Text style={styles.progressText}>
                     {currSymbol}{actual.toFixed(0)} / {currSymbol}{budget.toFixed(0)} ({Math.round(percent * 100)}%)

@@ -69,7 +69,9 @@
     "occurredTimes": "{{count}} kez",
     "daysInterval": "gün aralıklı",
     "addAsSubscription": "Abonelik Olarak Ekle",
-    "dismiss": "Kapat"
+    "dismiss": "Kapat",
+    "nextRenewal": "Sonraki Yenileme Tarihi",
+    "renews": "Yenilenir"
   },
   "add": {
     "title": "Harcama Ekle",
@@ -147,7 +149,19 @@
     "currencyUSD": "Dolar ($)",
     "currencyEUR": "Euro (€)",
     "exportExpenses": "Harcamaları Dışa Aktar",
-    "exportSubscriptions": "Abonelikleri Dışa Aktar"
+    "exportSubscriptions": "Abonelikleri Dışa Aktar",
+    "reminderDays": "Yenileme Hatırlatması",
+    "daysBefore": "{{count}} gün önce",
+    "darkMode": "Karanlık Mod",
+    "darkModeSystem": "Sistem",
+    "darkModeLight": "Açık",
+    "darkModeDark": "Koyu",
+    "biometricLock": "Biyometrik Kilit",
+    "biometricPrompt": "Devam etmek için kimliğinizi doğrulayın",
+    "biometricFallback": "Şifre kullan",
+    "biometricLocked": "Uygulama Kilitli",
+    "biometricLockedDesc": "Verilerinize erişmek için biyometrik doğrulama yapın",
+    "biometricUnlock": "Kilidi Aç"
   },
   "budget": {
     "title": "Bütçe",
@@ -163,6 +177,17 @@
     "noLimit": "Limit yok",
     "validAmount": "Geçerli bir tutar girin",
     "limit": "limit"
+  },
+  "onboarding": {
+    "welcomeTitle": "SubTrack'e Hoş Geldiniz",
+    "welcomeSubtitle": "Harcamalarınızı ve aboneliklerinizi kolayca takip edin. Akıllı öngörülerle finanslarınızı kontrol altına alın.",
+    "featuresTitle": "Akıllı Özellikler",
+    "featuresSubtitle": "AI destekli analiz, bütçe takibi, abonelik yönetimi ve detaylı harcama raporları — hepsi tek bir uygulamada.",
+    "currencyTitle": "Para Biriminizi Seçin",
+    "currencySubtitle": "Birincil para biriminizi seçin. Bunu daha sonra ayarlardan değiştirebilirsiniz.",
+    "next": "İleri",
+    "skip": "Atla",
+    "getStarted": "Başlayalım"
   },
   "history": {
     "title": "Harcama Geçmişi",

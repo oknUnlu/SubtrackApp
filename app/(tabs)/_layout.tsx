@@ -4,26 +4,25 @@ import React from 'react';
 import { Platform, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useAppTheme } from '@/hooks/use-app-theme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme() ?? 'light';
-  const tintColor = Colors[colorScheme].tint;
+  const { colors } = useAppTheme();
   const { t } = useTranslation();
 
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: tintColor,
-        tabBarInactiveTintColor: '#9CA3AF',
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.textMuted,
         tabBarStyle: {
           height: Platform.OS === 'android' ? 70 : 80,
           paddingBottom: Platform.OS === 'android' ? 10 : 20,
           paddingTop: 8,
           borderTopWidth: 1,
-          borderTopColor: colorScheme === 'dark' ? '#374151' : '#E5E7EB',
+          borderTopColor: colors.tabBarBorder,
+          backgroundColor: colors.tabBarBg,
           overflow: 'visible',
         },
         tabBarItemStyle: {
@@ -36,29 +35,19 @@ export default function TabLayout() {
         options={{
           title: t('tabs.home'),
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={focused ? 'home' : 'home-outline'}
-              size={size}
-              color={color}
-            />
+            <Ionicons name={focused ? 'home' : 'home-outline'} size={size} color={color} />
           ),
         }}
       />
-
       <Tabs.Screen
         name="subscriptions"
         options={{
           title: t('tabs.subscriptions'),
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={focused ? 'card' : 'card-outline'}
-              size={size}
-              color={color}
-            />
+            <Ionicons name={focused ? 'card' : 'card-outline'} size={size} color={color} />
           ),
         }}
       />
-
       <Tabs.Screen
         name="add"
         options={{
@@ -71,7 +60,7 @@ export default function TabLayout() {
                 height: 45,
                 width: 45,
                 borderRadius: 30,
-                backgroundColor: tintColor,
+                backgroundColor: colors.primary,
                 justifyContent: 'center',
                 alignItems: 'center',
                 elevation: 5,
@@ -81,40 +70,26 @@ export default function TabLayout() {
                 shadowOffset: { width: 0, height: 2 },
               }}
             >
-              <Ionicons
-                name="add"
-                size={30}
-                color="#fff"
-              />
+              <Ionicons name="add" size={30} color="#fff" />
             </View>
           ),
         }}
       />
-
       <Tabs.Screen
         name="ai"
         options={{
           title: t('tabs.aiAnalysis'),
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={focused ? 'analytics' : 'analytics-outline'}
-              size={size}
-              color={color}
-            />
+            <Ionicons name={focused ? 'analytics' : 'analytics-outline'} size={size} color={color} />
           ),
         }}
       />
-
       <Tabs.Screen
         name="settings"
         options={{
           title: t('tabs.settings'),
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={focused ? 'settings' : 'person-outline'}
-              size={size}
-              color={color}
-            />
+            <Ionicons name={focused ? 'settings' : 'person-outline'} size={size} color={color} />
           ),
         }}
       />

@@ -1,9 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import * as LocalAuthentication from "expo-local-authentication";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Alert,
   Modal,
   ScrollView,
+  Switch,
   Text,
   TouchableOpacity,
   View,
@@ -18,16 +20,24 @@ import {
   setSetting,
 } from "../../database/db";
 
-import { styles } from "../../styles/settings";
+import { createStyles } from "../../styles/settings";
 import { exportTransactionsCsv, exportSubscriptionsCsv } from "../../utils/csvExport";
+import { useAppTheme } from '@/hooks/use-app-theme';
 
 export default function SettingsScreen() {
   const { t, i18n } = useTranslation();
+  const { colors, setDarkMode } = useAppTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   const [currency, setCurrency] = useState("TRY");
   const [interval, setInterval] = useState("monthly");
   const [mainView, setMainView] = useState("monthly");
+  const [reminderDays, setReminderDays] = useState("1");
+  const [darkModeSetting, setDarkModeSetting] = useState("system");
+  const [biometricEnabled, setBiometricEnabled] = useState(false);
+  const [biometricAvailable, setBiometricAvailable] = useState(false);
 
-  const [modal, setModal] = useState<null | "currency" | "interval" | "view" | "language">(null);
+  const [modal, setModal] = useState<null | "currency" | "interval" | "view" | "language" | "reminder" | "darkMode">(null);
 
   useEffect(() => {
     load();
@@ -37,10 +47,19 @@ export default function SettingsScreen() {
     const c = await getSetting("currency");
     const i = await getSetting("interval");
     const v = await getSetting("mainView");
-
     if (c) setCurrency(c);
     if (i) setInterval(i);
     if (v) setMainView(v);
+    const rd = await getSetting("reminderDaysBefore");
+    if (rd) setReminderDays(rd);
+    const dm = await getSetting("darkMode");
+    if (dm) setDarkModeSetting(dm);
+    // Biometric
+    const hasHw = await LocalAuthentication.hasHardwareAsync();
+    const enrolled = await LocalAuthentication.isEnrolledAsync();
+    setBiometricAvailable(hasHw && enrolled);
+    const bl = await getSetting("biometricLock");
+    setBiometricEnabled(bl === "true");
   };
 
   const select = async (key: string, value: string) => {
@@ -48,6 +67,11 @@ export default function SettingsScreen() {
     if (key === "currency") setCurrency(value);
     if (key === "interval") setInterval(value);
     if (key === "mainView") setMainView(value);
+    if (key === "reminderDaysBefore") setReminderDays(value);
+    if (key === "darkMode") {
+      setDarkModeSetting(value);
+      setDarkMode(value);
+    }
     setModal(null);
   };
 
@@ -69,49 +93,63 @@ export default function SettingsScreen() {
     );
   };
 
+  const darkModeLabel = (v: string) => {
+    if (v === "light") return t('settings.darkModeLight');
+    if (v === "dark") return t('settings.darkModeDark');
+    return t('settings.darkModeSystem');
+  };
+
+  const toggleBiometric = async (value: boolean) => {
+    if (value) {
+      // Verify biometric before enabling
+      const result = await LocalAuthentication.authenticateAsync({
+        promptMessage: t('settings.biometricPrompt'),
+        disableDeviceFallback: false,
+      });
+      if (result.success) {
+        await setSetting("biometricLock", "true");
+        setBiometricEnabled(true);
+      }
+    } else {
+      await setSetting("biometricLock", "false");
+      setBiometricEnabled(false);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
-        {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>{t('settings.title')}</Text>
-          <Ionicons name="settings-outline" size={22} />
         </View>
 
-        {/* Settings List */}
         <View style={styles.card}>
-          <SettingRow
-            icon="cash-outline"
-            label={t('settings.currency')}
-            value={currencyLabel(currency, t)}
-            onPress={() => setModal("currency")}
-          />
-
-          <Divider />
-
-          <SettingRow
-            icon="repeat-outline"
-            label={t('settings.defaultSubscription')}
-            value={interval === "monthly" ? t('common.monthly') : t('common.yearly')}
-            onPress={() => setModal("interval")}
-          />
-
-          <Divider />
-
-          <SettingRow
-            icon="stats-chart-outline"
-            label={t('settings.mainView')}
-            value={mainView === "monthly" ? t('common.monthly') : t('common.yearly')}
-            onPress={() => setModal("view")}
-          />
-
-          <Divider />
-          <SettingRow
-            icon="language-outline"
-            label={t('settings.language')}
-            value={languageLabel(i18n.language)}
-            onPress={() => setModal("language")}
-          />
+          <SettingRow icon="cash-outline" label={t('settings.currency')} value={currencyLabel(currency, t)} onPress={() => setModal("currency")} colors={colors} />
+          <Divider colors={colors} />
+          <SettingRow icon="repeat-outline" label={t('settings.defaultSubscription')} value={interval === "monthly" ? t('common.monthly') : t('common.yearly')} onPress={() => setModal("interval")} colors={colors} />
+          <Divider colors={colors} />
+          <SettingRow icon="stats-chart-outline" label={t('settings.mainView')} value={mainView === "monthly" ? t('common.monthly') : t('common.yearly')} onPress={() => setModal("view")} colors={colors} />
+          <Divider colors={colors} />
+          <SettingRow icon="notifications-outline" label={t('settings.reminderDays')} value={t('settings.daysBefore', { count: reminderDays })} onPress={() => setModal("reminder")} colors={colors} />
+          <Divider colors={colors} />
+          <SettingRow icon="moon-outline" label={t('settings.darkMode')} value={darkModeLabel(darkModeSetting)} onPress={() => setModal("darkMode")} colors={colors} />
+          {biometricAvailable && (
+            <>
+              <Divider colors={colors} />
+              <View style={{ flexDirection: "row", alignItems: "center", padding: 14, gap: 12 }}>
+                <Ionicons name="finger-print-outline" size={20} color={colors.primary} />
+                <Text style={{ fontSize: 15, fontWeight: "500", color: colors.text, flex: 1 }}>{t('settings.biometricLock')}</Text>
+                <Switch
+                  value={biometricEnabled}
+                  onValueChange={toggleBiometric}
+                  trackColor={{ false: colors.border, true: colors.primaryLight }}
+                  thumbColor={biometricEnabled ? colors.primary : colors.textMuted}
+                />
+              </View>
+            </>
+          )}
+          <Divider colors={colors} />
+          <SettingRow icon="language-outline" label={t('settings.language')} value={languageLabel(i18n.language)} onPress={() => setModal("language")} colors={colors} />
         </View>
 
         {/* Data Export */}
@@ -123,13 +161,13 @@ export default function SettingsScreen() {
               catch (e) { console.error(e); Alert.alert(t('common.error')); }
             }}
           >
-            <Ionicons name="download-outline" size={20} color="#22c55e" />
+            <Ionicons name="download-outline" size={20} color={colors.primary} />
             <Text style={styles.rowLabel}>{t('settings.exportExpenses')}</Text>
             <View style={{ flex: 1 }} />
             <Text style={styles.rowValue}>CSV</Text>
-            <Ionicons name="chevron-forward" size={16} color="#9ca3af" />
+            <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
           </TouchableOpacity>
-          <Divider />
+          <Divider colors={colors} />
           <TouchableOpacity
             style={styles.row}
             onPress={async () => {
@@ -137,18 +175,17 @@ export default function SettingsScreen() {
               catch (e) { console.error(e); Alert.alert(t('common.error')); }
             }}
           >
-            <Ionicons name="cloud-download-outline" size={20} color="#22c55e" />
+            <Ionicons name="cloud-download-outline" size={20} color={colors.primary} />
             <Text style={styles.rowLabel}>{t('settings.exportSubscriptions')}</Text>
             <View style={{ flex: 1 }} />
             <Text style={styles.rowValue}>CSV</Text>
-            <Ionicons name="chevron-forward" size={16} color="#9ca3af" />
+            <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
           </TouchableOpacity>
         </View>
 
         {/* Danger Zone */}
         <View style={styles.dangerCard}>
           <Text style={styles.dangerTitle}>{t('settings.dangerZone')}</Text>
-
           <TouchableOpacity style={styles.dangerButton} onPress={reset}>
             <Ionicons name="trash-outline" size={18} color="#fff" />
             <Text style={styles.dangerText}>{t('settings.deleteAllData')}</Text>
@@ -157,43 +194,29 @@ export default function SettingsScreen() {
       </ScrollView>
 
       {/* Modals */}
-      <OptionModal
-        visible={modal === "currency"}
-        title={t('settings.currency')}
+      <OptionModal visible={modal === "currency"} title={t('settings.currency')} colors={colors}
         options={[
           { label: t('settings.currencyTRY'), value: "TRY" },
           { label: t('settings.currencyUSD'), value: "USD" },
           { label: t('settings.currencyEUR'), value: "EUR" },
         ]}
-        onSelect={(v: string) => select("currency", v)}
-        onClose={() => setModal(null)}
+        onSelect={(v: string) => select("currency", v)} onClose={() => setModal(null)}
       />
-
-      <OptionModal
-        visible={modal === "interval"}
-        title={t('settings.defaultSubscription')}
+      <OptionModal visible={modal === "interval"} title={t('settings.defaultSubscription')} colors={colors}
         options={[
           { label: t('common.monthly'), value: "monthly" },
           { label: t('common.yearly'), value: "yearly" },
         ]}
-        onSelect={(v: string) => select("interval", v)}
-        onClose={() => setModal(null)}
+        onSelect={(v: string) => select("interval", v)} onClose={() => setModal(null)}
       />
-
-      <OptionModal
-        visible={modal === "view"}
-        title={t('settings.mainView')}
+      <OptionModal visible={modal === "view"} title={t('settings.mainView')} colors={colors}
         options={[
           { label: t('common.monthly'), value: "monthly" },
           { label: t('common.yearly'), value: "yearly" },
         ]}
-        onSelect={(v: string) => select("mainView", v)}
-        onClose={() => setModal(null)}
+        onSelect={(v: string) => select("mainView", v)} onClose={() => setModal(null)}
       />
-
-      <OptionModal
-        visible={modal === "language"}
-        title={t('settings.language')}
+      <OptionModal visible={modal === "language"} title={t('settings.language')} colors={colors}
         options={[
           { label: "Türkçe", value: "tr" },
           { label: "English", value: "en" },
@@ -204,56 +227,68 @@ export default function SettingsScreen() {
           { label: "日本語", value: "ja" },
           { label: "한국어", value: "ko" },
         ]}
-        onSelect={async (v: string) => {
-          await changeLanguage(v);
-          setModal(null);
-        }}
+        onSelect={async (v: string) => { await changeLanguage(v); setModal(null); }}
         onClose={() => setModal(null)}
+      />
+      <OptionModal visible={modal === "reminder"} title={t('settings.reminderDays')} colors={colors}
+        options={[
+          { label: t('settings.daysBefore', { count: "1" }), value: "1" },
+          { label: t('settings.daysBefore', { count: "2" }), value: "2" },
+          { label: t('settings.daysBefore', { count: "3" }), value: "3" },
+          { label: t('settings.daysBefore', { count: "7" }), value: "7" },
+        ]}
+        onSelect={(v: string) => select("reminderDaysBefore", v)} onClose={() => setModal(null)}
+      />
+      <OptionModal visible={modal === "darkMode"} title={t('settings.darkMode')} colors={colors}
+        options={[
+          { label: t('settings.darkModeSystem'), value: "system" },
+          { label: t('settings.darkModeLight'), value: "light" },
+          { label: t('settings.darkModeDark'), value: "dark" },
+        ]}
+        onSelect={(v: string) => select("darkMode", v)} onClose={() => setModal(null)}
       />
     </SafeAreaView>
   );
 }
-function SettingRow({ icon, label, value, onPress }: {
+
+function SettingRow({ icon, label, value, onPress, colors }: {
   icon: keyof typeof Ionicons.glyphMap;
   label: string;
   value: string;
   onPress: () => void;
+  colors: any;
 }) {
   return (
-    <TouchableOpacity style={styles.row} onPress={onPress}>
-      <Ionicons name={icon} size={20} color="#22c55e" />
-      <Text style={styles.rowLabel}>{label}</Text>
+    <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", padding: 14, gap: 12 }} onPress={onPress}>
+      <Ionicons name={icon} size={20} color={colors.primary} />
+      <Text style={{ fontSize: 15, fontWeight: "500", color: colors.text }}>{label}</Text>
       <View style={{ flex: 1 }} />
-      <Text style={styles.rowValue}>{value}</Text>
-      <Ionicons name="chevron-forward" size={16} color="#9ca3af" />
+      <Text style={{ color: colors.textSecondary, fontSize: 14 }}>{value}</Text>
+      <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
     </TouchableOpacity>
   );
 }
 
-function Divider() {
-  return <View style={styles.divider} />;
+function Divider({ colors }: { colors: any }) {
+  return <View style={{ height: 1, backgroundColor: colors.border, marginLeft: 48 }} />;
 }
 
-function OptionModal({ visible, title, options, onSelect, onClose }: {
+function OptionModal({ visible, title, options, onSelect, onClose, colors }: {
   visible: boolean;
   title: string;
   options: { label: string; value: string }[];
   onSelect: (value: string) => void;
   onClose: () => void;
+  colors: any;
 }) {
   return (
     <Modal visible={visible} transparent animationType="slide">
-      <TouchableOpacity style={styles.modalOverlay} onPress={onClose}>
-        <View style={styles.modal}>
-          <Text style={styles.modalTitle}>{title}</Text>
-
+      <TouchableOpacity style={{ flex: 1, backgroundColor: colors.modalOverlay, justifyContent: "flex-end" }} onPress={onClose}>
+        <View style={{ backgroundColor: colors.surface, padding: 16, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
+          <Text style={{ fontSize: 16, fontWeight: "700", marginBottom: 12, color: colors.text }}>{title}</Text>
           {options.map((o) => (
-            <TouchableOpacity
-              key={o.value}
-              style={styles.option}
-              onPress={() => onSelect(o.value)}
-            >
-              <Text style={styles.optionText}>{o.label}</Text>
+            <TouchableOpacity key={o.value} style={{ paddingVertical: 14 }} onPress={() => onSelect(o.value)}>
+              <Text style={{ fontSize: 16, color: colors.text }}>{o.label}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -270,14 +305,8 @@ function currencyLabel(v: string, t: any) {
 
 function languageLabel(code: string): string {
   const labels: Record<string, string> = {
-    tr: "Türkçe",
-    en: "English",
-    es: "Español",
-    pt: "Português",
-    hi: "हिन्दी",
-    id: "Bahasa Indonesia",
-    ja: "日本語",
-    ko: "한국어",
+    tr: "Türkçe", en: "English", es: "Español", pt: "Português",
+    hi: "हिन्दी", id: "Bahasa Indonesia", ja: "日本語", ko: "한국어",
   };
   return labels[code] || code;
 }

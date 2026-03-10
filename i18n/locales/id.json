@@ -69,7 +69,9 @@
     "occurredTimes": "{{count}} kali",
     "daysInterval": "hari interval",
     "addAsSubscription": "Tambah sebagai Langganan",
-    "dismiss": "Abaikan"
+    "dismiss": "Abaikan",
+    "nextRenewal": "Tanggal Perpanjangan Berikutnya",
+    "renews": "Diperpanjang"
   },
   "add": {
     "title": "Tambah Pengeluaran",
@@ -147,7 +149,19 @@
     "currencyUSD": "Dolar ($)",
     "currencyEUR": "Euro (€)",
     "exportExpenses": "Ekspor Pengeluaran",
-    "exportSubscriptions": "Ekspor Langganan"
+    "exportSubscriptions": "Ekspor Langganan",
+    "reminderDays": "Pengingat Perpanjangan",
+    "daysBefore": "{{count}} hari sebelum",
+    "darkMode": "Mode Gelap",
+    "darkModeSystem": "Sistem",
+    "darkModeLight": "Terang",
+    "darkModeDark": "Gelap",
+    "biometricLock": "Kunci Biometrik",
+    "biometricPrompt": "Autentikasi untuk melanjutkan",
+    "biometricFallback": "Gunakan kode sandi",
+    "biometricLocked": "Aplikasi Terkunci",
+    "biometricLockedDesc": "Autentikasi dengan biometrik untuk mengakses data Anda",
+    "biometricUnlock": "Buka Kunci"
   },
   "budget": {
     "title": "Anggaran",
@@ -163,6 +177,17 @@
     "noLimit": "Tanpa batas",
     "validAmount": "Masukkan jumlah yang valid",
     "limit": "batas"
+  },
+  "onboarding": {
+    "welcomeTitle": "Selamat Datang di SubTrack",
+    "welcomeSubtitle": "Lacak pengeluaran dan langganan Anda dengan mudah. Kendalikan keuangan Anda dengan wawasan cerdas.",
+    "featuresTitle": "Fitur Cerdas",
+    "featuresSubtitle": "Analisis AI, pelacakan anggaran, manajemen langganan, dan laporan pengeluaran detail — semua dalam satu aplikasi.",
+    "currencyTitle": "Pilih Mata Uang Anda",
+    "currencySubtitle": "Pilih mata uang utama Anda. Anda dapat mengubahnya nanti di pengaturan.",
+    "next": "Selanjutnya",
+    "skip": "Lewati",
+    "getStarted": "Mulai"
   },
   "history": {
     "title": "Riwayat Transaksi",

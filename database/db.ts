@@ -124,8 +124,9 @@ export async function initDB(): Promise<void> {
     )`
   );
 
-  // Migrations
-  await executeSql(`ALTER TABLE transactions ADD COLUMN notes TEXT`).catch(() => {});
+  // Migrations — use db.runAsync directly to avoid console.error noise
+  // when the column already exists (duplicate column is expected on repeat launches)
+  await db.runAsync(`ALTER TABLE transactions ADD COLUMN notes TEXT`).catch(() => {});
 }
 
 /* -------------------- */
@@ -273,8 +274,8 @@ export async function deleteSubscription(id: string) {
 
 export async function updateSubscription(item: SubscriptionItem) {
   await executeSql(
-    `UPDATE subscriptions SET title = ?, amount = ?, interval = ? WHERE id = ?`,
-    [item.title, item.amount, item.interval, item.id]
+    `UPDATE subscriptions SET title = ?, amount = ?, interval = ?, nextDate = ? WHERE id = ?`,
+    [item.title, item.amount, item.interval, item.nextDate ?? null, item.id]
   );
 }
 

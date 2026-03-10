@@ -1,7 +1,8 @@
 import { StyleSheet } from "react-native";
+import { AppColors } from "@/constants/theme";
 
-export const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f9fafb" },
+export const createStyles = (colors: AppColors) => StyleSheet.create({
+  container: { flex: 1, backgroundColor: colors.background },
   content: { padding: 16 },
 
   header: {
@@ -9,12 +10,13 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 16,
   },
-  title: { fontSize: 22, fontWeight: "700" },
+  title: { fontSize: 22, fontWeight: "700", color: colors.text },
 
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 16,
     paddingVertical: 6,
+    marginBottom: 16,
   },
 
   row: {
@@ -26,31 +28,32 @@ export const styles = StyleSheet.create({
   rowLabel: {
     fontSize: 15,
     fontWeight: "500",
+    color: colors.text,
   },
   rowValue: {
-    color: "#6b7280",
+    color: colors.textSecondary,
     fontSize: 14,
   },
 
   divider: {
     height: 1,
-    backgroundColor: "#e5e7eb",
+    backgroundColor: colors.border,
     marginLeft: 48,
   },
 
   dangerCard: {
-    marginTop: 20,
-    backgroundColor: "#fee2e2",
+    marginTop: 4,
+    backgroundColor: colors.dangerBg,
     borderRadius: 16,
     padding: 14,
   },
   dangerTitle: {
     fontWeight: "700",
-    color: "#991b1b",
+    color: colors.dangerText,
     marginBottom: 10,
   },
   dangerButton: {
-    backgroundColor: "#dc2626",
+    backgroundColor: colors.dangerButton,
     padding: 14,
     borderRadius: 12,
     flexDirection: "row",
@@ -64,11 +67,11 @@ export const styles = StyleSheet.create({
 
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.3)",
+    backgroundColor: colors.modalOverlay,
     justifyContent: "flex-end",
   },
   modal: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     padding: 16,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -77,11 +80,13 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "700",
     marginBottom: 12,
+    color: colors.text,
   },
   option: {
     paddingVertical: 14,
   },
   optionText: {
     fontSize: 16,
+    color: colors.text,
   },
 });

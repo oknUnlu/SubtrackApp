@@ -69,7 +69,9 @@
     "occurredTimes": "{{count}} vezes",
     "daysInterval": "dias de intervalo",
     "addAsSubscription": "Adicionar como Assinatura",
-    "dismiss": "Dispensar"
+    "dismiss": "Dispensar",
+    "nextRenewal": "Próxima Data de Renovação",
+    "renews": "Renova"
   },
   "add": {
     "title": "Adicionar Gasto",
@@ -147,7 +149,19 @@
     "currencyUSD": "Dólar ($)",
     "currencyEUR": "Euro (€)",
     "exportExpenses": "Exportar Gastos",
-    "exportSubscriptions": "Exportar Assinaturas"
+    "exportSubscriptions": "Exportar Assinaturas",
+    "reminderDays": "Lembrete de Renovação",
+    "daysBefore": "{{count}} dia(s) antes",
+    "darkMode": "Modo Escuro",
+    "darkModeSystem": "Sistema",
+    "darkModeLight": "Claro",
+    "darkModeDark": "Escuro",
+    "biometricLock": "Bloqueio Biométrico",
+    "biometricPrompt": "Autentique-se para continuar",
+    "biometricFallback": "Usar senha",
+    "biometricLocked": "App Bloqueado",
+    "biometricLockedDesc": "Autentique-se com biometria para acessar seus dados",
+    "biometricUnlock": "Desbloquear"
   },
   "budget": {
     "title": "Orçamento",
@@ -163,6 +177,17 @@
     "noLimit": "Sem limite",
     "validAmount": "Insira um valor válido",
     "limit": "limite"
+  },
+  "onboarding": {
+    "welcomeTitle": "Bem-vindo ao SubTrack",
+    "welcomeSubtitle": "Acompanhe seus gastos e assinaturas facilmente. Assuma o controle das suas finanças com insights inteligentes.",
+    "featuresTitle": "Recursos Inteligentes",
+    "featuresSubtitle": "Análise com IA, controle de orçamento, gestão de assinaturas e relatórios detalhados — tudo em um app.",
+    "currencyTitle": "Escolha sua Moeda",
+    "currencySubtitle": "Selecione sua moeda principal. Você pode alterar isso depois nas configurações.",
+    "next": "Próximo",
+    "skip": "Pular",
+    "getStarted": "Começar"
   },
   "history": {
     "title": "Histórico de Transações",

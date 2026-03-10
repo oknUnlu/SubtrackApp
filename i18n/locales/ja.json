@@ -69,7 +69,9 @@
     "occurredTimes": "{{count}}回",
     "daysInterval": "日間隔",
     "addAsSubscription": "サブスクとして追加",
-    "dismiss": "閉じる"
+    "dismiss": "閉じる",
+    "nextRenewal": "次回更新日",
+    "renews": "更新"
   },
   "add": {
     "title": "支出を追加",
@@ -147,7 +149,19 @@
     "currencyUSD": "ドル ($)",
     "currencyEUR": "ユーロ (€)",
     "exportExpenses": "支出をエクスポート",
-    "exportSubscriptions": "サブスクをエクスポート"
+    "exportSubscriptions": "サブスクをエクスポート",
+    "reminderDays": "更新リマインダー",
+    "daysBefore": "{{count}}日前",
+    "darkMode": "ダークモード",
+    "darkModeSystem": "システム",
+    "darkModeLight": "ライト",
+    "darkModeDark": "ダーク",
+    "biometricLock": "生体認証ロック",
+    "biometricPrompt": "続行するには認証してください",
+    "biometricFallback": "パスコードを使用",
+    "biometricLocked": "アプリがロックされています",
+    "biometricLockedDesc": "データにアクセスするには生体認証を行ってください",
+    "biometricUnlock": "ロック解除"
   },
   "budget": {
     "title": "予算",
@@ -163,6 +177,17 @@
     "noLimit": "上限なし",
     "validAmount": "有効な金額を入力してください",
     "limit": "上限"
+  },
+  "onboarding": {
+    "welcomeTitle": "SubTrackへようこそ",
+    "welcomeSubtitle": "支出とサブスクリプションを簡単に管理。スマートな分析で家計をコントロールしましょう。",
+    "featuresTitle": "スマート機能",
+    "featuresSubtitle": "AI分析、予算管理、サブスク管理、詳細な支出レポート — すべてが一つのアプリに。",
+    "currencyTitle": "通貨を選択",
+    "currencySubtitle": "メインの通貨を選択してください。後から設定で変更できます。",
+    "next": "次へ",
+    "skip": "スキップ",
+    "getStarted": "はじめる"
   },
   "history": {
     "title": "取引履歴",

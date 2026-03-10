@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { AppColors } from "@/constants/theme";
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: AppColors) => StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: "#f6f7f9",
+    backgroundColor: colors.background,
     paddingBottom: 32,
   },
   header: {
@@ -14,9 +15,10 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontWeight: "700",
+    color: colors.text,
   },
   subtitle: {
-    color: "#6b7280",
+    color: colors.textSecondary,
     marginTop: 4,
   },
 
@@ -55,7 +57,7 @@ export const styles = StyleSheet.create({
   },
   actionCard: {
     width: "48%",
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 18,
     padding: 20,
     alignItems: "center",
@@ -71,10 +73,11 @@ export const styles = StyleSheet.create({
   actionText: {
     fontSize: 16,
     fontWeight: "600",
+    color: colors.text,
   },
 
   analyzeButton: {
-    backgroundColor: "#9333ea",
+    backgroundColor: colors.purpleDark,
     borderRadius: 18,
     paddingVertical: 16,
     flexDirection: "row",
@@ -92,7 +95,7 @@ export const styles = StyleSheet.create({
   placeholder: {
     borderStyle: "dashed",
     borderWidth: 1,
-    borderColor: "#d1d5db",
+    borderColor: colors.border,
     borderRadius: 16,
     padding: 16,
     flexDirection: "row",
@@ -101,23 +104,23 @@ export const styles = StyleSheet.create({
   },
   placeholderText: {
     marginLeft: 8,
-    color: "#6b7280",
+    color: colors.textSecondary,
     flex: 1,
   },
 
   adArea: {
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: colors.border,
     padding: 16,
     alignItems: "center",
   },
   adTitle: {
     fontWeight: "600",
-    color: "#9ca3af",
+    color: colors.textMuted,
   },
   adSubtitle: {
-    color: "#cbd5f5",
+    color: colors.textMuted,
     marginTop: 4,
   },
 });

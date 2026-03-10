@@ -69,7 +69,9 @@
     "occurredTimes": "{{count}} veces",
     "daysInterval": "días de intervalo",
     "addAsSubscription": "Agregar como Suscripción",
-    "dismiss": "Descartar"
+    "dismiss": "Descartar",
+    "nextRenewal": "Fecha de Próxima Renovación",
+    "renews": "Se renueva"
   },
   "add": {
     "title": "Agregar Gasto",
@@ -147,7 +149,19 @@
     "currencyUSD": "Dólar ($)",
     "currencyEUR": "Euro (€)",
     "exportExpenses": "Exportar Gastos",
-    "exportSubscriptions": "Exportar Suscripciones"
+    "exportSubscriptions": "Exportar Suscripciones",
+    "reminderDays": "Recordatorio de Renovación",
+    "daysBefore": "{{count}} día(s) antes",
+    "darkMode": "Modo Oscuro",
+    "darkModeSystem": "Sistema",
+    "darkModeLight": "Claro",
+    "darkModeDark": "Oscuro",
+    "biometricLock": "Bloqueo Biométrico",
+    "biometricPrompt": "Autentícate para continuar",
+    "biometricFallback": "Usar código",
+    "biometricLocked": "App Bloqueada",
+    "biometricLockedDesc": "Autentícate con biometría para acceder a tus datos",
+    "biometricUnlock": "Desbloquear"
   },
   "budget": {
     "title": "Presupuesto",
@@ -163,6 +177,17 @@
     "noLimit": "Sin límite",
     "validAmount": "Ingresa un monto válido",
     "limit": "límite"
+  },
+  "onboarding": {
+    "welcomeTitle": "Bienvenido a SubTrack",
+    "welcomeSubtitle": "Rastrea tus gastos y suscripciones sin esfuerzo. Toma el control de tus finanzas con sugerencias inteligentes.",
+    "featuresTitle": "Funciones Inteligentes",
+    "featuresSubtitle": "Análisis con IA, control de presupuesto, gestión de suscripciones e informes detallados — todo en una app.",
+    "currencyTitle": "Elige tu Moneda",
+    "currencySubtitle": "Selecciona tu moneda principal. Puedes cambiarla después en ajustes.",
+    "next": "Siguiente",
+    "skip": "Omitir",
+    "getStarted": "Comenzar"
   },
   "history": {
     "title": "Historial de Transacciones",

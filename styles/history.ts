@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { AppColors } from "@/constants/theme";
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: AppColors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f6f7f9",
+    backgroundColor: colors.background,
   },
   content: {
     padding: 16,
@@ -18,20 +19,22 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "700",
+    color: colors.text,
   },
   subtitle: {
-    color: "#6b7280",
+    color: colors.textSecondary,
     marginTop: 4,
   },
   searchBar: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 14,
     padding: 12,
     paddingLeft: 40,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: colors.border,
     marginBottom: 12,
+    color: colors.text,
   },
   searchIcon: {
     position: "absolute",
@@ -47,16 +50,16 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: "#e5e7eb",
+    backgroundColor: colors.chipBg,
     marginRight: 8,
   },
   filterChipActive: {
-    backgroundColor: "#22c55e",
+    backgroundColor: colors.primary,
   },
   filterChipText: {
     fontSize: 13,
     fontWeight: "600",
-    color: "#374151",
+    color: colors.chipText,
   },
   filterChipTextActive: {
     color: "#fff",
@@ -68,7 +71,7 @@ export const styles = StyleSheet.create({
   transactionCard: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 14,
     padding: 14,
     marginBottom: 8,
@@ -83,21 +86,23 @@ export const styles = StyleSheet.create({
   txTitle: {
     fontWeight: "600",
     fontSize: 15,
+    color: colors.text,
   },
   txSubtitle: {
     fontSize: 12,
-    color: "#6b7280",
+    color: colors.textSecondary,
     marginTop: 2,
   },
   txNotes: {
     fontSize: 11,
-    color: "#9ca3af",
+    color: colors.textMuted,
     marginTop: 2,
   },
   txAmount: {
     fontWeight: "700",
     fontSize: 15,
     marginRight: 10,
+    color: colors.text,
   },
   emptyState: {
     alignItems: "center",
@@ -108,11 +113,11 @@ export const styles = StyleSheet.create({
     marginBottom: 12,
   },
   emptyText: {
-    color: "#6b7280",
+    color: colors.textSecondary,
     fontSize: 15,
   },
   resultCount: {
-    color: "#9ca3af",
+    color: colors.textMuted,
     fontSize: 13,
     marginBottom: 10,
     textAlign: "center",

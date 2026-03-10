@@ -1,15 +1,16 @@
 import { StyleSheet } from "react-native";
+import { AppColors } from "@/constants/theme";
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: AppColors) => StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: "#f6f7f9",
+    backgroundColor: colors.background,
     paddingBottom: 32,
   },
   statHint: {
     marginTop: 4,
     fontSize: 12,
-    color: "#9CA3AF",
+    color: colors.textMuted,
   },
 
   header: {
@@ -21,9 +22,10 @@ export const styles = StyleSheet.create({
   appName: {
     fontSize: 22,
     fontWeight: "700",
+    color: colors.text,
   },
   date: {
-    color: "#6b7280",
+    color: colors.textSecondary,
     marginTop: 2,
   },
 
@@ -63,7 +65,7 @@ export const styles = StyleSheet.create({
   },
   statCard: {
     width: "48%",
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 18,
     padding: 16,
   },
@@ -73,16 +75,17 @@ export const styles = StyleSheet.create({
     marginBottom: 12,
   },
   statLabel: {
-    color: "#6b7280",
+    color: colors.textSecondary,
     fontWeight: "500",
   },
   statValue: {
     fontSize: 24,
     fontWeight: "700",
+    color: colors.text,
   },
 
   largeCard: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 20,
     padding: 20,
     marginBottom: 16,
@@ -91,6 +94,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     marginBottom: 16,
+    color: colors.text,
   },
   emptyState: {
     alignItems: "center",
@@ -101,22 +105,22 @@ export const styles = StyleSheet.create({
     marginBottom: 8,
   },
   emptyText: {
-    color: "#6b7280",
+    color: colors.textSecondary,
   },
 
   adArea: {
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: colors.border,
     padding: 16,
     alignItems: "center",
   },
   adTitle: {
     fontWeight: "600",
-    color: "#9ca3af",
+    color: colors.textMuted,
   },
   adSubtitle: {
-    color: "#cbd5f5",
+    color: colors.textMuted,
     marginTop: 4,
   },
 });

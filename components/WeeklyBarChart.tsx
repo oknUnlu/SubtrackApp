@@ -1,13 +1,15 @@
-import React from "react";
 import { View } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 
 type Props = {
   data: { day: string; total: number; label: string }[];
   currencySymbol: string;
+  axisColor?: string;
+  labelColor?: string;
+  yLabelColor?: string;
 };
 
-export default function WeeklyBarChart({ data, currencySymbol }: Props) {
+export default function WeeklyBarChart({ data, currencySymbol, axisColor = "#e5e7eb", labelColor = "#6b7280", yLabelColor = "#9ca3af" }: Props) {
   if (data.length === 0) return null;
 
   const today = new Date().getDay().toString();
@@ -29,9 +31,9 @@ export default function WeeklyBarChart({ data, currencySymbol }: Props) {
         barBorderRadius={6}
         yAxisThickness={0}
         xAxisThickness={1}
-        xAxisColor="#e5e7eb"
-        yAxisTextStyle={{ fontSize: 11, color: "#9ca3af" }}
-        xAxisLabelTextStyle={{ fontSize: 11, color: "#6b7280" }}
+        xAxisColor={axisColor}
+        yAxisTextStyle={{ fontSize: 11, color: yLabelColor }}
+        xAxisLabelTextStyle={{ fontSize: 11, color: labelColor }}
         formatYLabel={(val: string) => `${currencySymbol}${val}`}
         isAnimated
         animationDuration={500}

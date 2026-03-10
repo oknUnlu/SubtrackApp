@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { AppColors } from "@/constants/theme";
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: AppColors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f6f7f9",
+    backgroundColor: colors.background,
   },
   content: {
     padding: 16,
@@ -18,13 +19,14 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "700",
+    color: colors.text,
   },
   subtitle: {
-    color: "#777",
+    color: colors.textSecondary,
     marginTop: 4,
   },
   summaryCard: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 16,
     padding: 16,
     flexDirection: "row",
@@ -32,16 +34,17 @@ export const styles = StyleSheet.create({
     marginBottom: 16,
   },
   label: {
-    color: "#777",
+    color: colors.textSecondary,
     marginBottom: 6,
   },
   amount: {
     fontSize: 20,
     fontWeight: "700",
+    color: colors.text,
   },
   addButton: {
     flexDirection: "row",
-    backgroundColor: "#22c55e",
+    backgroundColor: colors.primary,
     borderRadius: 16,
     paddingVertical: 14,
     justifyContent: "center",
@@ -54,7 +57,7 @@ export const styles = StyleSheet.create({
     marginLeft: 8,
   },
   emptyCard: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 16,
     padding: 24,
     alignItems: "center",
@@ -64,25 +67,26 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     marginTop: 12,
+    color: colors.text,
   },
   emptyText: {
-    color: "#777",
+    color: colors.textSecondary,
     textAlign: "center",
     marginTop: 8,
   },
   adArea: {
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: colors.border,
     borderRadius: 12,
     padding: 16,
     alignItems: "center",
   },
   adTitle: {
     fontWeight: "600",
-    color: "#999",
+    color: colors.textMuted,
   },
   adSubtitle: {
-    color: "#bbb",
+    color: colors.textMuted,
     marginTop: 4,
   },
   bottomTab: {
@@ -90,33 +94,36 @@ export const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingVertical: 12,
     borderTopWidth: 1,
-    borderColor: "#eee",
-    backgroundColor: "#fff",
+    borderColor: colors.border,
+    backgroundColor: colors.tabBarBg,
   },
   tabItem: {
     alignItems: "center",
   },
   tabLabel: {
     fontSize: 12,
-    color: "#999",
+    color: colors.textMuted,
     marginTop: 4,
   },
   input: {
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: colors.border,
     borderRadius: 10,
     padding: 10,
     marginBottom: 12,
+    color: colors.text,
+    backgroundColor: colors.inputBg,
   },
   pickerWrapper: {
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: colors.border,
     borderRadius: 10,
     marginBottom: 12,
     overflow: "hidden" as const,
+    backgroundColor: colors.inputBg,
   },
   subCard: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 14,
     padding: 14,
     marginBottom: 10,
@@ -126,9 +133,10 @@ export const styles = StyleSheet.create({
   subCardTitle: {
     fontWeight: "600" as const,
     fontSize: 16,
+    color: colors.text,
   },
   subCardInterval: {
-    color: "#6b7280",
+    color: colors.textSecondary,
     fontSize: 13,
     marginTop: 2,
   },
@@ -136,15 +144,16 @@ export const styles = StyleSheet.create({
     fontWeight: "700" as const,
     fontSize: 16,
     marginRight: 12,
+    color: colors.text,
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: colors.modalOverlay,
     justifyContent: "center" as const,
     padding: 20,
   },
   modalContent: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 16,
     padding: 16,
   },
@@ -152,6 +161,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700" as const,
     marginBottom: 12,
+    color: colors.text,
   },
   intervalRow: {
     flexDirection: "row" as const,

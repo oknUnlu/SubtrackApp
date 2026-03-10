@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { AppColors } from "@/constants/theme";
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: AppColors) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f6f7f9",
+    backgroundColor: colors.background,
   },
   content: {
     padding: 16,
@@ -18,9 +19,10 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "700",
+    color: colors.text,
   },
   subtitle: {
-    color: "#6b7280",
+    color: colors.textSecondary,
     marginTop: 4,
   },
   overallCard: {
@@ -63,9 +65,10 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     marginBottom: 12,
+    color: colors.text,
   },
   categoryCard: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 16,
     padding: 14,
     marginBottom: 10,
@@ -83,19 +86,21 @@ export const styles = StyleSheet.create({
     flex: 1,
     fontWeight: "600",
     fontSize: 15,
+    color: colors.text,
   },
   categoryInput: {
     width: 100,
-    backgroundColor: "#f3f4f6",
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 10,
     padding: 8,
     fontSize: 14,
     fontWeight: "600",
     textAlign: "right",
+    color: colors.text,
   },
   progressBar: {
     height: 8,
-    backgroundColor: "#e5e7eb",
+    backgroundColor: colors.border,
     borderRadius: 8,
     overflow: "hidden",
   },
@@ -105,7 +110,7 @@ export const styles = StyleSheet.create({
   },
   progressText: {
     fontSize: 12,
-    color: "#6b7280",
+    color: colors.textSecondary,
     marginTop: 4,
   },
   saveCategoryButton: {

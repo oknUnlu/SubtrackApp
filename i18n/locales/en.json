@@ -69,7 +69,9 @@
     "occurredTimes": "{{count}} times",
     "daysInterval": "days apart",
     "addAsSubscription": "Add as Subscription",
-    "dismiss": "Dismiss"
+    "dismiss": "Dismiss",
+    "nextRenewal": "Next Renewal Date",
+    "renews": "Renews"
   },
   "add": {
     "title": "Add Expense",
@@ -147,7 +149,19 @@
     "currencyUSD": "Dollar ($)",
     "currencyEUR": "Euro (€)",
     "exportExpenses": "Export Expenses",
-    "exportSubscriptions": "Export Subscriptions"
+    "exportSubscriptions": "Export Subscriptions",
+    "reminderDays": "Reminder Before Renewal",
+    "daysBefore": "{{count}} day(s) before",
+    "darkMode": "Dark Mode",
+    "darkModeSystem": "System",
+    "darkModeLight": "Light",
+    "darkModeDark": "Dark",
+    "biometricLock": "Biometric Lock",
+    "biometricPrompt": "Authenticate to continue",
+    "biometricFallback": "Use passcode",
+    "biometricLocked": "App Locked",
+    "biometricLockedDesc": "Authenticate with biometrics to access your data",
+    "biometricUnlock": "Unlock"
   },
   "budget": {
     "title": "Budget",
@@ -163,6 +177,17 @@
     "noLimit": "No limit",
     "validAmount": "Enter a valid amount",
     "limit": "limit"
+  },
+  "onboarding": {
+    "welcomeTitle": "Welcome to SubTrack",
+    "welcomeSubtitle": "Track your expenses and subscriptions effortlessly. Take control of your finances with smart insights.",
+    "featuresTitle": "Smart Features",
+    "featuresSubtitle": "AI-powered analysis, budget tracking, subscription management, and detailed spending reports — all in one app.",
+    "currencyTitle": "Choose Your Currency",
+    "currencySubtitle": "Select your primary currency. You can change this later in settings.",
+    "next": "Next",
+    "skip": "Skip",
+    "getStarted": "Get Started"
   },
   "history": {
     "title": "Transaction History",

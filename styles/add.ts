@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { AppColors } from "@/constants/theme";
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: AppColors) => StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: "#f6f7f9",
+    backgroundColor: colors.background,
     paddingBottom: 32,
   },
   header: {
@@ -14,9 +15,10 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontWeight: "700",
+    color: colors.text,
   },
   subtitle: {
-    color: "#6b7280",
+    color: colors.textSecondary,
     marginTop: 4,
   },
   label: {
@@ -24,24 +26,26 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
     marginBottom: 8,
     marginTop: 16,
-    color: "#374151",
+    color: colors.icon,
   },
   input: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.inputBg,
     borderRadius: 16,
     padding: 14,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: colors.border,
+    color: colors.text,
   },
   amountInput: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.inputBg,
     borderRadius: 16,
     padding: 18,
     fontSize: 22,
     fontWeight: "600",
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: colors.border,
+    color: colors.text,
   },
   categoryGrid: {
     flexDirection: "row",
@@ -51,16 +55,16 @@ export const styles = StyleSheet.create({
   },
   categoryCard: {
     width: "30%",
-    backgroundColor: "#f3f4f6",
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 16,
     paddingVertical: 20,
     alignItems: "center",
     marginBottom: 12,
   },
   categorySelected: {
-    backgroundColor: "#dcfce7",
+    backgroundColor: colors.primaryLight,
     borderWidth: 2,
-    borderColor: "#22c55e",
+    borderColor: colors.primary,
   },
   categoryIcon: {
     fontSize: 28,
@@ -69,24 +73,25 @@ export const styles = StyleSheet.create({
   categoryLabel: {
     fontSize: 14,
     fontWeight: "500",
-    color: "#111827",
+    color: colors.text,
   },
   categoryLabelSelected: {
     fontWeight: "700",
   },
   notesInput: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.inputBg,
     borderRadius: 16,
     padding: 14,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: colors.border,
     minHeight: 80,
     textAlignVertical: "top",
+    color: colors.text,
   },
   saveButton: {
     marginTop: 24,
-    backgroundColor: "#22c55e",
+    backgroundColor: colors.primary,
     borderRadius: 18,
     paddingVertical: 16,
     flexDirection: "row",
@@ -105,20 +110,20 @@ export const styles = StyleSheet.create({
   templateLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#6b7280",
+    color: colors.textSecondary,
     marginBottom: 8,
     marginTop: 8,
   },
   templateChip: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 14,
     paddingHorizontal: 14,
     paddingVertical: 10,
     marginRight: 10,
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: colors.border,
     minWidth: 120,
   },
   templateChipIcon: {
@@ -131,12 +136,12 @@ export const styles = StyleSheet.create({
   templateChipTitle: {
     fontSize: 13,
     fontWeight: "600",
-    color: "#222",
+    color: colors.text,
     maxWidth: 100,
   },
   templateChipAmount: {
     fontSize: 12,
-    color: "#22c55e",
+    color: colors.primary,
     fontWeight: "600",
     marginTop: 1,
   },
@@ -144,12 +149,12 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 14,
     padding: 14,
     marginTop: 16,
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: colors.border,
   },
   templateToggleLeft: {
     flexDirection: "row",
@@ -157,7 +162,7 @@ export const styles = StyleSheet.create({
   },
   templateToggleText: {
     fontSize: 15,
-    color: "#374151",
+    color: colors.icon,
     fontWeight: "500",
     marginLeft: 8,
   },
@@ -172,35 +177,36 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 14,
     paddingVertical: 6,
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
   },
   tagChipText: {
     fontSize: 13,
     fontWeight: "600",
-    color: "#374151",
+    color: colors.icon,
   },
   tagAddButton: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: "#dcfce7",
+    backgroundColor: colors.primaryLight,
     justifyContent: "center",
     alignItems: "center",
   },
   newTagRow: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.surface,
     borderRadius: 14,
     padding: 12,
     marginTop: 8,
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: colors.border,
   },
   newTagInput: {
-    backgroundColor: "#f3f4f6",
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 10,
     padding: 10,
     fontSize: 14,
     marginBottom: 8,
+    color: colors.text,
   },
   tagColorRow: {
     flexDirection: "row",
@@ -214,10 +220,10 @@ export const styles = StyleSheet.create({
   },
   tagColorDotSelected: {
     borderWidth: 3,
-    borderColor: "#222",
+    borderColor: colors.text,
   },
   tagCreateButton: {
-    backgroundColor: "#22c55e",
+    backgroundColor: colors.primary,
     borderRadius: 10,
     paddingVertical: 8,
     alignItems: "center",
@@ -231,12 +237,12 @@ export const styles = StyleSheet.create({
     marginTop: 24,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#e5e7eb",
+    borderColor: colors.border,
     padding: 16,
     alignItems: "center",
   },
   adText: {
-    color: "#9ca3af",
+    color: colors.textMuted,
     fontWeight: "600",
   },
 });

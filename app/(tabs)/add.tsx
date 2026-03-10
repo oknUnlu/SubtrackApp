@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   Alert,
   FlatList,
@@ -31,7 +31,8 @@ import {
   TagItem,
   TemplateItem,
 } from "../../database/db";
-import { styles } from "../../styles/add";
+import { createStyles } from "../../styles/add";
+import { useAppTheme } from '@/hooks/use-app-theme';
 
 const CATEGORY_DATA = [
   { key: "food", icon: "🍔" },
@@ -47,6 +48,9 @@ const CATEGORY_DATA = [
 
 export default function AddExpenseScreen() {
   const { t } = useTranslation();
+  const { colors } = useAppTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("other");
@@ -183,9 +187,8 @@ export default function AddExpenseScreen() {
     }
   };
 
-
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#f6f7f9" }} edges={["top"]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={["top"]}>
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -197,7 +200,6 @@ export default function AddExpenseScreen() {
           <Text style={styles.title}>{t('add.title')}</Text>
           <Text style={styles.subtitle}>{t('add.subtitle')}</Text>
         </View>
-        <Ionicons name="notifications-outline" size={22} color="#222" />
       </View>
 
       {/* Templates */}
@@ -233,7 +235,7 @@ export default function AddExpenseScreen() {
       <TextInput
         style={styles.input}
         placeholder={t('add.titlePlaceholder')}
-        placeholderTextColor="#9ca3af"
+        placeholderTextColor={colors.placeholder}
         value={title}
         onChangeText={setTitle}
       />
@@ -244,7 +246,7 @@ export default function AddExpenseScreen() {
         style={styles.amountInput}
         keyboardType="numeric"
         placeholder="0.00"
-        placeholderTextColor="#9ca3af"
+        placeholderTextColor={colors.placeholder}
         value={amount}
         onChangeText={setAmount}
       />
@@ -257,19 +259,11 @@ export default function AddExpenseScreen() {
           return (
             <TouchableOpacity
               key={item.key}
-              style={[
-                styles.categoryCard,
-                selected && styles.categorySelected,
-              ]}
+              style={[styles.categoryCard, selected && styles.categorySelected]}
               onPress={() => setCategory(item.key)}
             >
               <Text style={styles.categoryIcon}>{item.icon}</Text>
-              <Text
-                style={[
-                  styles.categoryLabel,
-                  selected && styles.categoryLabelSelected,
-                ]}
-              >
+              <Text style={[styles.categoryLabel, selected && styles.categoryLabelSelected]}>
                 {item.label}
               </Text>
             </TouchableOpacity>
@@ -282,7 +276,7 @@ export default function AddExpenseScreen() {
       <TextInput
         style={styles.notesInput}
         placeholder={t('add.notesPlaceholder')}
-        placeholderTextColor="#9ca3af"
+        placeholderTextColor={colors.placeholder}
         value={notes}
         onChangeText={setNotes}
         multiline
@@ -297,24 +291,15 @@ export default function AddExpenseScreen() {
           return (
             <TouchableOpacity
               key={tag.id}
-              style={[
-                styles.tagChip,
-                { borderColor: tag.color },
-                isSelected && { backgroundColor: tag.color },
-              ]}
+              style={[styles.tagChip, { borderColor: tag.color }, isSelected && { backgroundColor: tag.color }]}
               onPress={() => toggleTag(tag.id)}
             >
-              <Text style={[styles.tagChipText, isSelected && { color: '#fff' }]}>
-                {tag.name}
-              </Text>
+              <Text style={[styles.tagChipText, isSelected && { color: '#fff' }]}>{tag.name}</Text>
             </TouchableOpacity>
           );
         })}
-        <TouchableOpacity
-          style={styles.tagAddButton}
-          onPress={() => setShowNewTag(!showNewTag)}
-        >
-          <Ionicons name={showNewTag ? "close" : "add"} size={18} color="#22c55e" />
+        <TouchableOpacity style={styles.tagAddButton} onPress={() => setShowNewTag(!showNewTag)}>
+          <Ionicons name={showNewTag ? "close" : "add"} size={18} color={colors.primary} />
         </TouchableOpacity>
       </View>
       {showNewTag && (
@@ -322,7 +307,7 @@ export default function AddExpenseScreen() {
           <TextInput
             style={styles.newTagInput}
             placeholder={t('add.tagName')}
-            placeholderTextColor="#9ca3af"
+            placeholderTextColor={colors.placeholder}
             value={newTagName}
             onChangeText={setNewTagName}
           />
@@ -330,11 +315,7 @@ export default function AddExpenseScreen() {
             {TAG_COLORS.map((c) => (
               <TouchableOpacity
                 key={c}
-                style={[
-                  styles.tagColorDot,
-                  { backgroundColor: c },
-                  newTagColor === c && styles.tagColorDotSelected,
-                ]}
+                style={[styles.tagColorDot, { backgroundColor: c }, newTagColor === c && styles.tagColorDotSelected]}
                 onPress={() => setNewTagColor(c)}
               />
             ))}
@@ -348,13 +329,13 @@ export default function AddExpenseScreen() {
       {/* Save as Template */}
       <View style={styles.templateToggle}>
         <View style={styles.templateToggleLeft}>
-          <Ionicons name="bookmark-outline" size={20} color="#6b7280" />
+          <Ionicons name="bookmark-outline" size={20} color={colors.iconSecondary} />
           <Text style={styles.templateToggleText}>{t('add.saveAsTemplate')}</Text>
         </View>
         <Switch
           value={saveAsTemplate}
           onValueChange={setSaveAsTemplate}
-          trackColor={{ false: '#e5e7eb', true: '#86efac' }}
+          trackColor={{ false: colors.border, true: '#86efac' }}
           thumbColor={saveAsTemplate ? '#22c55e' : '#f4f3f4'}
         />
       </View>
@@ -364,7 +345,6 @@ export default function AddExpenseScreen() {
         <Ionicons name="checkmark" size={20} color="#fff" />
         <Text style={styles.saveButtonText}>{t('add.saveExpense')}</Text>
       </TouchableOpacity>
-
 
       {/* Ad Area */}
       <View style={styles.adArea}>
