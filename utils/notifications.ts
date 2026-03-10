@@ -1,29 +1,34 @@
-import * as Notifications from "expo-notifications";
+import Constants, { ExecutionEnvironment } from "expo-constants";
 import { Platform } from "react-native";
 import { getSubscriptions, getSetting } from "../database/db";
 
 /**
- * Flag that tracks whether expo-notifications is available in this runtime.
- * Expo Go removed push notification support in SDK 53+, so we gracefully
- * skip all notification calls when running inside Expo Go.
+ * expo-notifications is completely unavailable in Expo Go since SDK 53.
+ * We detect Expo Go via Constants.executionEnvironment and skip loading
+ * the module entirely to avoid the console error / red screen.
  */
-let notificationsAvailable = true;
+const isExpoGo = Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
 
-try {
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: true,
-      shouldSetBadge: false,
-    }),
-  });
-} catch {
-  notificationsAvailable = false;
-  console.warn("expo-notifications is not available in this environment (Expo Go?).");
+let Notifications: typeof import("expo-notifications") | null = null;
+
+if (!isExpoGo && Platform.OS !== "web") {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    Notifications = require("expo-notifications");
+    Notifications!.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: false,
+      }),
+    });
+  } catch {
+    Notifications = null;
+  }
 }
 
 export async function requestNotificationPermissions(): Promise<boolean> {
-  if (!notificationsAvailable) return false;
+  if (!Notifications) return false;
 
   try {
     const { status: existing } = await Notifications.getPermissionsAsync();
@@ -32,7 +37,7 @@ export async function requestNotificationPermissions(): Promise<boolean> {
     const { status } = await Notifications.requestPermissionsAsync();
     return status === "granted";
   } catch {
-    notificationsAvailable = false;
+    Notifications = null;
     return false;
   }
 }
@@ -45,20 +50,18 @@ export async function scheduleSubscriptionReminder(
   daysBefore: number = 1,
   currencySymbol: string = "₺"
 ): Promise<string | null> {
-  if (!notificationsAvailable) return null;
+  if (!Notifications) return null;
 
   try {
     const hasPermission = await requestNotificationPermissions();
     if (!hasPermission) return null;
 
-    // Cancel existing notification for this subscription
     await cancelSubscriptionReminder(subscriptionId);
 
     const reminderDate = new Date(nextDate);
     reminderDate.setDate(reminderDate.getDate() - daysBefore);
-    reminderDate.setHours(9, 0, 0, 0); // 9 AM
+    reminderDate.setHours(9, 0, 0, 0);
 
-    // Don't schedule if the reminder date is in the past
     if (reminderDate.getTime() <= Date.now()) return null;
 
     const id = await Notifications.scheduleNotificationAsync({
@@ -76,23 +79,23 @@ export async function scheduleSubscriptionReminder(
 
     return id;
   } catch {
-    notificationsAvailable = false;
+    Notifications = null;
     return null;
   }
 }
 
 export async function cancelSubscriptionReminder(subscriptionId: string): Promise<void> {
-  if (!notificationsAvailable) return;
+  if (!Notifications) return;
 
   try {
     await Notifications.cancelScheduledNotificationAsync(`sub_${subscriptionId}`);
   } catch {
-    // Notification may not exist or notifications not available
+    // Notification may not exist
   }
 }
 
 export async function rescheduleAllReminders(): Promise<void> {
-  if (Platform.OS === "web" || !notificationsAvailable) return;
+  if (!Notifications) return;
 
   try {
     const subs = await getSubscriptions();
@@ -107,6 +110,6 @@ export async function rescheduleAllReminders(): Promise<void> {
       }
     }
   } catch {
-    // Notifications not available in this environment
+    // Notifications not available
   }
 }

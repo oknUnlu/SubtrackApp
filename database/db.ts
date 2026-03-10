@@ -1,4 +1,4 @@
-import * as SQLite from "expo-sqlite";
+import { Platform } from "react-native";
 
 export type TransactionItem = {
   id: string;
@@ -37,9 +37,33 @@ export type TagItem = {
   color: string;
 };
 
-
 const DB_NAME = "subtrack.db";
-const db = SQLite.openDatabaseSync(DB_NAME);
+
+/**
+ * Lazy-loaded database instance.
+ * expo-sqlite requires SharedArrayBuffer on web which is not available
+ * without special COOP/COEP headers, so we open the DB lazily and
+ * provide a no-op stub on the web platform.
+ */
+let _db: import("expo-sqlite").SQLiteDatabase | null = null;
+let _isWeb = Platform.OS === "web";
+
+/** No-op database stub for web — all queries return empty results */
+const webStub = {
+  runAsync: async () => ({ changes: 0, lastInsertRowId: 0 }),
+  getAllAsync: async () => [],
+  getFirstAsync: async () => null,
+} as unknown as import("expo-sqlite").SQLiteDatabase;
+
+function getDB(): import("expo-sqlite").SQLiteDatabase {
+  if (_isWeb) return webStub;
+  if (!_db) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const SQLite = require("expo-sqlite") as typeof import("expo-sqlite");
+    _db = SQLite.openDatabaseSync(DB_NAME);
+  }
+  return _db;
+}
 
 /* -------------------- */
 /*  GENERIC SQL HELPER  */
@@ -49,7 +73,7 @@ async function executeSql(
   params: (string | number | null)[] = []
 ): Promise<any> {
   try {
-    return await db.runAsync(sql, params);
+    return await getDB().runAsync(sql, params);
   } catch (err) {
     console.error("SQL error:", err);
     throw err;
@@ -60,6 +84,8 @@ async function executeSql(
 /*  INIT DATABASE       */
 /* -------------------- */
 export async function initDB(): Promise<void> {
+  if (_isWeb) return;
+
   await executeSql(
     `CREATE TABLE IF NOT EXISTS transactions (
       id TEXT PRIMARY KEY NOT NULL,
@@ -124,9 +150,9 @@ export async function initDB(): Promise<void> {
     )`
   );
 
-  // Migrations — use db.runAsync directly to avoid console.error noise
+  // Migrations — use getDB().runAsync directly to avoid console.error noise
   // when the column already exists (duplicate column is expected on repeat launches)
-  await db.runAsync(`ALTER TABLE transactions ADD COLUMN notes TEXT`).catch(() => {});
+  await getDB().runAsync(`ALTER TABLE transactions ADD COLUMN notes TEXT`).catch(() => {});
 }
 
 /* -------------------- */
@@ -156,13 +182,13 @@ export async function updateTransaction(item: TransactionItem) {
 }
 
 export async function getTransactions(): Promise<TransactionItem[]> {
-  return await db.getAllAsync(
+  return await getDB().getAllAsync(
     "SELECT * FROM transactions ORDER BY date DESC"
   );
 }
 
 export async function getRecentTransactions(limit: number = 5): Promise<TransactionItem[]> {
-  return await db.getAllAsync(
+  return await getDB().getAllAsync(
     "SELECT * FROM transactions ORDER BY date DESC LIMIT ?",
     [limit]
   );
@@ -211,7 +237,7 @@ export async function searchTransactions(opts: {
     params.push(opts.offset);
   }
 
-  return await db.getAllAsync<TransactionItem>(sql, params);
+  return await getDB().getAllAsync<TransactionItem>(sql, params);
 }
 
 export async function getTransactionCount(opts?: {
@@ -240,7 +266,7 @@ export async function getTransactionCount(opts?: {
     params.push(opts.dateTo);
   }
 
-  const result = await db.getFirstAsync<{ count: number }>(sql, params);
+  const result = await getDB().getFirstAsync<{ count: number }>(sql, params);
   return result?.count ?? 0;
 }
 
@@ -263,7 +289,7 @@ export async function addSubscription(item: SubscriptionItem) {
 }
 
 export async function getSubscriptions(): Promise<SubscriptionItem[]> {
-  return await db.getAllAsync(
+  return await getDB().getAllAsync(
     "SELECT * FROM subscriptions ORDER BY title ASC"
   );
 }
@@ -280,7 +306,7 @@ export async function updateSubscription(item: SubscriptionItem) {
 }
 
 export async function getMonthlyTotal(): Promise<number> {
-  const txResult = await db.getFirstAsync<{ total: number }>(
+  const txResult = await getDB().getFirstAsync<{ total: number }>(
     `
     SELECT SUM(amount) as total
     FROM transactions
@@ -288,7 +314,7 @@ export async function getMonthlyTotal(): Promise<number> {
     `
   );
 
-  const subResult = await db.getAllAsync<{ amount: number; interval: string }>(
+  const subResult = await getDB().getAllAsync<{ amount: number; interval: string }>(
     `SELECT amount, interval FROM subscriptions`
   );
 
@@ -301,7 +327,7 @@ export async function getMonthlyTotal(): Promise<number> {
 }
 
 export async function getSubscriptionCount(): Promise<number> {
-  const result = await db.getFirstAsync<{ count: number }>(
+  const result = await getDB().getFirstAsync<{ count: number }>(
     `SELECT COUNT(*) as count FROM subscriptions`
   );
 
@@ -309,7 +335,7 @@ export async function getSubscriptionCount(): Promise<number> {
 }
 
 export async function getCategoryDistribution() {
-  return await db.getAllAsync<{
+  return await getDB().getAllAsync<{
     category: string;
     total: number;
   }>(
@@ -322,7 +348,7 @@ export async function getCategoryDistribution() {
 }
 
 export async function getWeeklyTrend() {
-  return await db.getAllAsync<{
+  return await getDB().getAllAsync<{
     day: string;
     total: number;
   }>(
@@ -338,7 +364,7 @@ export async function getWeeklyTrend() {
 
 
 export async function getMonthlyTotalForMonth(yearMonth: string): Promise<number> {
-  const result = await db.getFirstAsync<{ total: number }>(
+  const result = await getDB().getFirstAsync<{ total: number }>(
     `SELECT COALESCE(SUM(amount), 0) as total FROM transactions WHERE strftime('%Y-%m', date) = ?`,
     [yearMonth]
   );
@@ -371,7 +397,7 @@ export async function setSetting(key: string, value: string) {
 }
 
 export async function getSetting(key: string): Promise<string | null> {
-  const result = await db.getFirstAsync<{ value: string }>(
+  const result = await getDB().getFirstAsync<{ value: string }>(
     `SELECT value FROM settings WHERE key = ?`,
     [key]
   );
@@ -421,11 +447,11 @@ export async function getBudget(type: string, category?: string, month?: string)
   }
 
   sql += ` LIMIT 1`;
-  return await db.getFirstAsync<BudgetItem>(sql, params);
+  return await getDB().getFirstAsync<BudgetItem>(sql, params);
 }
 
 export async function getAllBudgets(): Promise<BudgetItem[]> {
-  return await db.getAllAsync<BudgetItem>(
+  return await getDB().getAllAsync<BudgetItem>(
     `SELECT * FROM budgets ORDER BY type ASC, category ASC`
   );
 }
@@ -440,22 +466,22 @@ export async function getBudgetVsActual(month?: string): Promise<{
 }> {
   const targetMonth = month ?? new Date().toISOString().slice(0, 7);
 
-  const overallBudget = await db.getFirstAsync<{ amount: number }>(
+  const overallBudget = await getDB().getFirstAsync<{ amount: number }>(
     `SELECT amount FROM budgets WHERE type = 'overall' AND (month = ? OR month IS NULL) ORDER BY month DESC LIMIT 1`,
     [targetMonth]
   );
 
-  const txTotal = await db.getFirstAsync<{ total: number }>(
+  const txTotal = await getDB().getFirstAsync<{ total: number }>(
     `SELECT COALESCE(SUM(amount), 0) as total FROM transactions WHERE strftime('%Y-%m', date) = ?`,
     [targetMonth]
   );
 
-  const catBudgets = await db.getAllAsync<{ category: string; amount: number }>(
+  const catBudgets = await getDB().getAllAsync<{ category: string; amount: number }>(
     `SELECT category, amount FROM budgets WHERE type = 'category' AND (month = ? OR month IS NULL)`,
     [targetMonth]
   );
 
-  const catActuals = await db.getAllAsync<{ category: string; total: number }>(
+  const catActuals = await getDB().getAllAsync<{ category: string; total: number }>(
     `SELECT category, COALESCE(SUM(amount), 0) as total FROM transactions WHERE strftime('%Y-%m', date) = ? GROUP BY category`,
     [targetMonth]
   );
@@ -483,7 +509,7 @@ export async function addTemplate(item: TemplateItem) {
 }
 
 export async function getTemplates(): Promise<TemplateItem[]> {
-  return await db.getAllAsync<TemplateItem>(
+  return await getDB().getAllAsync<TemplateItem>(
     `SELECT * FROM templates ORDER BY useCount DESC, title ASC`
   );
 }
@@ -507,7 +533,7 @@ export async function createTag(tag: TagItem) {
 }
 
 export async function getTags(): Promise<TagItem[]> {
-  return await db.getAllAsync<TagItem>(`SELECT * FROM tags ORDER BY name ASC`);
+  return await getDB().getAllAsync<TagItem>(`SELECT * FROM tags ORDER BY name ASC`);
 }
 
 export async function deleteTag(id: string) {
@@ -525,7 +551,7 @@ export async function addTagsToTransaction(transactionId: string, tagIds: string
 }
 
 export async function getTagsForTransaction(transactionId: string): Promise<TagItem[]> {
-  return await db.getAllAsync<TagItem>(
+  return await getDB().getAllAsync<TagItem>(
     `SELECT t.* FROM tags t INNER JOIN transaction_tags tt ON t.id = tt.tagId WHERE tt.transactionId = ?`,
     [transactionId]
   );
@@ -534,7 +560,7 @@ export async function getTagsForTransaction(transactionId: string): Promise<TagI
 export async function getTagsForTransactions(transactionIds: string[]): Promise<Map<string, TagItem[]>> {
   if (transactionIds.length === 0) return new Map();
   const placeholders = transactionIds.map(() => '?').join(',');
-  const rows = await db.getAllAsync<{ transactionId: string; id: string; name: string; color: string }>(
+  const rows = await getDB().getAllAsync<{ transactionId: string; id: string; name: string; color: string }>(
     `SELECT tt.transactionId, t.id, t.name, t.color FROM tags t INNER JOIN transaction_tags tt ON t.id = tt.tagId WHERE tt.transactionId IN (${placeholders})`,
     transactionIds
   );
