@@ -8,8 +8,6 @@
     "success": "Başarılı",
     "monthly": "Aylık",
     "yearly": "Yıllık",
-    "adArea": "REKLAM ALANI",
-    "adBanner": "AdMob Banner (320×50)",
     "deleteConfirm": "\"{{name}}\" silinsin mi?",
     "deleted": "Silindi"
   },

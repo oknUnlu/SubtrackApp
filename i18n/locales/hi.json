@@ -8,8 +8,6 @@
     "success": "सफल",
     "monthly": "मासिक",
     "yearly": "वार्षिक",
-    "adArea": "विज्ञापन क्षेत्र",
-    "adBanner": "AdMob Banner (320×50)",
     "deleteConfirm": "\"{{name}}\" को हटाएं?",
     "deleted": "हटाया गया"
   },

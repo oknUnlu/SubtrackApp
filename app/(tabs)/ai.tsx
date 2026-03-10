@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 
+import AdBanner from '@/components/AdBanner';
 import {
   getBudgetVsActual,
   getCategoryDistribution,
@@ -203,10 +204,8 @@ export default function AIAnalysisScreen() {
           </View>
         )}
 
-        <View style={styles.adArea}>
-          <Text style={styles.adTitle}>{t("common.adArea")}</Text>
-          <Text style={styles.adSubtitle}>{t("common.adBanner")}</Text>
-        </View>
+        {/* Ad */}
+        <AdBanner />
       </ScrollView>
     </SafeAreaView>
   );

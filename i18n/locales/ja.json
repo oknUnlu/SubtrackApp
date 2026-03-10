@@ -8,8 +8,6 @@
     "success": "成功",
     "monthly": "月額",
     "yearly": "年額",
-    "adArea": "広告エリア",
-    "adBanner": "AdMob Banner (320×50)",
     "deleteConfirm": "\"{{name}}\"を削除しますか？",
     "deleted": "削除しました"
   },

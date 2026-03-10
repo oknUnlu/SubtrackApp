@@ -8,8 +8,6 @@
     "success": "Sucesso",
     "monthly": "Mensal",
     "yearly": "Anual",
-    "adArea": "ÁREA DE ANÚNCIOS",
-    "adBanner": "AdMob Banner (320×50)",
     "deleteConfirm": "Excluir \"{{name}}\"?",
     "deleted": "Excluído"
   },

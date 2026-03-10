@@ -39,7 +39,14 @@
         }
       ],
       "expo-sqlite",
-      "expo-localization"
+      "expo-localization",
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "##################~##########",
+          "iosAppId": "##################~##########"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

@@ -55,6 +55,14 @@ const webStub = {
   getFirstAsync: async () => null,
 } as unknown as import("expo-sqlite").SQLiteDatabase;
 
+/* ---- Web-only localStorage helpers for settings persistence ---- */
+function webGetSetting(key: string): string | null {
+  try { return globalThis.localStorage?.getItem(`subtrack_${key}`) ?? null; } catch { return null; }
+}
+function webSetSetting(key: string, value: string): void {
+  try { globalThis.localStorage?.setItem(`subtrack_${key}`, value); } catch { /* noop */ }
+}
+
 function getDB(): import("expo-sqlite").SQLiteDatabase {
   if (_isWeb) return webStub;
   if (!_db) {
@@ -390,6 +398,7 @@ export async function getMonthlyComparison(): Promise<{
 }
 
 export async function setSetting(key: string, value: string) {
+  if (_isWeb) { webSetSetting(key, value); return; }
   await executeSql(
     `INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)`,
     [key, value]
@@ -397,6 +406,7 @@ export async function setSetting(key: string, value: string) {
 }
 
 export async function getSetting(key: string): Promise<string | null> {
+  if (_isWeb) return webGetSetting(key);
   const result = await getDB().getFirstAsync<{ value: string }>(
     `SELECT value FROM settings WHERE key = ?`,
     [key]

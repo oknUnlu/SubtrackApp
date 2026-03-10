@@ -8,8 +8,6 @@
     "success": "Berhasil",
     "monthly": "Bulanan",
     "yearly": "Tahunan",
-    "adArea": "AREA IKLAN",
-    "adBanner": "AdMob Banner (320×50)",
     "deleteConfirm": "Hapus \"{{name}}\"?",
     "deleted": "Dihapus"
   },

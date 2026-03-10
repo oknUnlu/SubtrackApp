@@ -74,21 +74,6 @@ export const createStyles = (colors: AppColors) => StyleSheet.create({
     textAlign: "center",
     marginTop: 8,
   },
-  adArea: {
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 12,
-    padding: 16,
-    alignItems: "center",
-  },
-  adTitle: {
-    fontWeight: "600",
-    color: colors.textMuted,
-  },
-  adSubtitle: {
-    color: colors.textMuted,
-    marginTop: 4,
-  },
   bottomTab: {
     flexDirection: "row",
     justifyContent: "space-around",

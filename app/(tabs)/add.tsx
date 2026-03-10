@@ -16,6 +16,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from 'react-i18next';
 
+import AdBanner from '@/components/AdBanner';
 import { randomUUID } from "expo-crypto";
 import {
   addTagsToTransaction,
@@ -346,10 +347,8 @@ export default function AddExpenseScreen() {
         <Text style={styles.saveButtonText}>{t('add.saveExpense')}</Text>
       </TouchableOpacity>
 
-      {/* Ad Area */}
-      <View style={styles.adArea}>
-        <Text style={styles.adText}>{t('common.adArea')}</Text>
-      </View>
+      {/* Ad */}
+      <AdBanner />
     </ScrollView>
     </KeyboardAvoidingView>
     </SafeAreaView>

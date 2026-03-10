@@ -233,16 +233,4 @@ export const createStyles = (colors: AppColors) => StyleSheet.create({
     fontWeight: "600",
     fontSize: 14,
   },
-  adArea: {
-    marginTop: 24,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: 16,
-    alignItems: "center",
-  },
-  adText: {
-    color: colors.textMuted,
-    fontWeight: "600",
-  },
 });

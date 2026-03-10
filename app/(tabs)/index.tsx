@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 
+import AdBanner from '@/components/AdBanner';
 import ExpenseDonutChart from '../../components/ExpenseDonutChart';
 import WeeklyBarChart from '../../components/WeeklyBarChart';
 import { useAppTheme } from '@/hooks/use-app-theme';
@@ -377,10 +378,7 @@ export default function HomeScreen() {
       </View>
 
       {/* Ad */}
-      <View style={styles.adArea}>
-        <Text style={styles.adTitle}>{t('common.adArea')}</Text>
-        <Text style={styles.adSubtitle}>{t('common.adBanner')}</Text>
-      </View>
+      <AdBanner />
     </ScrollView>
   </SafeAreaView>
   );
