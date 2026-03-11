@@ -10,7 +10,7 @@ import { View, type ViewStyle } from "react-native";
  * unavailable (Expo Go or web).
  */
 
-const AD_UNIT_ID = "####################/##########";  
+const AD_UNIT_ID = "ca-app-pub-3850996093825148/7549678024";
 
 let BannerAd: any = null;
 let BannerAdSize: any = null;

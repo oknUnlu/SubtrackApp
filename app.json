@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "SubtrackApp",
+    "name": "SubTrack",
     "slug": "SubtrackApp",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,9 +9,12 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.okanu.subtrack"
     },
     "android": {
+      "package": "com.okanu.subtrack",
+      "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#22c55e",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -43,14 +46,20 @@
       [
         "react-native-google-mobile-ads",
         {
-          "androidAppId": "##################################", 
-          "iosAppId": "##################################"
+          "androidAppId": "ca-app-pub-3850996093825148~8955238971",
+          "iosAppId": "ca-app-pub-3850996093825148~8955238971"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "f0a966b3-4ea3-45a9-ad5b-9ad9cc56d986"
+      }
     }
   }
 }
