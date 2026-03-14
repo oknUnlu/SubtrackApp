@@ -1,0 +1,16 @@
+🚀 Versão 1.0.0 - Lançamento Inicial
+
+✨ Recursos:
+• Rastreie gastos com categorias e tags
+• Gerencie todas as suas assinaturas em um só lugar
+• Defina orçamentos e monitore gastos
+• Análise impulsionada por IA e dicas inteligentes
+• Gráficos e análises bonitos
+• Suporte ao modo escuro
+• 8 idiomas
+• Proteção com bloqueio biométrico
+• Exportar dados em CSV
+
+🎯 Privacidade em Primeiro Lugar: Todos os seus dados permanecem no seu dispositivo. Sem servidores, sem rastreamento.
+
+Obrigado por experimentar SubTrack!

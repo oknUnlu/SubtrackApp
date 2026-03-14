@@ -1,0 +1,25 @@
+SubTrack helps you take control of your finances by tracking every expense and subscription in one place.
+
+✦ EXPENSE TRACKING
+Quickly log expenses with categories, tags, and notes. See where your money goes with beautiful charts and weekly trends.
+
+✦ SUBSCRIPTION MANAGEMENT
+Never forget a renewal again. Track all your subscriptions — Netflix, Spotify, iCloud, and more — with automatic reminders before they charge.
+
+✦ SMART BUDGETS
+Set monthly budgets overall or by category. Visual progress bars show how close you are to your limits.
+
+✦ AI-POWERED INSIGHTS
+Get personalized tips based on your spending patterns. Discover savings opportunities and track your financial progress.
+
+✦ PRIVACY FIRST
+All data stays on your device. No account required, no data sent to servers. Your finances are yours alone.
+
+✦ MORE FEATURES
+• Dark Mode — easy on the eyes
+• Biometric Lock — Face ID & fingerprint protection
+• 8 Languages — English, Turkish, Spanish, Portuguese, Hindi, Indonesian, Japanese, Korean
+• CSV Export — share and backup your data
+• Tags & Templates — organize expenses your way
+
+Download SubTrack today and start saving smarter!

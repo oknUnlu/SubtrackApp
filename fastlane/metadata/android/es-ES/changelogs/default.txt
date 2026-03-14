@@ -1,0 +1,16 @@
+🚀 Versión 1.0.0 - Lanzamiento Inicial
+
+✨ Características:
+• Registra gastos con categorías y etiquetas
+• Gestiona todas tus suscripciones en un solo lugar
+• Establece presupuestos y monitorea gastos
+• Análisis impulsado por IA y consejos inteligentes
+• Hermosos gráficos y análisis
+• Compatible con modo oscuro
+• 8 idiomas
+• Protección con bloqueo biométrico
+• Exportar datos en CSV
+
+🎯 Privacidad Primero: Todos tus datos permanecen en tu dispositivo. Sin servidores, sin seguimiento.
+
+¡Gracias por probar SubTrack!

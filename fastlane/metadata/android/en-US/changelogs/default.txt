@@ -1,0 +1,16 @@
+🚀 Version 1.0.0 - Initial Release
+
+✨ Features:
+• Track expenses with categories and tags
+• Manage all your subscriptions in one place
+• Set budgets and monitor spending
+• AI-powered insights and smart tips
+• Beautiful charts and analytics
+• Dark mode support
+• 8 languages
+• Biometric lock protection
+• CSV export for your data
+
+🎯 Privacy First: All data stays on your device. No servers, no tracking.
+
+Thank you for trying SubTrack!

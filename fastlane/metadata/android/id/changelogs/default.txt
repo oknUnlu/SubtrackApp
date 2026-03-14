@@ -1,0 +1,16 @@
+🚀 Versi 1.0.0 - Rilis Awal
+
+✨ Fitur:
+• Lacak pengeluaran dengan kategori dan tag
+• Kelola semua langganan Anda di satu tempat
+• Tetapkan anggaran dan pantau pengeluaran
+• Analisis bertenaga AI dan tips cerdas
+• Grafik dan analitik yang indah
+• Dukungan mode gelap
+• 8 bahasa
+• Perlindungan kunci biometrik
+• Ekspor data dalam CSV
+
+🎯 Privasi Utama: Semua data Anda tetap di perangkat Anda. Tidak ada server, tidak ada pelacakan.
+
+Terima kasih telah mencoba SubTrack!

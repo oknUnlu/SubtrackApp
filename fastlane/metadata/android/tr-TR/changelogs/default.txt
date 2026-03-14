@@ -1,0 +1,16 @@
+🚀 Sürüm 1.0.0 - İlk Sürüm
+
+✨ Özellikler:
+• Harcamaları kategoriler ve etiketlerle takip edin
+• Tüm aboneliklerinizi tek bir yerde yönetin
+• Bütçe belirleyin ve harcamaları izleyin
+• AI destekli öneriler ve akıllı ipuçları
+• Güzel grafikler ve analizler
+• Koyu mod desteği
+• 8 dil desteği
+• Biyometrik kilit koruması
+• CSV dışa aktarma
+
+🎯 Gizlilik Öncelikli: Tüm verileriniz cihazınızda kalır. Sunucu yok, izleme yok.
+
+SubTrack'i denediğiniz için teşekkürler!
