@@ -1,11 +1,11 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { AppColors } from "@/constants/theme";
 
 export const createStyles = (colors: AppColors) => StyleSheet.create({
   container: {
     padding: 16,
     backgroundColor: colors.background,
-    paddingBottom: 32,
+    paddingBottom: Platform.OS === 'android' ? 100 : 40,
   },
   statHint: {
     marginTop: 4,

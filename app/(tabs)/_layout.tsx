@@ -56,10 +56,10 @@ export default function TabLayout() {
             <View
               style={{
                 position: 'absolute',
-                top: -10,
-                height: 45,
-                width: 45,
-                borderRadius: 30,
+                top: Platform.OS === 'android' ? -20 : -10,
+                height: 50,
+                width: 50,
+                borderRadius: 25,
                 backgroundColor: colors.primary,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -73,6 +73,9 @@ export default function TabLayout() {
               <Ionicons name="add" size={30} color="#fff" />
             </View>
           ),
+          tabBarItemStyle: {
+            height: 50,
+          },
         }}
       />
       <Tabs.Screen

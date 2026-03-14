@@ -1,9 +1,9 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { AppColors } from "@/constants/theme";
 
 export const createStyles = (colors: AppColors) => StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background },
-  content: { padding: 16 },
+  content: { padding: 16, paddingBottom: Platform.OS === 'android' ? 100 : 40 },
 
   header: {
     flexDirection: "row",
