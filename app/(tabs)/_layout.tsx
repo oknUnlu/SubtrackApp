@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform, View } from 'react-native';
+import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
 import { useAppTheme } from '@/hooks/use-app-theme';
@@ -9,6 +10,9 @@ import { useAppTheme } from '@/hooks/use-app-theme';
 export default function TabLayout() {
   const { colors } = useAppTheme();
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
+
+  const bottomPadding = Math.max(insets.bottom, 10);
 
   return (
     <Tabs
@@ -17,8 +21,8 @@ export default function TabLayout() {
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textMuted,
         tabBarStyle: {
-          height: Platform.OS === 'android' ? 70 : 80,
-          paddingBottom: Platform.OS === 'android' ? 10 : 20,
+          height: 60 + bottomPadding,
+          paddingBottom: bottomPadding,
           paddingTop: 8,
           borderTopWidth: 1,
           borderTopColor: colors.tabBarBorder,
@@ -56,7 +60,7 @@ export default function TabLayout() {
             <View
               style={{
                 position: 'absolute',
-                top: Platform.OS === 'android' ? -20 : -10,
+                top: -18,
                 height: 50,
                 width: 50,
                 borderRadius: 25,
@@ -73,9 +77,6 @@ export default function TabLayout() {
               <Ionicons name="add" size={30} color="#fff" />
             </View>
           ),
-          tabBarItemStyle: {
-            height: 50,
-          },
         }}
       />
       <Tabs.Screen

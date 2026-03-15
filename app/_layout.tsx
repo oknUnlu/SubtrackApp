@@ -1,6 +1,6 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack, useRouter } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+import { SystemBars } from 'react-native-edge-to-edge';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 
@@ -33,7 +33,7 @@ function AppContent({ showOnboarding }: { showOnboarding: boolean }) {
         <Stack.Screen name="history" options={{ presentation: 'modal', headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
       </Stack>
-      <StatusBar style={isDark ? "light" : "dark"} />
+      <SystemBars style={isDark ? "light" : "dark"} />
     </ThemeProvider>
   );
 }
