@@ -99,7 +99,18 @@
     "cash": "Cash",
     "creditCard": "Credit Card",
     "bankName": "Bank Name",
-    "bankNamePlaceholder": "E.g: Garanti, Yapı Kredi..."
+    "bankNamePlaceholder": "E.g: Garanti, Yapı Kredi...",
+    "budgetExceeded": "⚠️ Monthly budget exceeded! ({{percent}}%)",
+    "budgetWarning": "⚠️ {{percent}}% of monthly budget used",
+    "categoryBudgetExceeded": "⚠️ {{category}} budget exceeded! ({{percent}}%)",
+    "categoryBudgetWarning": "⚠️ {{category}}: {{percent}}% of budget used",
+    "receipt": "Receipt / Photo",
+    "pickPhoto": "Gallery",
+    "takePhoto": "Camera",
+    "cameraPermission": "Camera permission is required",
+    "installmentPurchase": "Installment Purchase",
+    "installmentCount": "Number of Installments",
+    "installmentSummary": "{{count}} installments × {{monthly}}/month"
   },
   "ai": {
     "title": "Smart Tips",
@@ -130,6 +141,10 @@
     "weekdayPatternDesc": "You tend to spend the most on {{day}}s",
     "savingsTip": "Savings Opportunity",
     "savingsTipDesc": "{{category}} accounts for {{percent}}% of your spending. Consider setting a budget limit.",
+    "budgetSuggestion": "Budget Suggestion",
+    "budgetSuggestionDesc": "Based on your spending, we suggest a monthly budget of {{amount}}",
+    "categorySuggestion": "Category Budget Tip",
+    "categorySuggestionDesc": "Consider setting a {{amount}} budget for {{category}} based on your recent spending",
     "days": {
       "sunday": "Sunday",
       "monday": "Monday",
@@ -206,5 +221,78 @@
     "totalResults": "{{count}} transactions",
     "viewAll": "View All",
     "deleteTransaction": "Delete Transaction"
+  },
+  "yearlyReport": {
+    "title": "Yearly Summary",
+    "subtitle": "Your annual spending overview",
+    "totalSpent": "Total Spent",
+    "monthlyAvg": "Monthly Average",
+    "topMonth": "Highest Month",
+    "topCategory": "Top Category",
+    "monthlyBreakdown": "Monthly Breakdown",
+    "categoryBreakdown": "Category Breakdown",
+    "noData": "No data for this year"
+  },
+  "bankReport": {
+    "title": "Credit Card Report",
+    "subtitle": "Spending by bank",
+    "totalCardSpending": "Total Card Spending",
+    "transactions": "{{count}} transactions",
+    "noCardData": "No credit card expenses yet"
+  },
+  "categoryTrend": {
+    "title": "Category Trend",
+    "subtitle": "Monthly spending by category",
+    "last6Months": "Last 6 Months",
+    "selectCategory": "Select a category",
+    "noData": "No data for this category"
+  },
+  "installments": {
+    "title": "Installments",
+    "subtitle": "Track your installment payments",
+    "addNew": "Add Installment",
+    "totalDebt": "Total Remaining",
+    "monthlyPayment": "Monthly Payment",
+    "productName": "Product/Service Name",
+    "totalAmount": "Total Amount",
+    "numberOfInstallments": "Number of Installments",
+    "paidInstallments": "Paid",
+    "remaining": "{{paid}}/{{total}} paid",
+    "markPaid": "Mark as Paid",
+    "completed": "Completed",
+    "noInstallments": "No installments yet",
+    "fillAllFields": "Please fill in all fields",
+    "bankName": "Bank Name",
+    "bankNamePlaceholder": "E.g: Garanti, Yapı Kredi..."
+  },
+  "spendingGoals": {
+    "title": "Spending Goals",
+    "subtitle": "Set and track your savings targets",
+    "addNew": "Add Goal",
+    "goalName": "Goal name",
+    "targetAmountPlaceholder": "Target amount",
+    "deadlinePlaceholder": "Deadline (YYYY-MM-DD)",
+    "color": "Color",
+    "daysLeft": "days left",
+    "remaining": "Remaining",
+    "addProgress": "Add Progress",
+    "amount": "Amount",
+    "completed": "Achieved",
+    "noGoals": "No spending goals yet",
+    "fillAllFields": "Please fill in all fields"
+  },
+  "monthlyReport": {
+    "title": "Monthly Report",
+    "subtitle": "Detailed monthly summary",
+    "totalSpent": "Total Spent",
+    "transactionCount": "Transactions",
+    "avgPerDay": "Daily Average",
+    "topCategory": "Top Category",
+    "cashVsCard": "Cash vs Card",
+    "cash": "Cash",
+    "card": "Card",
+    "noData": "No data for this month",
+    "previousMonth": "Previous Month",
+    "share": "Share Report"
   }
 }

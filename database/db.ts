@@ -9,6 +9,7 @@ export type TransactionItem = {
   notes?: string;
   paymentMethod?: string; // "cash" | "credit_card"
   bankName?: string;
+  receiptUri?: string;
 };
 
 export type SubscriptionItem = {
@@ -38,6 +39,27 @@ export type TagItem = {
   name: string;
   color: string;
 };
+
+export type SpendingGoalItem = {
+  id: string;
+  title: string;
+  targetAmount: number;
+  currentAmount: number;
+  deadline: string; // ISO date
+  category?: string;
+  color: string;
+};
+
+/**
+ * Format a number with thousands separators (dot) and optional decimals (comma).
+ * Examples: 10000 → "10.000", 1500.5 → "1.500,50", 250 → "250"
+ */
+export function formatNumber(value: number, decimals: number = 0): string {
+  const fixed = value.toFixed(decimals);
+  const [intPart, decPart] = fixed.split(".");
+  const formatted = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return decPart ? `${formatted},${decPart}` : formatted;
+}
 
 const DB_NAME = "subtrack.db";
 
@@ -160,11 +182,37 @@ export async function initDB(): Promise<void> {
     )`
   );
 
+  await executeSql(
+    `CREATE TABLE IF NOT EXISTS installments (
+      id TEXT PRIMARY KEY NOT NULL,
+      title TEXT NOT NULL,
+      totalAmount REAL NOT NULL,
+      installmentCount INTEGER NOT NULL,
+      paidCount INTEGER DEFAULT 0,
+      monthlyAmount REAL NOT NULL,
+      startDate TEXT NOT NULL,
+      bankName TEXT
+    )`
+  );
+
+  await executeSql(
+    `CREATE TABLE IF NOT EXISTS spending_goals (
+      id TEXT PRIMARY KEY NOT NULL,
+      title TEXT NOT NULL,
+      targetAmount REAL NOT NULL,
+      currentAmount REAL DEFAULT 0,
+      deadline TEXT NOT NULL,
+      category TEXT,
+      color TEXT NOT NULL
+    )`
+  );
+
   // Migrations — use getDB().runAsync directly to avoid console.error noise
   // when the column already exists (duplicate column is expected on repeat launches)
   await getDB().runAsync(`ALTER TABLE transactions ADD COLUMN notes TEXT`).catch(() => {});
   await getDB().runAsync(`ALTER TABLE transactions ADD COLUMN paymentMethod TEXT`).catch(() => {});
   await getDB().runAsync(`ALTER TABLE transactions ADD COLUMN bankName TEXT`).catch(() => {});
+  await getDB().runAsync(`ALTER TABLE transactions ADD COLUMN receiptUri TEXT`).catch(() => {});
 }
 
 /* -------------------- */
@@ -172,8 +220,8 @@ export async function initDB(): Promise<void> {
 /* -------------------- */
 export async function addTransaction(item: TransactionItem) {
   const sql = `
-    INSERT INTO transactions (id, title, amount, date, category, notes, paymentMethod, bankName)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO transactions (id, title, amount, date, category, notes, paymentMethod, bankName, receiptUri)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   await executeSql(sql, [
@@ -185,13 +233,14 @@ export async function addTransaction(item: TransactionItem) {
     item.notes ?? null,
     item.paymentMethod ?? null,
     item.bankName ?? null,
+    item.receiptUri ?? null,
   ]);
 }
 
 export async function updateTransaction(item: TransactionItem) {
   await executeSql(
-    `UPDATE transactions SET title = ?, amount = ?, category = ?, notes = ?, paymentMethod = ?, bankName = ? WHERE id = ?`,
-    [item.title, item.amount, item.category ?? null, item.notes ?? null, item.paymentMethod ?? null, item.bankName ?? null, item.id]
+    `UPDATE transactions SET title = ?, amount = ?, category = ?, notes = ?, paymentMethod = ?, bankName = ?, receiptUri = ? WHERE id = ?`,
+    [item.title, item.amount, item.category ?? null, item.notes ?? null, item.paymentMethod ?? null, item.bankName ?? null, item.receiptUri ?? null, item.id]
   );
 }
 
@@ -598,6 +647,189 @@ export async function getPaymentMethodDistribution(): Promise<{ method: string; 
   );
 }
 
+/* -------------------- */
+/*  SMART CATEGORY       */
+/* -------------------- */
+export async function predictCategory(title: string): Promise<string | null> {
+  if (!title || title.length < 2) return null;
+  const result = await getDB().getFirstAsync<{ category: string; cnt: number }>(
+    `SELECT category, COUNT(*) as cnt FROM transactions
+     WHERE LOWER(title) = LOWER(?) AND category IS NOT NULL
+     GROUP BY category ORDER BY cnt DESC LIMIT 1`,
+    [title.trim()]
+  );
+  if (result) return result.category;
+  // Fuzzy: check if title contains known words
+  const fuzzy = await getDB().getFirstAsync<{ category: string; cnt: number }>(
+    `SELECT category, COUNT(*) as cnt FROM transactions
+     WHERE LOWER(title) LIKE LOWER(?) AND category IS NOT NULL
+     GROUP BY category ORDER BY cnt DESC LIMIT 1`,
+    [`%${title.trim()}%`]
+  );
+  return fuzzy?.category ?? null;
+}
+
+/* -------------------- */
+/*  INSTALLMENTS         */
+/* -------------------- */
+export type InstallmentItem = {
+  id: string;
+  title: string;
+  totalAmount: number;
+  installmentCount: number;
+  paidCount: number;
+  monthlyAmount: number;
+  startDate: string;
+  bankName?: string;
+};
+
+/* -------------------- */
+/*  YEARLY ANALYTICS     */
+/* -------------------- */
+export async function getYearlyMonthlyTotals(year: number): Promise<{ month: string; total: number }[]> {
+  return await getDB().getAllAsync<{ month: string; total: number }>(
+    `SELECT strftime('%m', date) as month, COALESCE(SUM(amount), 0) as total
+     FROM transactions
+     WHERE strftime('%Y', date) = ?
+     GROUP BY month ORDER BY month ASC`,
+    [String(year)]
+  );
+}
+
+export async function getYearlyCategoryTotals(year: number): Promise<{ category: string; total: number }[]> {
+  return await getDB().getAllAsync<{ category: string; total: number }>(
+    `SELECT category, COALESCE(SUM(amount), 0) as total
+     FROM transactions
+     WHERE strftime('%Y', date) = ?
+     GROUP BY category ORDER BY total DESC`,
+    [String(year)]
+  );
+}
+
+export async function getYearlyTotal(year: number): Promise<number> {
+  const r = await getDB().getFirstAsync<{ total: number }>(
+    `SELECT COALESCE(SUM(amount), 0) as total FROM transactions WHERE strftime('%Y', date) = ?`,
+    [String(year)]
+  );
+  return r?.total ?? 0;
+}
+
+/* -------------------- */
+/*  BANK REPORT          */
+/* -------------------- */
+export async function getBankDistribution(): Promise<{ bankName: string; total: number; count: number }[]> {
+  return await getDB().getAllAsync<{ bankName: string; total: number; count: number }>(
+    `SELECT COALESCE(bankName, 'Diğer') as bankName, SUM(amount) as total, COUNT(*) as count
+     FROM transactions
+     WHERE paymentMethod = 'credit_card'
+     AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')
+     GROUP BY bankName ORDER BY total DESC`
+  );
+}
+
+/* -------------------- */
+/*  CATEGORY TREND       */
+/* -------------------- */
+export async function getCategoryMonthlyTrend(category: string, months: number = 6): Promise<{ month: string; total: number }[]> {
+  return await getDB().getAllAsync<{ month: string; total: number }>(
+    `SELECT strftime('%Y-%m', date) as month, COALESCE(SUM(amount), 0) as total
+     FROM transactions
+     WHERE category = ?
+     AND date >= date('now', '-' || ? || ' months')
+     GROUP BY month ORDER BY month ASC`,
+    [category, months]
+  );
+}
+
+export async function addInstallment(item: InstallmentItem) {
+  await executeSql(
+    `INSERT INTO installments (id, title, totalAmount, installmentCount, paidCount, monthlyAmount, startDate, bankName)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    [item.id, item.title, item.totalAmount, item.installmentCount, item.paidCount, item.monthlyAmount, item.startDate, item.bankName ?? null]
+  );
+}
+
+export async function getInstallments(): Promise<InstallmentItem[]> {
+  return await getDB().getAllAsync<InstallmentItem>(
+    `SELECT * FROM installments WHERE paidCount < installmentCount ORDER BY startDate DESC`
+  );
+}
+
+export async function getAllInstallments(): Promise<InstallmentItem[]> {
+  return await getDB().getAllAsync<InstallmentItem>(
+    `SELECT * FROM installments ORDER BY startDate DESC`
+  );
+}
+
+export async function updateInstallmentPaid(id: string) {
+  await executeSql(`UPDATE installments SET paidCount = paidCount + 1 WHERE id = ?`, [id]);
+}
+
+export async function deleteInstallment(id: string) {
+  await executeSql(`DELETE FROM installments WHERE id = ?`, [id]);
+}
+
+/* -------------------- */
+/*  MONTHLY REPORT       */
+/* -------------------- */
+export async function getMonthlyReport(yearMonth?: string): Promise<{
+  total: number;
+  topCategory: { category: string; total: number } | null;
+  transactionCount: number;
+  avgPerDay: number;
+  cashTotal: number;
+  cardTotal: number;
+}> {
+  const ym = yearMonth ?? new Date().toISOString().slice(0, 7);
+  const total = await getMonthlyTotalForMonth(ym);
+  const topCat = await getDB().getFirstAsync<{ category: string; total: number }>(
+    `SELECT category, SUM(amount) as total FROM transactions WHERE strftime('%Y-%m', date) = ? GROUP BY category ORDER BY total DESC LIMIT 1`,
+    [ym]
+  );
+  const countResult = await getDB().getFirstAsync<{ count: number }>(
+    `SELECT COUNT(*) as count FROM transactions WHERE strftime('%Y-%m', date) = ?`,
+    [ym]
+  );
+  const daysInMonth = new Date(parseInt(ym.split('-')[0]), parseInt(ym.split('-')[1]), 0).getDate();
+  const payMethods = await getDB().getAllAsync<{ method: string; total: number }>(
+    `SELECT COALESCE(paymentMethod, 'cash') as method, SUM(amount) as total FROM transactions WHERE strftime('%Y-%m', date) = ? GROUP BY method`,
+    [ym]
+  );
+  const cashTotal = payMethods.find(p => p.method === 'cash')?.total ?? 0;
+  const cardTotal = payMethods.find(p => p.method === 'credit_card')?.total ?? 0;
+
+  return {
+    total,
+    topCategory: topCat ?? null,
+    transactionCount: countResult?.count ?? 0,
+    avgPerDay: daysInMonth > 0 ? total / daysInMonth : 0,
+    cashTotal,
+    cardTotal,
+  };
+}
+
+/* -------------------- */
+/*  SPENDING GOALS       */
+/* -------------------- */
+export async function addSpendingGoal(item: SpendingGoalItem) {
+  await executeSql(
+    `INSERT INTO spending_goals (id, title, targetAmount, currentAmount, deadline, category, color) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [item.id, item.title, item.targetAmount, item.currentAmount, item.deadline, item.category ?? null, item.color]
+  );
+}
+
+export async function getSpendingGoals(): Promise<SpendingGoalItem[]> {
+  return await getDB().getAllAsync(`SELECT * FROM spending_goals ORDER BY deadline ASC`);
+}
+
+export async function updateSpendingGoalAmount(id: string, amount: number) {
+  await executeSql(`UPDATE spending_goals SET currentAmount = ? WHERE id = ?`, [amount, id]);
+}
+
+export async function deleteSpendingGoal(id: string) {
+  await executeSql(`DELETE FROM spending_goals WHERE id = ?`, [id]);
+}
+
 export async function clearAllData() {
   await executeSql(`DELETE FROM transactions`);
   await executeSql(`DELETE FROM subscriptions`);
@@ -605,4 +837,5 @@ export async function clearAllData() {
   await executeSql(`DELETE FROM templates`);
   await executeSql(`DELETE FROM tags`);
   await executeSql(`DELETE FROM transaction_tags`);
+  await executeSql(`DELETE FROM spending_goals`);
 }

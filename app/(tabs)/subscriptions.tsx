@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import {
   addSubscription,
   deleteSubscription,
+  formatNumber,
   getCurrencySymbol,
   getSetting,
   getSubscriptions,
@@ -165,11 +166,11 @@ export default function SubscriptionsScreen() {
         <View style={styles.summaryCard}>
           <View>
             <Text style={styles.label}>{t('subscriptions.monthlyTotal')}</Text>
-            <Text style={styles.amount}>{currSymbol}{monthlyTotal.toFixed(2)}</Text>
+            <Text style={styles.amount}>{currSymbol}{formatNumber(monthlyTotal, 2)}</Text>
           </View>
           <View>
             <Text style={styles.label}>{t('subscriptions.yearlyTotal')}</Text>
-            <Text style={styles.amount}>{currSymbol}{yearlyTotal.toFixed(2)}</Text>
+            <Text style={styles.amount}>{currSymbol}{formatNumber(yearlyTotal, 2)}</Text>
           </View>
         </View>
 
@@ -197,7 +198,7 @@ export default function SubscriptionsScreen() {
                   {sub.nextDate ? ` · ${t('subscriptions.renews')} ${sub.nextDate}` : ''}
                 </Text>
               </View>
-              <Text style={styles.subCardAmount}>{currSymbol}{sub.amount.toFixed(2)}</Text>
+              <Text style={styles.subCardAmount}>{currSymbol}{formatNumber(sub.amount, 2)}</Text>
               <TouchableOpacity onPress={() => openEditModal(sub)} style={{ marginRight: 10 }}>
                 <Ionicons name="pencil-outline" size={20} color={colors.iconSecondary} />
               </TouchableOpacity>
@@ -236,7 +237,7 @@ export default function SubscriptionsScreen() {
                       {t('subscriptions.occurredTimes', { count: r.occurrences })} · ~{r.avgIntervalDays} {t('subscriptions.daysInterval')}
                     </Text>
                   </View>
-                  <Text style={{ fontWeight: "700", fontSize: 16, color: colors.purple }}>{currSymbol}{r.amount.toFixed(2)}</Text>
+                  <Text style={{ fontWeight: "700", fontSize: 16, color: colors.purple }}>{currSymbol}{formatNumber(r.amount, 2)}</Text>
                 </View>
                 <View style={{ flexDirection: "row", gap: 8 }}>
                   <TouchableOpacity

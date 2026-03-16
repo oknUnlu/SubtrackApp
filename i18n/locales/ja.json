@@ -99,7 +99,18 @@
     "cash": "現金",
     "creditCard": "クレジットカード",
     "bankName": "銀行名",
-    "bankNamePlaceholder": "例: 三菱UFJ, みずほ..."
+    "bankNamePlaceholder": "例: 三菱UFJ, みずほ...",
+    "receipt": "レシート / 写真",
+    "pickPhoto": "ギャラリー",
+    "takePhoto": "カメラ",
+    "cameraPermission": "カメラの許可が必要です",
+    "budgetExceeded": "⚠️ 月間予算を超過しました！({{percent}}%)",
+    "budgetWarning": "⚠️ 月間予算の{{percent}}%を使用中",
+    "categoryBudgetExceeded": "⚠️ {{category}}の予算を超過しました！({{percent}}%)",
+    "categoryBudgetWarning": "⚠️ {{category}}: 予算の{{percent}}%を使用中",
+    "installmentPurchase": "分割払い",
+    "installmentCount": "分割回数",
+    "installmentSummary": "{{count}}回払い × {{monthly}}/月"
   },
   "ai": {
     "title": "スマートヒント",
@@ -130,6 +141,10 @@
     "weekdayPatternDesc": "{{day}}に最も多く支出する傾向があります",
     "savingsTip": "節約チャンス",
     "savingsTipDesc": "{{category}}は支出の{{percent}}%を占めています。予算上限の設定を検討してください。",
+    "budgetSuggestion": "予算の提案",
+    "budgetSuggestionDesc": "支出に基づいて、月間予算{{amount}}を提案します",
+    "categorySuggestion": "カテゴリー予算のヒント",
+    "categorySuggestionDesc": "最近の支出に基づいて、{{category}}に{{amount}}の予算を設定することを検討してください",
     "days": {
       "sunday": "日曜日",
       "monday": "月曜日",
@@ -206,5 +221,78 @@
     "totalResults": "{{count}}件の取引",
     "viewAll": "すべて見る",
     "deleteTransaction": "取引を削除"
+  },
+  "yearlyReport": {
+    "title": "年間サマリー",
+    "subtitle": "年間支出の概要",
+    "totalSpent": "合計支出",
+    "monthlyAvg": "月平均",
+    "topMonth": "最も支出の多い月",
+    "topCategory": "トップカテゴリー",
+    "monthlyBreakdown": "月別内訳",
+    "categoryBreakdown": "カテゴリー別内訳",
+    "noData": "この年のデータがありません"
+  },
+  "bankReport": {
+    "title": "クレジットカードレポート",
+    "subtitle": "銀行別の支出",
+    "totalCardSpending": "カード支出合計",
+    "transactions": "{{count}}件の取引",
+    "noCardData": "まだクレジットカードの支出がありません"
+  },
+  "categoryTrend": {
+    "title": "カテゴリートレンド",
+    "subtitle": "カテゴリー別の月間支出",
+    "last6Months": "過去6ヶ月",
+    "selectCategory": "カテゴリーを選択",
+    "noData": "このカテゴリーのデータがありません"
+  },
+  "installments": {
+    "title": "分割払い",
+    "subtitle": "分割払いの支払いを管理",
+    "addNew": "分割払いを追加",
+    "totalDebt": "残りの合計",
+    "monthlyPayment": "月々の支払い",
+    "productName": "商品/サービス名",
+    "totalAmount": "合計金額",
+    "numberOfInstallments": "分割回数",
+    "paidInstallments": "支払済み",
+    "remaining": "{{paid}}/{{total}} 支払済み",
+    "markPaid": "支払済みにする",
+    "completed": "完了",
+    "noInstallments": "まだ分割払いがありません",
+    "fillAllFields": "すべての項目を入力してください",
+    "bankName": "銀行名",
+    "bankNamePlaceholder": "例: 三菱UFJ, みずほ..."
+  },
+  "spendingGoals": {
+    "title": "支出目標",
+    "subtitle": "貯蓄目標を設定して追跡",
+    "addNew": "目標を追加",
+    "goalName": "目標名",
+    "targetAmountPlaceholder": "目標金額",
+    "deadlinePlaceholder": "期限 (YYYY-MM-DD)",
+    "color": "色",
+    "daysLeft": "日残り",
+    "remaining": "残り",
+    "addProgress": "進捗を追加",
+    "amount": "金額",
+    "completed": "達成",
+    "noGoals": "まだ支出目標がありません",
+    "fillAllFields": "すべての項目を入力してください"
+  },
+  "monthlyReport": {
+    "title": "月間レポート",
+    "subtitle": "詳細な月間サマリー",
+    "totalSpent": "合計支出",
+    "transactionCount": "取引件数",
+    "avgPerDay": "日平均",
+    "topCategory": "トップカテゴリー",
+    "cashVsCard": "現金 vs カード",
+    "cash": "現金",
+    "card": "カード",
+    "noData": "この月のデータがありません",
+    "previousMonth": "前月",
+    "share": "レポートを共有"
   }
 }

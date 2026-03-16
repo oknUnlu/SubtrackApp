@@ -99,7 +99,18 @@
     "cash": "Nakit",
     "creditCard": "Kredi Kartı",
     "bankName": "Banka Adı",
-    "bankNamePlaceholder": "Örn: Garanti, Yapı Kredi..."
+    "bankNamePlaceholder": "Örn: Garanti, Yapı Kredi...",
+    "receipt": "Fiş / Fotoğraf",
+    "pickPhoto": "Galeri",
+    "takePhoto": "Kamera",
+    "cameraPermission": "Kamera izni gereklidir",
+    "budgetExceeded": "⚠️ Aylık bütçe aşıldı! ({{percent}}%)",
+    "budgetWarning": "⚠️ Aylık bütçenin {{percent}}% kullanıldı",
+    "categoryBudgetExceeded": "⚠️ {{category}} bütçesi aşıldı! ({{percent}}%)",
+    "categoryBudgetWarning": "⚠️ {{category}}: Bütçenin {{percent}}% kullanıldı",
+    "installmentPurchase": "Taksitli Alışveriş",
+    "installmentCount": "Taksit Sayısı",
+    "installmentSummary": "{{count}} taksit × {{monthly}}/ay"
   },
   "ai": {
     "title": "Akıllı İpuçları",
@@ -130,6 +141,10 @@
     "weekdayPatternDesc": "En çok {{day}} günleri harcama yapıyorsunuz",
     "savingsTip": "Tasarruf Fırsatı",
     "savingsTipDesc": "{{category}} harcamalarınızın %{{percent}}'ini oluşturuyor. Bütçe limiti belirlemeyi düşünün.",
+    "budgetSuggestion": "Bütçe Önerisi",
+    "budgetSuggestionDesc": "Harcamalarınıza göre aylık {{amount}} bütçe öneriyoruz",
+    "categorySuggestion": "Kategori Bütçe İpucu",
+    "categorySuggestionDesc": "Son harcamalarınıza göre {{category}} için {{amount}} bütçe belirlemeyi düşünün",
     "days": {
       "sunday": "Pazar",
       "monday": "Pazartesi",
@@ -206,5 +221,78 @@
     "totalResults": "{{count}} harcama",
     "viewAll": "Tümünü Gör",
     "deleteTransaction": "Harcamayı Sil"
+  },
+  "yearlyReport": {
+    "title": "Yıllık Özet",
+    "subtitle": "Yıllık harcama genel görünümü",
+    "totalSpent": "Toplam Harcama",
+    "monthlyAvg": "Aylık Ortalama",
+    "topMonth": "En Yüksek Ay",
+    "topCategory": "En Çok Harcanan",
+    "monthlyBreakdown": "Aylık Dağılım",
+    "categoryBreakdown": "Kategori Dağılımı",
+    "noData": "Bu yıl için veri yok"
+  },
+  "bankReport": {
+    "title": "Kredi Kartı Raporu",
+    "subtitle": "Bankaya göre harcamalar",
+    "totalCardSpending": "Toplam Kart Harcaması",
+    "transactions": "{{count}} işlem",
+    "noCardData": "Henüz kredi kartı harcaması yok"
+  },
+  "categoryTrend": {
+    "title": "Kategori Trendi",
+    "subtitle": "Kategoriye göre aylık harcama",
+    "last6Months": "Son 6 Ay",
+    "selectCategory": "Kategori seçin",
+    "noData": "Bu kategori için veri yok"
+  },
+  "installments": {
+    "title": "Taksitler",
+    "subtitle": "Taksit ödemelerinizi takip edin",
+    "addNew": "Taksit Ekle",
+    "totalDebt": "Toplam Kalan",
+    "monthlyPayment": "Aylık Ödeme",
+    "productName": "Ürün/Hizmet Adı",
+    "totalAmount": "Toplam Tutar",
+    "numberOfInstallments": "Taksit Sayısı",
+    "paidInstallments": "Ödenen",
+    "remaining": "{{paid}}/{{total}} ödendi",
+    "markPaid": "Ödendi İşaretle",
+    "completed": "Tamamlandı",
+    "noInstallments": "Henüz taksit yok",
+    "fillAllFields": "Lütfen tüm alanları doldurun",
+    "bankName": "Banka Adı",
+    "bankNamePlaceholder": "Örn: Garanti, Yapı Kredi..."
+  },
+  "spendingGoals": {
+    "title": "Harcama Hedefleri",
+    "subtitle": "Tasarruf hedeflerinizi belirleyin ve takip edin",
+    "addNew": "Hedef Ekle",
+    "goalName": "Hedef adı",
+    "targetAmountPlaceholder": "Hedef tutar",
+    "deadlinePlaceholder": "Son tarih (YYYY-AA-GG)",
+    "color": "Renk",
+    "daysLeft": "gün kaldı",
+    "remaining": "Kalan",
+    "addProgress": "İlerleme Ekle",
+    "amount": "Tutar",
+    "completed": "Başarıldı",
+    "noGoals": "Henüz harcama hedefi yok",
+    "fillAllFields": "Lütfen tüm alanları doldurun"
+  },
+  "monthlyReport": {
+    "title": "Aylık Rapor",
+    "subtitle": "Detaylı aylık özet",
+    "totalSpent": "Toplam Harcama",
+    "transactionCount": "İşlem Sayısı",
+    "avgPerDay": "Günlük Ortalama",
+    "topCategory": "En Çok Harcanan",
+    "cashVsCard": "Nakit vs Kart",
+    "cash": "Nakit",
+    "card": "Kart",
+    "noData": "Bu ay için veri yok",
+    "previousMonth": "Önceki Ay",
+    "share": "Raporu Paylaş"
   }
 }

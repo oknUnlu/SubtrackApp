@@ -99,7 +99,18 @@
     "cash": "Dinheiro",
     "creditCard": "Cartão de Crédito",
     "bankName": "Nome do Banco",
-    "bankNamePlaceholder": "Ex: Itaú, Bradesco..."
+    "bankNamePlaceholder": "Ex: Itaú, Bradesco...",
+    "receipt": "Recibo / Foto",
+    "pickPhoto": "Galeria",
+    "takePhoto": "Câmera",
+    "cameraPermission": "Permissão de câmera é necessária",
+    "budgetExceeded": "⚠️ Orçamento mensal excedido! ({{percent}}%)",
+    "budgetWarning": "⚠️ {{percent}}% do orçamento mensal utilizado",
+    "categoryBudgetExceeded": "⚠️ Orçamento de {{category}} excedido! ({{percent}}%)",
+    "categoryBudgetWarning": "⚠️ {{category}}: {{percent}}% do orçamento utilizado",
+    "installmentPurchase": "Compra Parcelada",
+    "installmentCount": "Número de Parcelas",
+    "installmentSummary": "{{count}} parcelas × {{monthly}}/mês"
   },
   "ai": {
     "title": "Dicas Inteligentes",
@@ -130,6 +141,10 @@
     "weekdayPatternDesc": "Você tende a gastar mais às {{day}}",
     "savingsTip": "Oportunidade de Economia",
     "savingsTipDesc": "{{category}} representa {{percent}}% dos seus gastos. Considere definir um limite.",
+    "budgetSuggestion": "Sugestão de Orçamento",
+    "budgetSuggestionDesc": "Com base nos seus gastos, sugerimos um orçamento mensal de {{amount}}",
+    "categorySuggestion": "Dica de Orçamento por Categoria",
+    "categorySuggestionDesc": "Considere definir um orçamento de {{amount}} para {{category}} com base nos seus gastos recentes",
     "days": {
       "sunday": "domingo",
       "monday": "segunda-feira",
@@ -206,5 +221,78 @@
     "totalResults": "{{count}} transações",
     "viewAll": "Ver Tudo",
     "deleteTransaction": "Excluir Transação"
+  },
+  "yearlyReport": {
+    "title": "Resumo Anual",
+    "subtitle": "Visão geral dos gastos anuais",
+    "totalSpent": "Total Gasto",
+    "monthlyAvg": "Média Mensal",
+    "topMonth": "Mês com Maior Gasto",
+    "topCategory": "Categoria Principal",
+    "monthlyBreakdown": "Detalhamento Mensal",
+    "categoryBreakdown": "Detalhamento por Categoria",
+    "noData": "Sem dados para este ano"
+  },
+  "bankReport": {
+    "title": "Relatório de Cartão de Crédito",
+    "subtitle": "Gastos por banco",
+    "totalCardSpending": "Total no Cartão",
+    "transactions": "{{count}} transações",
+    "noCardData": "Ainda não há gastos com cartão de crédito"
+  },
+  "categoryTrend": {
+    "title": "Tendência por Categoria",
+    "subtitle": "Gasto mensal por categoria",
+    "last6Months": "Últimos 6 Meses",
+    "selectCategory": "Selecione uma categoria",
+    "noData": "Sem dados para esta categoria"
+  },
+  "installments": {
+    "title": "Parcelas",
+    "subtitle": "Acompanhe seus pagamentos parcelados",
+    "addNew": "Adicionar Parcela",
+    "totalDebt": "Total Restante",
+    "monthlyPayment": "Pagamento Mensal",
+    "productName": "Nome do Produto/Serviço",
+    "totalAmount": "Valor Total",
+    "numberOfInstallments": "Número de Parcelas",
+    "paidInstallments": "Pagas",
+    "remaining": "{{paid}}/{{total}} pagas",
+    "markPaid": "Marcar como Paga",
+    "completed": "Concluído",
+    "noInstallments": "Ainda não há parcelas",
+    "fillAllFields": "Por favor preencha todos os campos",
+    "bankName": "Nome do Banco",
+    "bankNamePlaceholder": "Ex: Itaú, Bradesco..."
+  },
+  "spendingGoals": {
+    "title": "Metas de Gasto",
+    "subtitle": "Defina e acompanhe suas metas de economia",
+    "addNew": "Adicionar Meta",
+    "goalName": "Nome da meta",
+    "targetAmountPlaceholder": "Valor alvo",
+    "deadlinePlaceholder": "Prazo (AAAA-MM-DD)",
+    "color": "Cor",
+    "daysLeft": "dias restantes",
+    "remaining": "Restante",
+    "addProgress": "Adicionar Progresso",
+    "amount": "Valor",
+    "completed": "Alcançado",
+    "noGoals": "Ainda não há metas de gasto",
+    "fillAllFields": "Por favor preencha todos os campos"
+  },
+  "monthlyReport": {
+    "title": "Relatório Mensal",
+    "subtitle": "Resumo mensal detalhado",
+    "totalSpent": "Total Gasto",
+    "transactionCount": "Transações",
+    "avgPerDay": "Média Diária",
+    "topCategory": "Categoria Principal",
+    "cashVsCard": "Dinheiro vs Cartão",
+    "cash": "Dinheiro",
+    "card": "Cartão",
+    "noData": "Sem dados para este mês",
+    "previousMonth": "Mês Anterior",
+    "share": "Compartilhar Relatório"
   }
 }

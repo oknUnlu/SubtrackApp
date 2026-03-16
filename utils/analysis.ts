@@ -224,6 +224,50 @@ export function getSavingsTips(
   return insights;
 }
 
+export function getBudgetSuggestions(
+  categories: { category: string; total: number }[],
+  budgetData: {
+    overall: { budget: number; actual: number } | null;
+    categories: { category: string; budget: number; actual: number }[];
+  }
+): Insight[] {
+  const insights: Insight[] = [];
+  const total = categories.reduce((s, c) => s + c.total, 0);
+
+  // Suggest setting overall budget if none exists
+  if (!budgetData.overall && total > 0) {
+    const suggested = Math.round(total * 0.9 / 100) * 100; // 90% rounded to nearest 100
+    insights.push({
+      type: "tip",
+      icon: "calculator-outline",
+      titleKey: "ai.budgetSuggestion",
+      descriptionKey: "ai.budgetSuggestionDesc",
+      descriptionParams: { amount: suggested },
+      priority: 4,
+    });
+  }
+
+  // Suggest category budgets for top spending categories without budgets
+  const existingCatBudgets = new Set(budgetData.categories.map(c => c.category));
+  const sorted = [...categories].sort((a, b) => b.total - a.total);
+  for (const cat of sorted.slice(0, 3)) {
+    if (!existingCatBudgets.has(cat.category) && cat.total > 0) {
+      const suggested = Math.round(cat.total * 1.1 / 10) * 10; // 110% rounded to nearest 10
+      insights.push({
+        type: "tip",
+        icon: "bulb-outline",
+        titleKey: "ai.categorySuggestion",
+        descriptionKey: "ai.categorySuggestionDesc",
+        descriptionParams: { category: cat.category, amount: suggested },
+        priority: 3,
+      });
+      break; // Only suggest one at a time
+    }
+  }
+
+  return insights;
+}
+
 export function generateAllInsights(data: {
   transactions: TransactionItem[];
   subscriptions: SubscriptionItem[];
@@ -260,6 +304,7 @@ export function generateAllInsights(data: {
   if (dayPattern) insights.push(dayPattern);
 
   insights.push(...getSavingsTips(data.categories));
+  insights.push(...getBudgetSuggestions(data.categories, data.budgetData));
 
   return insights.sort((a, b) => b.priority - a.priority);
 }

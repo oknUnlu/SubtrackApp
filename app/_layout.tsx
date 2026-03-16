@@ -32,6 +32,12 @@ function AppContent({ showOnboarding }: { showOnboarding: boolean }) {
         <Stack.Screen name="budget" options={{ presentation: 'modal', headerShown: false }} />
         <Stack.Screen name="history" options={{ presentation: 'modal', headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+        <Stack.Screen name="yearly-report" options={{ presentation: 'modal', headerShown: false }} />
+        <Stack.Screen name="bank-report" options={{ presentation: 'modal', headerShown: false }} />
+        <Stack.Screen name="category-trend" options={{ presentation: 'modal', headerShown: false }} />
+        <Stack.Screen name="installments" options={{ presentation: 'modal', headerShown: false }} />
+        <Stack.Screen name="monthly-report" options={{ presentation: 'modal', headerShown: false }} />
+        <Stack.Screen name="spending-goals" options={{ presentation: 'modal', headerShown: false }} />
       </Stack>
       <SystemBars style={isDark ? "light" : "dark"} />
     </ThemeProvider>

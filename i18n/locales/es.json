@@ -99,7 +99,18 @@
     "cash": "Efectivo",
     "creditCard": "Tarjeta de Crédito",
     "bankName": "Nombre del Banco",
-    "bankNamePlaceholder": "Ej: BBVA, Santander..."
+    "bankNamePlaceholder": "Ej: BBVA, Santander...",
+    "receipt": "Recibo / Foto",
+    "pickPhoto": "Galería",
+    "takePhoto": "Cámara",
+    "cameraPermission": "Se requiere permiso de cámara",
+    "budgetExceeded": "⚠️ ¡Presupuesto mensual excedido! ({{percent}}%)",
+    "budgetWarning": "⚠️ {{percent}}% del presupuesto mensual utilizado",
+    "categoryBudgetExceeded": "⚠️ ¡Presupuesto de {{category}} excedido! ({{percent}}%)",
+    "categoryBudgetWarning": "⚠️ {{category}}: {{percent}}% del presupuesto utilizado",
+    "installmentPurchase": "Compra a Plazos",
+    "installmentCount": "Número de Cuotas",
+    "installmentSummary": "{{count}} cuotas × {{monthly}}/mes"
   },
   "ai": {
     "title": "Consejos Inteligentes",
@@ -130,6 +141,10 @@
     "weekdayPatternDesc": "Tiendes a gastar más los {{day}}",
     "savingsTip": "Oportunidad de Ahorro",
     "savingsTipDesc": "{{category}} representa el {{percent}}% de tus gastos. Considera establecer un límite.",
+    "budgetSuggestion": "Sugerencia de Presupuesto",
+    "budgetSuggestionDesc": "Según tus gastos, te sugerimos un presupuesto mensual de {{amount}}",
+    "categorySuggestion": "Consejo de Presupuesto por Categoría",
+    "categorySuggestionDesc": "Considera establecer un presupuesto de {{amount}} para {{category}} según tus gastos recientes",
     "days": {
       "sunday": "domingo",
       "monday": "lunes",
@@ -206,5 +221,78 @@
     "totalResults": "{{count}} transacciones",
     "viewAll": "Ver Todo",
     "deleteTransaction": "Eliminar Transacción"
+  },
+  "yearlyReport": {
+    "title": "Resumen Anual",
+    "subtitle": "Tu panorama de gastos anuales",
+    "totalSpent": "Total Gastado",
+    "monthlyAvg": "Promedio Mensual",
+    "topMonth": "Mes con Mayor Gasto",
+    "topCategory": "Categoría Principal",
+    "monthlyBreakdown": "Desglose Mensual",
+    "categoryBreakdown": "Desglose por Categoría",
+    "noData": "Sin datos para este año"
+  },
+  "bankReport": {
+    "title": "Reporte de Tarjeta de Crédito",
+    "subtitle": "Gastos por banco",
+    "totalCardSpending": "Total en Tarjeta",
+    "transactions": "{{count}} transacciones",
+    "noCardData": "Aún no hay gastos con tarjeta de crédito"
+  },
+  "categoryTrend": {
+    "title": "Tendencia por Categoría",
+    "subtitle": "Gasto mensual por categoría",
+    "last6Months": "Últimos 6 Meses",
+    "selectCategory": "Selecciona una categoría",
+    "noData": "Sin datos para esta categoría"
+  },
+  "installments": {
+    "title": "Cuotas",
+    "subtitle": "Controla tus pagos en cuotas",
+    "addNew": "Agregar Cuota",
+    "totalDebt": "Total Pendiente",
+    "monthlyPayment": "Pago Mensual",
+    "productName": "Nombre del Producto/Servicio",
+    "totalAmount": "Monto Total",
+    "numberOfInstallments": "Número de Cuotas",
+    "paidInstallments": "Pagadas",
+    "remaining": "{{paid}}/{{total}} pagadas",
+    "markPaid": "Marcar como Pagada",
+    "completed": "Completado",
+    "noInstallments": "Aún no hay cuotas",
+    "fillAllFields": "Por favor completa todos los campos",
+    "bankName": "Nombre del Banco",
+    "bankNamePlaceholder": "Ej: BBVA, Santander..."
+  },
+  "spendingGoals": {
+    "title": "Metas de Gasto",
+    "subtitle": "Establece y controla tus objetivos de ahorro",
+    "addNew": "Agregar Meta",
+    "goalName": "Nombre de la meta",
+    "targetAmountPlaceholder": "Monto objetivo",
+    "deadlinePlaceholder": "Fecha límite (AAAA-MM-DD)",
+    "color": "Color",
+    "daysLeft": "días restantes",
+    "remaining": "Restante",
+    "addProgress": "Agregar Progreso",
+    "amount": "Monto",
+    "completed": "Logrado",
+    "noGoals": "Aún no hay metas de gasto",
+    "fillAllFields": "Por favor completa todos los campos"
+  },
+  "monthlyReport": {
+    "title": "Reporte Mensual",
+    "subtitle": "Resumen mensual detallado",
+    "totalSpent": "Total Gastado",
+    "transactionCount": "Transacciones",
+    "avgPerDay": "Promedio Diario",
+    "topCategory": "Categoría Principal",
+    "cashVsCard": "Efectivo vs Tarjeta",
+    "cash": "Efectivo",
+    "card": "Tarjeta",
+    "noData": "Sin datos para este mes",
+    "previousMonth": "Mes Anterior",
+    "share": "Compartir Reporte"
   }
 }

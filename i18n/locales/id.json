@@ -99,7 +99,18 @@
     "cash": "Tunai",
     "creditCard": "Kartu Kredit",
     "bankName": "Nama Bank",
-    "bankNamePlaceholder": "Cth: BCA, Mandiri..."
+    "bankNamePlaceholder": "Cth: BCA, Mandiri...",
+    "receipt": "Struk / Foto",
+    "pickPhoto": "Galeri",
+    "takePhoto": "Kamera",
+    "cameraPermission": "Izin kamera diperlukan",
+    "budgetExceeded": "⚠️ Anggaran bulanan terlampaui! ({{percent}}%)",
+    "budgetWarning": "⚠️ {{percent}}% anggaran bulanan terpakai",
+    "categoryBudgetExceeded": "⚠️ Anggaran {{category}} terlampaui! ({{percent}}%)",
+    "categoryBudgetWarning": "⚠️ {{category}}: {{percent}}% anggaran terpakai",
+    "installmentPurchase": "Pembelian Cicilan",
+    "installmentCount": "Jumlah Cicilan",
+    "installmentSummary": "{{count}} cicilan × {{monthly}}/bulan"
   },
   "ai": {
     "title": "Tips Cerdas",
@@ -130,6 +141,10 @@
     "weekdayPatternDesc": "Anda cenderung menghabiskan paling banyak pada hari {{day}}",
     "savingsTip": "Peluang Hemat",
     "savingsTipDesc": "{{category}} menyumbang {{percent}}% dari pengeluaran. Pertimbangkan menetapkan batas.",
+    "budgetSuggestion": "Saran Anggaran",
+    "budgetSuggestionDesc": "Berdasarkan pengeluaran Anda, kami menyarankan anggaran bulanan sebesar {{amount}}",
+    "categorySuggestion": "Tips Anggaran Kategori",
+    "categorySuggestionDesc": "Pertimbangkan menetapkan anggaran {{amount}} untuk {{category}} berdasarkan pengeluaran terbaru Anda",
     "days": {
       "sunday": "Minggu",
       "monday": "Senin",
@@ -206,5 +221,78 @@
     "totalResults": "{{count}} transaksi",
     "viewAll": "Lihat Semua",
     "deleteTransaction": "Hapus Transaksi"
+  },
+  "yearlyReport": {
+    "title": "Ringkasan Tahunan",
+    "subtitle": "Gambaran pengeluaran tahunan Anda",
+    "totalSpent": "Total Pengeluaran",
+    "monthlyAvg": "Rata-rata Bulanan",
+    "topMonth": "Bulan Tertinggi",
+    "topCategory": "Kategori Teratas",
+    "monthlyBreakdown": "Rincian Bulanan",
+    "categoryBreakdown": "Rincian Kategori",
+    "noData": "Tidak ada data untuk tahun ini"
+  },
+  "bankReport": {
+    "title": "Laporan Kartu Kredit",
+    "subtitle": "Pengeluaran per bank",
+    "totalCardSpending": "Total Pengeluaran Kartu",
+    "transactions": "{{count}} transaksi",
+    "noCardData": "Belum ada pengeluaran kartu kredit"
+  },
+  "categoryTrend": {
+    "title": "Tren Kategori",
+    "subtitle": "Pengeluaran bulanan per kategori",
+    "last6Months": "6 Bulan Terakhir",
+    "selectCategory": "Pilih kategori",
+    "noData": "Tidak ada data untuk kategori ini"
+  },
+  "installments": {
+    "title": "Cicilan",
+    "subtitle": "Pantau pembayaran cicilan Anda",
+    "addNew": "Tambah Cicilan",
+    "totalDebt": "Total Sisa",
+    "monthlyPayment": "Pembayaran Bulanan",
+    "productName": "Nama Produk/Layanan",
+    "totalAmount": "Jumlah Total",
+    "numberOfInstallments": "Jumlah Cicilan",
+    "paidInstallments": "Terbayar",
+    "remaining": "{{paid}}/{{total}} terbayar",
+    "markPaid": "Tandai Lunas",
+    "completed": "Selesai",
+    "noInstallments": "Belum ada cicilan",
+    "fillAllFields": "Harap isi semua kolom",
+    "bankName": "Nama Bank",
+    "bankNamePlaceholder": "Cth: BCA, Mandiri..."
+  },
+  "spendingGoals": {
+    "title": "Target Pengeluaran",
+    "subtitle": "Tetapkan dan pantau target tabungan Anda",
+    "addNew": "Tambah Target",
+    "goalName": "Nama target",
+    "targetAmountPlaceholder": "Jumlah target",
+    "deadlinePlaceholder": "Tenggat waktu (YYYY-MM-DD)",
+    "color": "Warna",
+    "daysLeft": "hari tersisa",
+    "remaining": "Sisa",
+    "addProgress": "Tambah Kemajuan",
+    "amount": "Jumlah",
+    "completed": "Tercapai",
+    "noGoals": "Belum ada target pengeluaran",
+    "fillAllFields": "Harap isi semua kolom"
+  },
+  "monthlyReport": {
+    "title": "Laporan Bulanan",
+    "subtitle": "Ringkasan bulanan terperinci",
+    "totalSpent": "Total Pengeluaran",
+    "transactionCount": "Transaksi",
+    "avgPerDay": "Rata-rata Harian",
+    "topCategory": "Kategori Teratas",
+    "cashVsCard": "Tunai vs Kartu",
+    "cash": "Tunai",
+    "card": "Kartu",
+    "noData": "Tidak ada data untuk bulan ini",
+    "previousMonth": "Bulan Sebelumnya",
+    "share": "Bagikan Laporan"
   }
 }

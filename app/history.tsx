@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 
 import {
   deleteTransaction,
+  formatNumber,
   getCurrencySymbol,
   getSetting,
   getTagsForTransactions,
@@ -129,7 +130,7 @@ export default function HistoryScreen() {
             </View>
           )}
         </View>
-        <Text style={styles.txAmount}>{currSymbol}{tx.amount.toFixed(2)}</Text>
+        <Text style={styles.txAmount}>{currSymbol}{formatNumber(tx.amount, 2)}</Text>
         <TouchableOpacity onPress={() => handleDelete(tx)}>
           <Ionicons name="trash-outline" size={18} color={colors.danger} />
         </TouchableOpacity>

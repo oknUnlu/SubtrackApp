@@ -1,9 +1,10 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
   Alert,
   FlatList,
+  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -15,19 +16,24 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from 'react-i18next';
+import * as ImagePicker from 'expo-image-picker';
 
 import AdBanner from '@/components/AdBanner';
 import { randomUUID } from "expo-crypto";
 import {
+  addInstallment,
   addTagsToTransaction,
   addTemplate,
   addTransaction,
   createTag,
   deleteTemplate,
+  formatNumber,
+  getBudgetVsActual,
   getCurrencySymbol,
   getSetting,
   setSetting,
   getTags,
+  predictCategory,
   getTemplates,
   incrementTemplateUseCount,
   TagItem,
@@ -67,6 +73,26 @@ export default function AddExpenseScreen() {
   const [newTagColor, setNewTagColor] = useState("#3b82f6");
   const [paymentMethod, setPaymentMethod] = useState<"cash" | "credit_card">("cash");
   const [bankName, setBankName] = useState("");
+  const [categoryManuallySet, setCategoryManuallySet] = useState(false);
+  const [receiptUri, setReceiptUri] = useState<string | null>(null);
+  const [isInstallment, setIsInstallment] = useState(false);
+  const [installmentCount, setInstallmentCount] = useState("");
+  const predictTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const scrollRef = useRef<ScrollView>(null);
+
+  // Toast notification state
+  const [toastData, setToastData] = useState<{ message: string; warnings: string[] } | null>(null);
+  const toastTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showToast = useCallback((message: string, warnings: string[] = []) => {
+    if (toastTimeout.current) clearTimeout(toastTimeout.current);
+    setToastData({ message, warnings });
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
+    const duration = warnings.length > 0 ? 4500 : 3000;
+    toastTimeout.current = setTimeout(() => {
+      setToastData(null);
+    }, duration);
+  }, []);
 
   const TAG_COLORS = ["#3b82f6", "#ef4444", "#f59e0b", "#8b5cf6", "#ec4899", "#14b8a6", "#f97316", "#6366f1"];
 
@@ -98,7 +124,7 @@ export default function AddExpenseScreen() {
 
   const applyTemplate = async (tmpl: TemplateItem) => {
     setTitle(tmpl.title);
-    setAmount(String(tmpl.amount));
+    setAmount(formatAmountDisplay(String(tmpl.amount)));
     setCategory(tmpl.category);
     setNotes(tmpl.notes ?? "");
     await incrementTemplateUseCount(tmpl.id);
@@ -138,6 +164,95 @@ export default function AddExpenseScreen() {
     setShowNewTag(false);
   };
 
+  const pickReceipt = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      quality: 0.7,
+    });
+    if (!result.canceled && result.assets[0]) {
+      setReceiptUri(result.assets[0].uri);
+    }
+  };
+
+  const takePhoto = async () => {
+    const perm = await ImagePicker.requestCameraPermissionsAsync();
+    if (!perm.granted) {
+      Alert.alert(t('common.error'), t('add.cameraPermission', { defaultValue: 'Camera permission is required' }));
+      return;
+    }
+    const result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 0.7,
+    });
+    if (!result.canceled && result.assets[0]) {
+      setReceiptUri(result.assets[0].uri);
+    }
+  };
+
+  const handleTitleChange = useCallback((text: string) => {
+    setTitle(text);
+    if (categoryManuallySet) return;
+    if (predictTimer.current) clearTimeout(predictTimer.current);
+    predictTimer.current = setTimeout(async () => {
+      if (text.trim().length >= 2) {
+        const predicted = await predictCategory(text.trim());
+        if (predicted && !categoryManuallySet) {
+          setCategory(predicted);
+        }
+      }
+    }, 400);
+  }, [categoryManuallySet]);
+
+  const handleCategorySelect = useCallback((key: string) => {
+    setCategory(key);
+    setCategoryManuallySet(true);
+  }, []);
+
+  const formatAmountDisplay = useCallback((raw: string): string => {
+    // Remove all non-numeric chars except comma and dot
+    let cleaned = raw.replace(/[^0-9.,]/g, "");
+    // Replace comma with dot for decimal
+    // Support both 10.000 (thousands) and 10,50 (decimal) patterns
+    // Strategy: last comma or dot with ≤2 digits after it is the decimal separator
+    const lastSep = Math.max(cleaned.lastIndexOf(","), cleaned.lastIndexOf("."));
+    let intPart = cleaned;
+    let decPart = "";
+    if (lastSep >= 0) {
+      const afterSep = cleaned.slice(lastSep + 1);
+      if (afterSep.length <= 2) {
+        // It's a decimal separator
+        intPart = cleaned.slice(0, lastSep).replace(/[.,]/g, "");
+        decPart = afterSep;
+      } else {
+        // It's a thousands separator, ignore it
+        intPart = cleaned.replace(/[.,]/g, "");
+      }
+    }
+    // Remove leading zeros
+    intPart = intPart.replace(/^0+(?=\d)/, "");
+    // Add thousands separators
+    const formatted = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    if (lastSep >= 0 && cleaned.slice(lastSep + 1).length <= 2) {
+      return formatted + "," + decPart;
+    }
+    return formatted;
+  }, []);
+
+  const handleAmountChange = useCallback((text: string) => {
+    if (text === "") {
+      setAmount("");
+      return;
+    }
+    setAmount(formatAmountDisplay(text));
+  }, [formatAmountDisplay]);
+
+  const parseAmount = useCallback((formatted: string): number => {
+    // Remove thousands separators (dots), replace decimal comma with dot
+    const cleaned = formatted.replace(/\./g, "").replace(",", ".");
+    return parseFloat(cleaned);
+  }, []);
+
   const localizedCategories = CATEGORY_DATA.map(c => ({
     ...c,
     label: t(`categories.${c.key}`),
@@ -149,7 +264,7 @@ export default function AddExpenseScreen() {
       return;
     }
 
-    const parsedAmount = parseFloat(amount.replace(",", "."));
+    const parsedAmount = parseAmount(amount);
 
     if (isNaN(parsedAmount)) {
       Alert.alert(t('common.error'), t('add.validAmount'));
@@ -167,6 +282,7 @@ export default function AddExpenseScreen() {
         notes: notes.trim() || undefined,
         paymentMethod,
         bankName: paymentMethod === "credit_card" ? bankName.trim() || undefined : undefined,
+        receiptUri: receiptUri ?? undefined,
       });
 
       // Remember payment method & bank for next entry
@@ -192,13 +308,64 @@ export default function AddExpenseScreen() {
         loadTemplates();
       }
 
-      Alert.alert(t('common.success'), t('add.saved'));
+      // Auto-create installment if credit card + installment selected
+      if (paymentMethod === "credit_card" && isInstallment && installmentCount) {
+        const count = parseInt(installmentCount, 10);
+        if (!isNaN(count) && count > 1) {
+          await addInstallment({
+            id: randomUUID(),
+            title: title.trim(),
+            totalAmount: parsedAmount,
+            installmentCount: count,
+            paidCount: 1, // First installment paid now
+            monthlyAmount: parsedAmount / count,
+            startDate: new Date().toISOString(),
+            bankName: bankName.trim() || undefined,
+          });
+        }
+      }
+
+      // Check budget limits after saving
+      const budgetData = await getBudgetVsActual();
+      const warnings: string[] = [];
+      if (budgetData.overall) {
+        const pct = (budgetData.overall.actual / budgetData.overall.budget) * 100;
+        if (pct >= 100) {
+          warnings.push(t('add.budgetExceeded', { percent: Math.round(pct), defaultValue: `⚠️ Monthly budget exceeded! ({{percent}}%)` }));
+        } else if (pct >= 80) {
+          warnings.push(t('add.budgetWarning', { percent: Math.round(pct), defaultValue: `⚠️ {{percent}}% of monthly budget used` }));
+        }
+      }
+      for (const cat of budgetData.categories) {
+        if (cat.category === category) {
+          const catPct = (cat.actual / cat.budget) * 100;
+          if (catPct >= 100) {
+            warnings.push(t('add.categoryBudgetExceeded', {
+              category: t(`categories.${category}`),
+              percent: Math.round(catPct),
+              defaultValue: `⚠️ {{category}} budget exceeded! ({{percent}}%)`
+            }));
+          } else if (catPct >= 80) {
+            warnings.push(t('add.categoryBudgetWarning', {
+              category: t(`categories.${category}`),
+              percent: Math.round(catPct),
+              defaultValue: `⚠️ {{category}}: {{percent}}% of budget used`
+            }));
+          }
+        }
+      }
+
+      showToast(t('add.saved'), warnings);
 
       setTitle("");
       setAmount("");
       setCategory("other");
       setNotes("");
       setSelectedTagIds([]);
+      setCategoryManuallySet(false);
+      setReceiptUri(null);
+      setIsInstallment(false);
+      setInstallmentCount("");
     } catch (err) {
       console.error(err);
       Alert.alert(t('common.error'), t('add.saveFailed'));
@@ -211,7 +378,61 @@ export default function AddExpenseScreen() {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView ref={scrollRef} contentContainerStyle={styles.container}>
+      {/* Success Toast */}
+      {toastData && (
+        <View
+          style={{
+            backgroundColor: toastData.warnings.length > 0 ? "#f59e0b" : "#22c55e",
+            borderRadius: 16,
+            paddingVertical: 14,
+            paddingHorizontal: 18,
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 12,
+            marginBottom: 12,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.2,
+            shadowRadius: 10,
+            elevation: 6,
+          }}
+        >
+          <View style={{
+            width: 36,
+            height: 36,
+            borderRadius: 18,
+            backgroundColor: "rgba(255,255,255,0.25)",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+            <Ionicons
+              name={toastData.warnings.length > 0 ? "warning" : "checkmark-circle"}
+              size={22}
+              color="#fff"
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: "#fff", fontWeight: "700", fontSize: 15 }}>
+              {toastData.message}
+            </Text>
+            {toastData.warnings.map((w, i) => (
+              <Text key={i} style={{ color: "rgba(255,255,255,0.9)", fontSize: 12, marginTop: 3 }}>
+                {w}
+              </Text>
+            ))}
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              if (toastTimeout.current) clearTimeout(toastTimeout.current);
+              setToastData(null);
+            }}
+          >
+            <Ionicons name="close" size={18} color="rgba(255,255,255,0.7)" />
+          </TouchableOpacity>
+        </View>
+      )}
+
       {/* Header */}
       <View style={styles.header}>
         <View>
@@ -255,18 +476,18 @@ export default function AddExpenseScreen() {
         placeholder={t('add.titlePlaceholder')}
         placeholderTextColor={colors.placeholder}
         value={title}
-        onChangeText={setTitle}
+        onChangeText={handleTitleChange}
       />
 
       {/* Amount Input */}
       <Text style={styles.label}>{t('add.amount', { symbol: currSymbol })}</Text>
       <TextInput
         style={styles.amountInput}
-        keyboardType="numeric"
-        placeholder="0.00"
+        keyboardType="decimal-pad"
+        placeholder="0,00"
         placeholderTextColor={colors.placeholder}
         value={amount}
-        onChangeText={setAmount}
+        onChangeText={handleAmountChange}
       />
 
       {/* Categories */}
@@ -278,7 +499,7 @@ export default function AddExpenseScreen() {
             <TouchableOpacity
               key={item.key}
               style={[styles.categoryCard, selected && styles.categorySelected]}
-              onPress={() => setCategory(item.key)}
+              onPress={() => handleCategorySelect(item.key)}
             >
               <Text style={styles.categoryIcon}>{item.icon}</Text>
               <Text style={[styles.categoryLabel, selected && styles.categoryLabelSelected]}>
@@ -322,6 +543,68 @@ export default function AddExpenseScreen() {
             value={bankName}
             onChangeText={setBankName}
           />
+
+          {/* Installment Option */}
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: colors.surface, borderRadius: 14, padding: 14, marginTop: 10, marginBottom: isInstallment ? 0 : 0 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+              <Ionicons name="layers-outline" size={20} color={colors.purple} />
+              <Text style={{ fontWeight: "600", color: colors.text, fontSize: 14 }}>{t('add.installmentPurchase', { defaultValue: 'Installment Purchase' })}</Text>
+            </View>
+            <Switch
+              value={isInstallment}
+              onValueChange={setIsInstallment}
+              trackColor={{ false: colors.border, true: '#c4b5fd' }}
+              thumbColor={isInstallment ? '#8b5cf6' : '#f4f3f4'}
+            />
+          </View>
+
+          {isInstallment && (
+            <View style={{ marginTop: 10 }}>
+              <Text style={{ fontSize: 13, color: colors.textSecondary, marginBottom: 8 }}>{t('add.installmentCount', { defaultValue: 'Number of Installments' })}</Text>
+              <View style={{ flexDirection: "row", gap: 8, flexWrap: "wrap" }}>
+                {[2, 3, 4, 6, 9, 12].map(n => (
+                  <TouchableOpacity
+                    key={n}
+                    onPress={() => setInstallmentCount(String(n))}
+                    style={{
+                      paddingHorizontal: 16,
+                      paddingVertical: 10,
+                      borderRadius: 12,
+                      backgroundColor: installmentCount === String(n) ? colors.purple : colors.surfaceSecondary,
+                      borderWidth: 1,
+                      borderColor: installmentCount === String(n) ? colors.purple : colors.border,
+                    }}
+                  >
+                    <Text style={{
+                      fontWeight: "600",
+                      fontSize: 14,
+                      color: installmentCount === String(n) ? "#fff" : colors.text,
+                    }}>{n}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+              {installmentCount && amount ? (() => {
+                const parsed = parseAmount(amount);
+                const count = parseInt(installmentCount, 10);
+                if (!isNaN(parsed) && !isNaN(count) && count > 0) {
+                  const monthly = parsed / count;
+                  return (
+                    <View style={{ backgroundColor: colors.purple + "15", borderRadius: 12, padding: 12, marginTop: 10, flexDirection: "row", alignItems: "center", gap: 10 }}>
+                      <Ionicons name="information-circle-outline" size={20} color={colors.purple} />
+                      <Text style={{ color: colors.purple, fontSize: 13, fontWeight: "500", flex: 1 }}>
+                        {t('add.installmentSummary', {
+                          count,
+                          monthly: `${currSymbol}${formatNumber(monthly, 2)}`,
+                          defaultValue: '{{count}} installments × {{monthly}}/month'
+                        })}
+                      </Text>
+                    </View>
+                  );
+                }
+                return null;
+              })() : null}
+            </View>
+          )}
         </>
       )}
 
@@ -376,6 +659,37 @@ export default function AddExpenseScreen() {
           </View>
           <TouchableOpacity style={styles.tagCreateButton} onPress={handleCreateTag}>
             <Text style={styles.tagCreateText}>{t('add.createTag')}</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {/* Receipt / Photo */}
+      <Text style={styles.label}>{t('add.receipt', { defaultValue: 'Receipt / Photo' })}</Text>
+      {receiptUri ? (
+        <View style={{ marginBottom: 12 }}>
+          <Image source={{ uri: receiptUri }} style={{ width: "100%", height: 180, borderRadius: 14 }} resizeMode="cover" />
+          <TouchableOpacity
+            onPress={() => setReceiptUri(null)}
+            style={{ position: "absolute", top: 8, right: 8, backgroundColor: "rgba(0,0,0,0.6)", borderRadius: 14, padding: 4 }}
+          >
+            <Ionicons name="close" size={18} color="#fff" />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={{ flexDirection: "row", gap: 10, marginBottom: 12 }}>
+          <TouchableOpacity
+            onPress={pickReceipt}
+            style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, backgroundColor: colors.surfaceSecondary, borderRadius: 14, paddingVertical: 14, borderWidth: 1, borderColor: colors.border, borderStyle: "dashed" }}
+          >
+            <Ionicons name="image-outline" size={20} color={colors.primary} />
+            <Text style={{ color: colors.primary, fontWeight: "600", fontSize: 13 }}>{t('add.pickPhoto', { defaultValue: 'Gallery' })}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={takePhoto}
+            style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, backgroundColor: colors.surfaceSecondary, borderRadius: 14, paddingVertical: 14, borderWidth: 1, borderColor: colors.border, borderStyle: "dashed" }}
+          >
+            <Ionicons name="camera-outline" size={20} color={colors.primary} />
+            <Text style={{ color: colors.primary, fontWeight: "600", fontSize: 13 }}>{t('add.takePhoto', { defaultValue: 'Camera' })}</Text>
           </TouchableOpacity>
         </View>
       )}

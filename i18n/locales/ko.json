@@ -99,7 +99,18 @@
     "cash": "현금",
     "creditCard": "신용카드",
     "bankName": "은행명",
-    "bankNamePlaceholder": "예: 국민, 신한..."
+    "bankNamePlaceholder": "예: 국민, 신한...",
+    "receipt": "영수증 / 사진",
+    "pickPhoto": "갤러리",
+    "takePhoto": "카메라",
+    "cameraPermission": "카메라 권한이 필요합니다",
+    "budgetExceeded": "⚠️ 월간 예산 초과! ({{percent}}%)",
+    "budgetWarning": "⚠️ 월간 예산의 {{percent}}% 사용됨",
+    "categoryBudgetExceeded": "⚠️ {{category}} 예산 초과! ({{percent}}%)",
+    "categoryBudgetWarning": "⚠️ {{category}}: 예산의 {{percent}}% 사용됨",
+    "installmentPurchase": "할부 구매",
+    "installmentCount": "할부 횟수",
+    "installmentSummary": "{{count}}회 할부 × {{monthly}}/월"
   },
   "ai": {
     "title": "스마트 팁",
@@ -130,6 +141,10 @@
     "weekdayPatternDesc": "{{day}}에 가장 많이 지출하는 경향이 있습니다",
     "savingsTip": "절약 기회",
     "savingsTipDesc": "{{category}}이(가) 지출의 {{percent}}%를 차지합니다. 예산 한도 설정을 고려하세요.",
+    "budgetSuggestion": "예산 제안",
+    "budgetSuggestionDesc": "지출을 기반으로 월 예산 {{amount}}을(를) 제안합니다",
+    "categorySuggestion": "카테고리 예산 팁",
+    "categorySuggestionDesc": "최근 지출을 기반으로 {{category}}에 {{amount}} 예산을 설정하는 것을 고려하세요",
     "days": {
       "sunday": "일요일",
       "monday": "월요일",
@@ -206,5 +221,78 @@
     "totalResults": "{{count}}건의 거래",
     "viewAll": "전체 보기",
     "deleteTransaction": "거래 삭제"
+  },
+  "yearlyReport": {
+    "title": "연간 요약",
+    "subtitle": "연간 지출 개요",
+    "totalSpent": "총 지출",
+    "monthlyAvg": "월 평균",
+    "topMonth": "최고 지출 월",
+    "topCategory": "최다 지출 카테고리",
+    "monthlyBreakdown": "월별 내역",
+    "categoryBreakdown": "카테고리별 내역",
+    "noData": "올해 데이터가 없습니다"
+  },
+  "bankReport": {
+    "title": "신용카드 리포트",
+    "subtitle": "은행별 지출",
+    "totalCardSpending": "카드 총 지출",
+    "transactions": "{{count}}건의 거래",
+    "noCardData": "아직 신용카드 지출이 없습니다"
+  },
+  "categoryTrend": {
+    "title": "카테고리 트렌드",
+    "subtitle": "카테고리별 월간 지출",
+    "last6Months": "최근 6개월",
+    "selectCategory": "카테고리 선택",
+    "noData": "이 카테고리의 데이터가 없습니다"
+  },
+  "installments": {
+    "title": "할부",
+    "subtitle": "할부 결제를 관리하세요",
+    "addNew": "할부 추가",
+    "totalDebt": "총 잔액",
+    "monthlyPayment": "월 납부금",
+    "productName": "상품/서비스명",
+    "totalAmount": "총 금액",
+    "numberOfInstallments": "할부 횟수",
+    "paidInstallments": "납부 완료",
+    "remaining": "{{paid}}/{{total}} 납부",
+    "markPaid": "납부 완료 표시",
+    "completed": "완료",
+    "noInstallments": "아직 할부가 없습니다",
+    "fillAllFields": "모든 항목을 입력해주세요",
+    "bankName": "은행명",
+    "bankNamePlaceholder": "예: 국민, 신한..."
+  },
+  "spendingGoals": {
+    "title": "지출 목표",
+    "subtitle": "저축 목표를 설정하고 추적하세요",
+    "addNew": "목표 추가",
+    "goalName": "목표 이름",
+    "targetAmountPlaceholder": "목표 금액",
+    "deadlinePlaceholder": "마감일 (YYYY-MM-DD)",
+    "color": "색상",
+    "daysLeft": "일 남음",
+    "remaining": "남은 금액",
+    "addProgress": "진행 추가",
+    "amount": "금액",
+    "completed": "달성",
+    "noGoals": "아직 지출 목표가 없습니다",
+    "fillAllFields": "모든 항목을 입력해주세요"
+  },
+  "monthlyReport": {
+    "title": "월간 리포트",
+    "subtitle": "상세 월간 요약",
+    "totalSpent": "총 지출",
+    "transactionCount": "거래 건수",
+    "avgPerDay": "일 평균",
+    "topCategory": "최다 지출 카테고리",
+    "cashVsCard": "현금 vs 카드",
+    "cash": "현금",
+    "card": "카드",
+    "noData": "이번 달 데이터가 없습니다",
+    "previousMonth": "이전 달",
+    "share": "리포트 공유"
   }
 }

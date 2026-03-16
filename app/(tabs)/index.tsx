@@ -15,6 +15,7 @@ import { createStyles } from "../../styles";
 
 import {
   deleteTransaction,
+  formatNumber,
   getBudgetVsActual,
   getCategoryDistribution,
   getCurrencySymbol,
@@ -142,7 +143,7 @@ export default function HomeScreen() {
           <Ionicons name="wallet-outline" size={18} color="#fff" />
           <Text style={styles.totalLabel}>{t('home.totalSpending')}</Text>
         </View>
-        <Text style={styles.totalAmount}>{currSymbol}{monthlyTotal.toFixed(2)}</Text>
+        <Text style={styles.totalAmount}>{currSymbol}{formatNumber(monthlyTotal, 2)}</Text>
         <View style={styles.totalFooter}>
           <Ionicons name="trending-up-outline" size={16} color="#dcfce7" />
           <Text style={styles.totalSubText}>{t('home.includingSubs')}</Text>
@@ -161,7 +162,7 @@ export default function HomeScreen() {
             <Text style={{ color: "#dcfce7", fontSize: 12, marginTop: 4 }}>
               {budgetInfo.actual > budgetInfo.budget
                 ? t('budget.exceeded')
-                : `${t('budget.remaining')} ${currSymbol}${(budgetInfo.budget - budgetInfo.actual).toFixed(0)}`
+                : `${t('budget.remaining')} ${currSymbol}${formatNumber(budgetInfo.budget - budgetInfo.actual)}`
               }
             </Text>
           </View>
@@ -192,7 +193,7 @@ export default function HomeScreen() {
             <Text style={styles.statLabel}>{t('home.dailyAverage')}</Text>
             <Ionicons name="analytics-outline" size={18} color={colors.iconSecondary} />
           </View>
-          <Text style={styles.statValue}>{currSymbol}{dailyAverage.toFixed(0)}</Text>
+          <Text style={styles.statValue}>{currSymbol}{formatNumber(dailyAverage)}</Text>
         </View>
       </View>
 
@@ -208,7 +209,7 @@ export default function HomeScreen() {
                 <Text style={styles.statLabel}>{t('home.cashSpending')}</Text>
                 <Ionicons name="cash-outline" size={18} color={colors.primary} />
               </View>
-              <Text style={styles.statValue}>{currSymbol}{cashTotal.toFixed(0)}</Text>
+              <Text style={styles.statValue}>{currSymbol}{formatNumber(cashTotal)}</Text>
               {payTotal > 0 && (
                 <Text style={{ fontSize: 11, color: colors.textMuted, marginTop: 2 }}>
                   %{Math.round((cashTotal / payTotal) * 100)}
@@ -220,7 +221,7 @@ export default function HomeScreen() {
                 <Text style={styles.statLabel}>{t('home.cardSpending')}</Text>
                 <Ionicons name="card-outline" size={18} color={colors.purple} />
               </View>
-              <Text style={styles.statValue}>{currSymbol}{cardTotal.toFixed(0)}</Text>
+              <Text style={styles.statValue}>{currSymbol}{formatNumber(cardTotal)}</Text>
               {payTotal > 0 && (
                 <Text style={{ fontSize: 11, color: colors.textMuted, marginTop: 2 }}>
                   %{Math.round((cardTotal / payTotal) * 100)}
@@ -231,6 +232,38 @@ export default function HomeScreen() {
         );
       })()}
 
+      {/* Quick Actions */}
+      <View style={styles.largeCard}>
+        <Text style={styles.cardTitle}>{t('home.quickActions', { defaultValue: 'Reports & Tools' })}</Text>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
+          {[
+            { icon: "calendar-outline" as const, label: t("monthlyReport.title"), route: "/monthly-report" },
+            { icon: "bar-chart-outline" as const, label: t("yearlyReport.title"), route: "/yearly-report" },
+            { icon: "card-outline" as const, label: t("bankReport.title"), route: "/bank-report" },
+            { icon: "trending-up-outline" as const, label: t("categoryTrend.title"), route: "/category-trend" },
+            { icon: "receipt-outline" as const, label: t("installments.title"), route: "/installments" },
+            { icon: "flag-outline" as const, label: t("spendingGoals.title", { defaultValue: "Spending Goals" }), route: "/spending-goals" },
+          ].map((item) => (
+            <TouchableOpacity
+              key={item.route}
+              onPress={() => router.push(item.route as any)}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                backgroundColor: colors.surfaceTertiary,
+                borderRadius: 12,
+                paddingHorizontal: 14,
+                paddingVertical: 10,
+                gap: 8,
+              }}
+            >
+              <Ionicons name={item.icon} size={18} color={colors.primary} />
+              <Text style={{ fontSize: 13, fontWeight: "600", color: colors.text }}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
       {/* Monthly Comparison */}
       {comparison && (comparison.thisMonth > 0 || comparison.lastMonth > 0) && (
         <View style={styles.largeCard}>
@@ -239,13 +272,13 @@ export default function HomeScreen() {
             <View style={{ flex: 1, backgroundColor: colors.primaryLight, borderRadius: 14, padding: 14, marginRight: 6 }}>
               <Text style={{ fontSize: 12, color: colors.primaryLightText, fontWeight: "500" }}>{t('home.thisMonth')}</Text>
               <Text style={{ fontSize: 20, fontWeight: "700", color: colors.primaryLightText, marginTop: 4 }}>
-                {currSymbol}{comparison.thisMonth.toFixed(0)}
+                {currSymbol}{formatNumber(comparison.thisMonth)}
               </Text>
             </View>
             <View style={{ flex: 1, backgroundColor: colors.surfaceSecondary, borderRadius: 14, padding: 14, marginLeft: 6 }}>
               <Text style={{ fontSize: 12, color: colors.textSecondary, fontWeight: "500" }}>{t('home.lastMonth')}</Text>
               <Text style={{ fontSize: 20, fontWeight: "700", color: colors.text, marginTop: 4 }}>
-                {currSymbol}{comparison.lastMonth.toFixed(0)}
+                {currSymbol}{formatNumber(comparison.lastMonth)}
               </Text>
             </View>
           </View>
@@ -313,10 +346,10 @@ export default function HomeScreen() {
                           <Text style={{ fontWeight: "600", color: colors.text }}>{cat.label}</Text>
                           <Text style={{ fontSize: 12, color: colors.textSecondary }}>
                             {t('home.percentThisMonth', { percent: Math.round(percent * 100) })}
-                            {catBudget ? ` · ${currSymbol}${catBudget.budget.toFixed(0)} ${t('budget.limit')}` : ''}
+                            {catBudget ? ` · ${currSymbol}${formatNumber(catBudget.budget)} ${t('budget.limit')}` : ''}
                           </Text>
                         </View>
-                        <Text style={{ fontWeight: "700", color: colors.text }}>{currSymbol}{item.total.toFixed(0)}</Text>
+                        <Text style={{ fontWeight: "700", color: colors.text }}>{currSymbol}{formatNumber(item.total)}</Text>
                       </View>
                       <View style={{ height: 6, backgroundColor: colors.border, borderRadius: 6, overflow: "hidden" }}>
                         <View style={{
@@ -396,6 +429,12 @@ export default function HomeScreen() {
                     ) : null}
                   </View>
                   {tx.notes ? <Text style={{ fontSize: 11, color: colors.textMuted, marginTop: 2 }} numberOfLines={1}>{tx.notes}</Text> : null}
+                  {tx.receiptUri ? (
+                    <View style={{ flexDirection: "row", alignItems: "center", marginTop: 2 }}>
+                      <Ionicons name="receipt-outline" size={11} color={colors.primary} />
+                      <Text style={{ fontSize: 10, color: colors.primary, marginLeft: 3 }}>Receipt attached</Text>
+                    </View>
+                  ) : null}
                   {(transactionTags.get(tx.id) ?? []).length > 0 && (
                     <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 4, marginTop: 3 }}>
                       {(transactionTags.get(tx.id) ?? []).map(tag => (
@@ -406,7 +445,7 @@ export default function HomeScreen() {
                     </View>
                   )}
                 </View>
-                <Text style={{ fontWeight: "700", marginRight: 10, color: colors.text }}>{currSymbol}{tx.amount.toFixed(2)}</Text>
+                <Text style={{ fontWeight: "700", marginRight: 10, color: colors.text }}>{currSymbol}{formatNumber(tx.amount, 2)}</Text>
                 <TouchableOpacity
                   onPress={() => {
                     Alert.alert(

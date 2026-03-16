@@ -99,7 +99,18 @@
     "cash": "नकद",
     "creditCard": "क्रेडिट कार्ड",
     "bankName": "बैंक का नाम",
-    "bankNamePlaceholder": "जैसे: SBI, HDFC..."
+    "bankNamePlaceholder": "जैसे: SBI, HDFC...",
+    "receipt": "रसीद / फोटो",
+    "pickPhoto": "गैलरी",
+    "takePhoto": "कैमरा",
+    "cameraPermission": "कैमरा अनुमति आवश्यक है",
+    "budgetExceeded": "⚠️ मासिक बजट पार हो गया! ({{percent}}%)",
+    "budgetWarning": "⚠️ मासिक बजट का {{percent}}% उपयोग हुआ",
+    "categoryBudgetExceeded": "⚠️ {{category}} बजट पार हो गया! ({{percent}}%)",
+    "categoryBudgetWarning": "⚠️ {{category}}: बजट का {{percent}}% उपयोग हुआ",
+    "installmentPurchase": "किस्त खरीदारी",
+    "installmentCount": "किस्तों की संख्या",
+    "installmentSummary": "{{count}} किस्तें × {{monthly}}/माह"
   },
   "ai": {
     "title": "स्मार्ट सुझाव",
@@ -130,6 +141,10 @@
     "weekdayPatternDesc": "आप {{day}} को सबसे ज्यादा खर्च करते हैं",
     "savingsTip": "बचत का अवसर",
     "savingsTipDesc": "{{category}} आपके खर्च का {{percent}}% है। बजट सीमा निर्धारित करने पर विचार करें।",
+    "budgetSuggestion": "बजट सुझाव",
+    "budgetSuggestionDesc": "आपके खर्च के आधार पर, हम {{amount}} का मासिक बजट सुझाते हैं",
+    "categorySuggestion": "श्रेणी बजट सुझाव",
+    "categorySuggestionDesc": "आपके हाल के खर्च के आधार पर {{category}} के लिए {{amount}} का बजट निर्धारित करने पर विचार करें",
     "days": {
       "sunday": "रविवार",
       "monday": "सोमवार",
@@ -206,5 +221,78 @@
     "totalResults": "{{count}} लेनदेन",
     "viewAll": "सभी देखें",
     "deleteTransaction": "लेनदेन हटाएं"
+  },
+  "yearlyReport": {
+    "title": "वार्षिक सारांश",
+    "subtitle": "आपके वार्षिक खर्च का अवलोकन",
+    "totalSpent": "कुल खर्च",
+    "monthlyAvg": "मासिक औसत",
+    "topMonth": "सबसे अधिक खर्च वाला महीना",
+    "topCategory": "शीर्ष श्रेणी",
+    "monthlyBreakdown": "मासिक विवरण",
+    "categoryBreakdown": "श्रेणी विवरण",
+    "noData": "इस वर्ष के लिए कोई डेटा नहीं"
+  },
+  "bankReport": {
+    "title": "क्रेडिट कार्ड रिपोर्ट",
+    "subtitle": "बैंक अनुसार खर्च",
+    "totalCardSpending": "कुल कार्ड खर्च",
+    "transactions": "{{count}} लेनदेन",
+    "noCardData": "अभी तक कोई क्रेडिट कार्ड खर्च नहीं"
+  },
+  "categoryTrend": {
+    "title": "श्रेणी रुझान",
+    "subtitle": "श्रेणी अनुसार मासिक खर्च",
+    "last6Months": "पिछले 6 महीने",
+    "selectCategory": "श्रेणी चुनें",
+    "noData": "इस श्रेणी के लिए कोई डेटा नहीं"
+  },
+  "installments": {
+    "title": "किस्तें",
+    "subtitle": "अपनी किस्त भुगतान ट्रैक करें",
+    "addNew": "किस्त जोड़ें",
+    "totalDebt": "कुल शेष",
+    "monthlyPayment": "मासिक भुगतान",
+    "productName": "उत्पाद/सेवा का नाम",
+    "totalAmount": "कुल राशि",
+    "numberOfInstallments": "किस्तों की संख्या",
+    "paidInstallments": "भुगतान हुई",
+    "remaining": "{{paid}}/{{total}} भुगतान हुई",
+    "markPaid": "भुगतान के रूप में चिह्नित करें",
+    "completed": "पूर्ण",
+    "noInstallments": "अभी तक कोई किस्त नहीं",
+    "fillAllFields": "कृपया सभी फ़ील्ड भरें",
+    "bankName": "बैंक का नाम",
+    "bankNamePlaceholder": "जैसे: SBI, HDFC..."
+  },
+  "spendingGoals": {
+    "title": "खर्च लक्ष्य",
+    "subtitle": "अपने बचत लक्ष्य निर्धारित करें और ट्रैक करें",
+    "addNew": "लक्ष्य जोड़ें",
+    "goalName": "लक्ष्य का नाम",
+    "targetAmountPlaceholder": "लक्ष्य राशि",
+    "deadlinePlaceholder": "समय सीमा (YYYY-MM-DD)",
+    "color": "रंग",
+    "daysLeft": "दिन शेष",
+    "remaining": "शेष",
+    "addProgress": "प्रगति जोड़ें",
+    "amount": "राशि",
+    "completed": "हासिल किया",
+    "noGoals": "अभी तक कोई खर्च लक्ष्य नहीं",
+    "fillAllFields": "कृपया सभी फ़ील्ड भरें"
+  },
+  "monthlyReport": {
+    "title": "मासिक रिपोर्ट",
+    "subtitle": "विस्तृत मासिक सारांश",
+    "totalSpent": "कुल खर्च",
+    "transactionCount": "लेनदेन",
+    "avgPerDay": "दैनिक औसत",
+    "topCategory": "शीर्ष श्रेणी",
+    "cashVsCard": "नकद बनाम कार्ड",
+    "cash": "नकद",
+    "card": "कार्ड",
+    "noData": "इस माह के लिए कोई डेटा नहीं",
+    "previousMonth": "पिछला महीना",
+    "share": "रिपोर्ट साझा करें"
   }
 }
