@@ -47,7 +47,8 @@
     "thisMonth": "今月",
     "lastMonth": "先月",
     "vsLastMonth": "先月比",
-    "totalLabel": "合計"
+    "totalLabel": "合計",
+    "quickActions": "レポートとツール"
   },
   "subscriptions": {
     "title": "サブスクリプション",

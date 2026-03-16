@@ -47,7 +47,8 @@
     "thisMonth": "Este Mês",
     "lastMonth": "Mês Passado",
     "vsLastMonth": "vs mês passado",
-    "totalLabel": "Total"
+    "totalLabel": "Total",
+    "quickActions": "Relatórios e Ferramentas"
   },
   "subscriptions": {
     "title": "Assinaturas",

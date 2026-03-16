@@ -47,7 +47,8 @@
     "thisMonth": "Bulan Ini",
     "lastMonth": "Bulan Lalu",
     "vsLastMonth": "vs bulan lalu",
-    "totalLabel": "Total"
+    "totalLabel": "Total",
+    "quickActions": "Laporan & Alat"
   },
   "subscriptions": {
     "title": "Langganan",

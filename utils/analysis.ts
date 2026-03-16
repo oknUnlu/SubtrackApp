@@ -107,7 +107,7 @@ export function getBudgetInsights(
 ): Insight[] {
   const insights: Insight[] = [];
 
-  if (budgetData.overall) {
+  if (budgetData.overall && budgetData.overall.budget > 0) {
     const percent = Math.round(
       (budgetData.overall.actual / budgetData.overall.budget) * 100
     );
@@ -124,6 +124,7 @@ export function getBudgetInsights(
   }
 
   for (const cat of budgetData.categories) {
+    if (cat.budget <= 0) continue;
     const percent = Math.round((cat.actual / cat.budget) * 100);
     if (percent >= 80) {
       insights.push({

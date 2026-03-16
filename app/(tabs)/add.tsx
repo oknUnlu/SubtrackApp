@@ -178,7 +178,7 @@ export default function AddExpenseScreen() {
   const takePhoto = async () => {
     const perm = await ImagePicker.requestCameraPermissionsAsync();
     if (!perm.granted) {
-      Alert.alert(t('common.error'), t('add.cameraPermission', { defaultValue: 'Camera permission is required' }));
+      Alert.alert(t('common.error'), t('add.cameraPermission'));
       return;
     }
     const result = await ImagePicker.launchCameraAsync({
@@ -328,28 +328,26 @@ export default function AddExpenseScreen() {
       // Check budget limits after saving
       const budgetData = await getBudgetVsActual();
       const warnings: string[] = [];
-      if (budgetData.overall) {
+      if (budgetData.overall && budgetData.overall.budget > 0) {
         const pct = (budgetData.overall.actual / budgetData.overall.budget) * 100;
         if (pct >= 100) {
-          warnings.push(t('add.budgetExceeded', { percent: Math.round(pct), defaultValue: `⚠️ Monthly budget exceeded! ({{percent}}%)` }));
+          warnings.push(t('add.budgetExceeded', { percent: Math.round(pct) }));
         } else if (pct >= 80) {
-          warnings.push(t('add.budgetWarning', { percent: Math.round(pct), defaultValue: `⚠️ {{percent}}% of monthly budget used` }));
+          warnings.push(t('add.budgetWarning', { percent: Math.round(pct) }));
         }
       }
       for (const cat of budgetData.categories) {
-        if (cat.category === category) {
+        if (cat.category === category && cat.budget > 0) {
           const catPct = (cat.actual / cat.budget) * 100;
           if (catPct >= 100) {
             warnings.push(t('add.categoryBudgetExceeded', {
               category: t(`categories.${category}`),
               percent: Math.round(catPct),
-              defaultValue: `⚠️ {{category}} budget exceeded! ({{percent}}%)`
             }));
           } else if (catPct >= 80) {
             warnings.push(t('add.categoryBudgetWarning', {
               category: t(`categories.${category}`),
               percent: Math.round(catPct),
-              defaultValue: `⚠️ {{category}}: {{percent}}% of budget used`
             }));
           }
         }
@@ -548,7 +546,7 @@ export default function AddExpenseScreen() {
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: colors.surface, borderRadius: 14, padding: 14, marginTop: 10, marginBottom: isInstallment ? 0 : 0 }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
               <Ionicons name="layers-outline" size={20} color={colors.purple} />
-              <Text style={{ fontWeight: "600", color: colors.text, fontSize: 14 }}>{t('add.installmentPurchase', { defaultValue: 'Installment Purchase' })}</Text>
+              <Text style={{ fontWeight: "600", color: colors.text, fontSize: 14 }}>{t('add.installmentPurchase')}</Text>
             </View>
             <Switch
               value={isInstallment}
@@ -560,7 +558,7 @@ export default function AddExpenseScreen() {
 
           {isInstallment && (
             <View style={{ marginTop: 10 }}>
-              <Text style={{ fontSize: 13, color: colors.textSecondary, marginBottom: 8 }}>{t('add.installmentCount', { defaultValue: 'Number of Installments' })}</Text>
+              <Text style={{ fontSize: 13, color: colors.textSecondary, marginBottom: 8 }}>{t('add.installmentCount')}</Text>
               <View style={{ flexDirection: "row", gap: 8, flexWrap: "wrap" }}>
                 {[2, 3, 4, 6, 9, 12].map(n => (
                   <TouchableOpacity
@@ -595,7 +593,6 @@ export default function AddExpenseScreen() {
                         {t('add.installmentSummary', {
                           count,
                           monthly: `${currSymbol}${formatNumber(monthly, 2)}`,
-                          defaultValue: '{{count}} installments × {{monthly}}/month'
                         })}
                       </Text>
                     </View>
@@ -664,7 +661,7 @@ export default function AddExpenseScreen() {
       )}
 
       {/* Receipt / Photo */}
-      <Text style={styles.label}>{t('add.receipt', { defaultValue: 'Receipt / Photo' })}</Text>
+      <Text style={styles.label}>{t('add.receipt')}</Text>
       {receiptUri ? (
         <View style={{ marginBottom: 12 }}>
           <Image source={{ uri: receiptUri }} style={{ width: "100%", height: 180, borderRadius: 14 }} resizeMode="cover" />
@@ -682,14 +679,14 @@ export default function AddExpenseScreen() {
             style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, backgroundColor: colors.surfaceSecondary, borderRadius: 14, paddingVertical: 14, borderWidth: 1, borderColor: colors.border, borderStyle: "dashed" }}
           >
             <Ionicons name="image-outline" size={20} color={colors.primary} />
-            <Text style={{ color: colors.primary, fontWeight: "600", fontSize: 13 }}>{t('add.pickPhoto', { defaultValue: 'Gallery' })}</Text>
+            <Text style={{ color: colors.primary, fontWeight: "600", fontSize: 13 }}>{t('add.pickPhoto')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={takePhoto}
             style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, backgroundColor: colors.surfaceSecondary, borderRadius: 14, paddingVertical: 14, borderWidth: 1, borderColor: colors.border, borderStyle: "dashed" }}
           >
             <Ionicons name="camera-outline" size={20} color={colors.primary} />
-            <Text style={{ color: colors.primary, fontWeight: "600", fontSize: 13 }}>{t('add.takePhoto', { defaultValue: 'Camera' })}</Text>
+            <Text style={{ color: colors.primary, fontWeight: "600", fontSize: 13 }}>{t('add.takePhoto')}</Text>
           </TouchableOpacity>
         </View>
       )}

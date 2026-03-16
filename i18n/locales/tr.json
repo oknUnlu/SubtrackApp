@@ -47,7 +47,8 @@
     "thisMonth": "Bu Ay",
     "lastMonth": "Geçen Ay",
     "vsLastMonth": "geçen aya göre",
-    "totalLabel": "Toplam"
+    "totalLabel": "Toplam",
+    "quickActions": "Raporlar ve Araçlar"
   },
   "subscriptions": {
     "title": "Abonelikler",

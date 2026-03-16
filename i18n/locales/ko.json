@@ -47,7 +47,8 @@
     "thisMonth": "이번 달",
     "lastMonth": "지난 달",
     "vsLastMonth": "지난 달 대비",
-    "totalLabel": "합계"
+    "totalLabel": "합계",
+    "quickActions": "보고서 및 도구"
   },
   "subscriptions": {
     "title": "구독",

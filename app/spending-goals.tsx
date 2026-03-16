@@ -66,7 +66,7 @@ export default function SpendingGoalsScreen() {
 
   const handleSave = async () => {
     if (!title.trim() || !targetAmount) {
-      Alert.alert(t("common.error"), t("spendingGoals.fillAllFields", { defaultValue: "Please fill in all fields" }));
+      Alert.alert(t("common.error"), t("spendingGoals.fillAllFields"));
       return;
     }
     const target = parseAmount(targetAmount);
@@ -115,8 +115,8 @@ export default function SpendingGoalsScreen() {
             <Ionicons name="close" size={24} color={colors.icon} />
           </TouchableOpacity>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 24, fontWeight: "700", color: colors.text }}>{t("spendingGoals.title", { defaultValue: "Spending Goals" })}</Text>
-            <Text style={{ color: colors.textSecondary, marginTop: 2 }}>{t("spendingGoals.subtitle", { defaultValue: "Set and track your savings targets" })}</Text>
+            <Text style={{ fontSize: 24, fontWeight: "700", color: colors.text }}>{t("spendingGoals.title")}</Text>
+            <Text style={{ color: colors.textSecondary, marginTop: 2 }}>{t("spendingGoals.subtitle")}</Text>
           </View>
         </View>
 
@@ -126,7 +126,7 @@ export default function SpendingGoalsScreen() {
           style={{ backgroundColor: colors.primary, borderRadius: 14, paddingVertical: 14, flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 8, marginBottom: 20 }}
         >
           <Ionicons name="add" size={20} color="#fff" />
-          <Text style={{ color: "#fff", fontWeight: "600", fontSize: 15 }}>{t("spendingGoals.addNew", { defaultValue: "Add Goal" })}</Text>
+          <Text style={{ color: "#fff", fontWeight: "600", fontSize: 15 }}>{t("spendingGoals.addNew")}</Text>
         </TouchableOpacity>
 
         {/* Active Goals */}
@@ -144,7 +144,7 @@ export default function SpendingGoalsScreen() {
                 </View>
                 <View style={{ flex: 1 }}>
                   <Text style={{ fontWeight: "700", fontSize: 16, color: colors.text }}>{goal.title}</Text>
-                  <Text style={{ fontSize: 12, color: colors.textSecondary }}>{daysLeft} {t("spendingGoals.daysLeft", { defaultValue: "days left" })}</Text>
+                  <Text style={{ fontSize: 12, color: colors.textSecondary }}>{daysLeft} {t("spendingGoals.daysLeft")}</Text>
                 </View>
                 <TouchableOpacity onPress={() => handleDelete(goal)}>
                   <Ionicons name="trash-outline" size={18} color={colors.danger} />
@@ -163,13 +163,13 @@ export default function SpendingGoalsScreen() {
               </View>
 
               <Text style={{ fontSize: 12, color: colors.textMuted, marginBottom: 8 }}>
-                {t("spendingGoals.remaining", { defaultValue: "Remaining" })}: {currSymbol}{formatNumber(remaining)}
+                {t("spendingGoals.remaining")}: {currSymbol}{formatNumber(remaining)}
               </Text>
 
               {editingGoal?.id === goal.id ? (
                 <View style={{ flexDirection: "row", gap: 8 }}>
                   <TextInput
-                    placeholder={t("spendingGoals.amount", { defaultValue: "Amount" })}
+                    placeholder={t("spendingGoals.amount")}
                     placeholderTextColor={colors.placeholder}
                     value={addAmount}
                     onChangeText={setAddAmount}
@@ -194,7 +194,7 @@ export default function SpendingGoalsScreen() {
                   onPress={() => setEditingGoal(goal)}
                   style={{ backgroundColor: goal.color + "15", borderRadius: 10, paddingVertical: 8, alignItems: "center" }}
                 >
-                  <Text style={{ color: goal.color, fontWeight: "600", fontSize: 13 }}>{t("spendingGoals.addProgress", { defaultValue: "Add Progress" })}</Text>
+                  <Text style={{ color: goal.color, fontWeight: "600", fontSize: 13 }}>{t("spendingGoals.addProgress")}</Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -204,7 +204,7 @@ export default function SpendingGoalsScreen() {
         {/* Completed Goals */}
         {completedGoals.length > 0 && (
           <>
-            <Text style={{ fontSize: 16, fontWeight: "700", color: colors.textSecondary, marginTop: 16, marginBottom: 10 }}>{t("spendingGoals.completed", { defaultValue: "Achieved" })}</Text>
+            <Text style={{ fontSize: 16, fontWeight: "700", color: colors.textSecondary, marginTop: 16, marginBottom: 10 }}>{t("spendingGoals.completed")}</Text>
             {completedGoals.map(goal => (
               <View key={goal.id} style={{ backgroundColor: colors.surface, borderRadius: 16, padding: 14, marginBottom: 8, opacity: 0.7, flexDirection: "row", alignItems: "center" }}>
                 <View style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: colors.primary + "20", justifyContent: "center", alignItems: "center", marginRight: 10 }}>
@@ -225,7 +225,7 @@ export default function SpendingGoalsScreen() {
         {goals.length === 0 && (
           <View style={{ alignItems: "center", paddingVertical: 40 }}>
             <Text style={{ fontSize: 40 }}>🎯</Text>
-            <Text style={{ color: colors.textMuted, marginTop: 8 }}>{t("spendingGoals.noGoals", { defaultValue: "No spending goals yet" })}</Text>
+            <Text style={{ color: colors.textMuted, marginTop: 8 }}>{t("spendingGoals.noGoals")}</Text>
           </View>
         )}
       </ScrollView>
@@ -234,27 +234,27 @@ export default function SpendingGoalsScreen() {
       <Modal visible={showModal} transparent animationType="slide">
         <View style={{ flex: 1, justifyContent: "flex-end", backgroundColor: "rgba(0,0,0,0.5)" }}>
           <View style={{ backgroundColor: colors.surface, borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 20 }}>
-            <Text style={{ fontSize: 20, fontWeight: "700", color: colors.text, marginBottom: 16 }}>{t("spendingGoals.addNew", { defaultValue: "Add Goal" })}</Text>
+            <Text style={{ fontSize: 20, fontWeight: "700", color: colors.text, marginBottom: 16 }}>{t("spendingGoals.addNew")}</Text>
             <TextInput
-              placeholder={t("spendingGoals.goalName", { defaultValue: "Goal name" })}
+              placeholder={t("spendingGoals.goalName")}
               placeholderTextColor={colors.placeholder}
               value={title} onChangeText={setTitle}
               style={{ backgroundColor: colors.inputBg, borderRadius: 14, padding: 14, fontSize: 15, borderWidth: 1, borderColor: colors.border, color: colors.text, marginBottom: 10 }}
             />
             <TextInput
-              placeholder={t("spendingGoals.targetAmountPlaceholder", { defaultValue: "Target amount" })}
+              placeholder={t("spendingGoals.targetAmountPlaceholder")}
               placeholderTextColor={colors.placeholder}
               value={targetAmount} onChangeText={handleTargetAmountChange}
               keyboardType="decimal-pad"
               style={{ backgroundColor: colors.inputBg, borderRadius: 14, padding: 14, fontSize: 15, borderWidth: 1, borderColor: colors.border, color: colors.text, marginBottom: 10 }}
             />
             <TextInput
-              placeholder={t("spendingGoals.deadlinePlaceholder", { defaultValue: "Deadline (YYYY-MM-DD)" })}
+              placeholder={t("spendingGoals.deadlinePlaceholder")}
               placeholderTextColor={colors.placeholder}
               value={deadline} onChangeText={setDeadline}
               style={{ backgroundColor: colors.inputBg, borderRadius: 14, padding: 14, fontSize: 15, borderWidth: 1, borderColor: colors.border, color: colors.text, marginBottom: 12 }}
             />
-            <Text style={{ fontSize: 13, color: colors.textSecondary, marginBottom: 8 }}>{t("spendingGoals.color", { defaultValue: "Color" })}</Text>
+            <Text style={{ fontSize: 13, color: colors.textSecondary, marginBottom: 8 }}>{t("spendingGoals.color")}</Text>
             <View style={{ flexDirection: "row", gap: 10, marginBottom: 16 }}>
               {GOAL_COLORS.map(c => (
                 <TouchableOpacity

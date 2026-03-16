@@ -153,7 +153,7 @@ export default function HomeScreen() {
           <View style={{ marginTop: 12 }}>
             <View style={{ height: 6, backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 6, overflow: "hidden" }}>
               <View style={{
-                width: `${Math.min((budgetInfo.actual / budgetInfo.budget) * 100, 100)}%`,
+                width: `${budgetInfo.budget > 0 ? Math.min((budgetInfo.actual / budgetInfo.budget) * 100, 100) : 0}%`,
                 height: "100%",
                 backgroundColor: budgetInfo.actual > budgetInfo.budget ? "#fca5a5" : "#dcfce7",
                 borderRadius: 6,
@@ -234,7 +234,7 @@ export default function HomeScreen() {
 
       {/* Quick Actions */}
       <View style={styles.largeCard}>
-        <Text style={styles.cardTitle}>{t('home.quickActions', { defaultValue: 'Reports & Tools' })}</Text>
+        <Text style={styles.cardTitle}>{t('home.quickActions')}</Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
           {[
             { icon: "calendar-outline" as const, label: t("monthlyReport.title"), route: "/monthly-report" },
@@ -242,7 +242,7 @@ export default function HomeScreen() {
             { icon: "card-outline" as const, label: t("bankReport.title"), route: "/bank-report" },
             { icon: "trending-up-outline" as const, label: t("categoryTrend.title"), route: "/category-trend" },
             { icon: "receipt-outline" as const, label: t("installments.title"), route: "/installments" },
-            { icon: "flag-outline" as const, label: t("spendingGoals.title", { defaultValue: "Spending Goals" }), route: "/spending-goals" },
+            { icon: "flag-outline" as const, label: t("spendingGoals.title"), route: "/spending-goals" },
           ].map((item) => (
             <TouchableOpacity
               key={item.route}

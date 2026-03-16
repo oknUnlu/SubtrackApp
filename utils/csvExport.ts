@@ -1,4 +1,4 @@
-import * as FileSystem from "expo-file-system";
+import { File, Paths } from "expo-file-system/next";
 import * as Sharing from "expo-sharing";
 import { getTransactions, getSubscriptions } from "../database/db";
 
@@ -28,12 +28,11 @@ export async function exportTransactionsCsv(): Promise<void> {
   }
 
   const fileName = `subtrack_expenses_${new Date().toISOString().slice(0, 10)}.csv`;
-  const filePath = `${FileSystem.cacheDirectory}${fileName}`;
-  await FileSystem.writeAsStringAsync(filePath, csv, {
-    encoding: FileSystem.EncodingType.UTF8,
-  });
+  const file = new File(Paths.cache, fileName);
+  file.create();
+  file.write(csv);
 
-  await Sharing.shareAsync(filePath, {
+  await Sharing.shareAsync(file.uri, {
     mimeType: "text/csv",
     dialogTitle: "Export Expenses",
     UTI: "public.comma-separated-values-text",
@@ -55,12 +54,11 @@ export async function exportSubscriptionsCsv(): Promise<void> {
   }
 
   const fileName = `subtrack_subscriptions_${new Date().toISOString().slice(0, 10)}.csv`;
-  const filePath = `${FileSystem.cacheDirectory}${fileName}`;
-  await FileSystem.writeAsStringAsync(filePath, csv, {
-    encoding: FileSystem.EncodingType.UTF8,
-  });
+  const file = new File(Paths.cache, fileName);
+  file.create();
+  file.write(csv);
 
-  await Sharing.shareAsync(filePath, {
+  await Sharing.shareAsync(file.uri, {
     mimeType: "text/csv",
     dialogTitle: "Export Subscriptions",
     UTI: "public.comma-separated-values-text",

@@ -47,7 +47,8 @@
     "thisMonth": "This Month",
     "lastMonth": "Last Month",
     "vsLastMonth": "vs last month",
-    "totalLabel": "Total"
+    "totalLabel": "Total",
+    "quickActions": "Reports & Tools"
   },
   "subscriptions": {
     "title": "Subscriptions",

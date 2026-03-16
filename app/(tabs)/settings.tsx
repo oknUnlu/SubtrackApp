@@ -130,7 +130,7 @@ export default function SettingsScreen() {
           <Divider colors={colors} />
           <SettingRow icon="stats-chart-outline" label={t('settings.mainView')} value={mainView === "monthly" ? t('common.monthly') : t('common.yearly')} onPress={() => setModal("view")} colors={colors} />
           <Divider colors={colors} />
-          <SettingRow icon="notifications-outline" label={t('settings.reminderDays')} value={t('settings.daysBefore', { count: reminderDays })} onPress={() => setModal("reminder")} colors={colors} />
+          <SettingRow icon="notifications-outline" label={t('settings.reminderDays')} value={t('settings.daysBefore', { count: Number(reminderDays) })} onPress={() => setModal("reminder")} colors={colors} />
           <Divider colors={colors} />
           <SettingRow icon="moon-outline" label={t('settings.darkMode')} value={darkModeLabel(darkModeSetting)} onPress={() => setModal("darkMode")} colors={colors} />
           {biometricAvailable && (
@@ -232,10 +232,10 @@ export default function SettingsScreen() {
       />
       <OptionModal visible={modal === "reminder"} title={t('settings.reminderDays')} colors={colors}
         options={[
-          { label: t('settings.daysBefore', { count: "1" }), value: "1" },
-          { label: t('settings.daysBefore', { count: "2" }), value: "2" },
-          { label: t('settings.daysBefore', { count: "3" }), value: "3" },
-          { label: t('settings.daysBefore', { count: "7" }), value: "7" },
+          { label: t('settings.daysBefore', { count: 1 }), value: "1" },
+          { label: t('settings.daysBefore', { count: 2 }), value: "2" },
+          { label: t('settings.daysBefore', { count: 3 }), value: "3" },
+          { label: t('settings.daysBefore', { count: 7 }), value: "7" },
         ]}
         onSelect={(v: string) => select("reminderDaysBefore", v)} onClose={() => setModal(null)}
       />
