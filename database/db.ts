@@ -7,6 +7,8 @@ export type TransactionItem = {
   date: string; // ISO string
   category?: string;
   notes?: string;
+  paymentMethod?: string; // "cash" | "credit_card"
+  bankName?: string;
 };
 
 export type SubscriptionItem = {
@@ -161,6 +163,8 @@ export async function initDB(): Promise<void> {
   // Migrations — use getDB().runAsync directly to avoid console.error noise
   // when the column already exists (duplicate column is expected on repeat launches)
   await getDB().runAsync(`ALTER TABLE transactions ADD COLUMN notes TEXT`).catch(() => {});
+  await getDB().runAsync(`ALTER TABLE transactions ADD COLUMN paymentMethod TEXT`).catch(() => {});
+  await getDB().runAsync(`ALTER TABLE transactions ADD COLUMN bankName TEXT`).catch(() => {});
 }
 
 /* -------------------- */
@@ -168,8 +172,8 @@ export async function initDB(): Promise<void> {
 /* -------------------- */
 export async function addTransaction(item: TransactionItem) {
   const sql = `
-    INSERT INTO transactions (id, title, amount, date, category, notes)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO transactions (id, title, amount, date, category, notes, paymentMethod, bankName)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   await executeSql(sql, [
@@ -179,13 +183,15 @@ export async function addTransaction(item: TransactionItem) {
     item.date,
     item.category ?? null,
     item.notes ?? null,
+    item.paymentMethod ?? null,
+    item.bankName ?? null,
   ]);
 }
 
 export async function updateTransaction(item: TransactionItem) {
   await executeSql(
-    `UPDATE transactions SET title = ?, amount = ?, category = ?, notes = ? WHERE id = ?`,
-    [item.title, item.amount, item.category ?? null, item.notes ?? null, item.id]
+    `UPDATE transactions SET title = ?, amount = ?, category = ?, notes = ?, paymentMethod = ?, bankName = ? WHERE id = ?`,
+    [item.title, item.amount, item.category ?? null, item.notes ?? null, item.paymentMethod ?? null, item.bankName ?? null, item.id]
   );
 }
 
@@ -581,6 +587,15 @@ export async function getTagsForTransactions(transactionIds: string[]): Promise<
     map.set(row.transactionId, list);
   }
   return map;
+}
+
+export async function getPaymentMethodDistribution(): Promise<{ method: string; total: number }[]> {
+  return await getDB().getAllAsync<{ method: string; total: number }>(
+    `SELECT COALESCE(paymentMethod, 'cash') as method, SUM(amount) as total
+     FROM transactions
+     WHERE strftime('%Y-%m', date) = strftime('%Y-%m', 'now')
+     GROUP BY method`
+  );
 }
 
 export async function clearAllData() {

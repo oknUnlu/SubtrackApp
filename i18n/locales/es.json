@@ -41,6 +41,8 @@
     "recentTransactions": "Transacciones Recientes",
     "noTransactions": "Aún no hay transacciones",
     "deleteTransaction": "Eliminar Transacción",
+    "cashSpending": "Efectivo",
+    "cardSpending": "Tarjeta de Crédito",
     "monthlyComparison": "Comparación Mensual",
     "thisMonth": "Este Mes",
     "lastMonth": "Mes Pasado",
@@ -69,6 +71,7 @@
     "addAsSubscription": "Agregar como Suscripción",
     "dismiss": "Descartar",
     "nextRenewal": "Fecha de Próxima Renovación",
+    "selectDate": "Seleccionar fecha",
     "renews": "Se renueva"
   },
   "add": {
@@ -91,7 +94,12 @@
     "longPressToDelete": "Mantén pulsado para eliminar",
     "tags": "Etiquetas",
     "tagName": "Nombre de etiqueta",
-    "createTag": "Crear Etiqueta"
+    "createTag": "Crear Etiqueta",
+    "paymentMethod": "Método de Pago",
+    "cash": "Efectivo",
+    "creditCard": "Tarjeta de Crédito",
+    "bankName": "Nombre del Banco",
+    "bankNamePlaceholder": "Ej: BBVA, Santander..."
   },
   "ai": {
     "title": "Consejos Inteligentes",

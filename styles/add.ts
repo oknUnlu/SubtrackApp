@@ -233,4 +233,33 @@ export const createStyles = (colors: AppColors) => StyleSheet.create({
     fontWeight: "600",
     fontSize: 14,
   },
+  paymentMethodRow: {
+    flexDirection: "row",
+    gap: 12,
+    marginTop: 8,
+  },
+  paymentMethodButton: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    backgroundColor: colors.surfaceSecondary,
+    borderRadius: 16,
+    paddingVertical: 14,
+    borderWidth: 2,
+    borderColor: "transparent",
+  },
+  paymentMethodSelected: {
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+  },
+  paymentMethodText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: colors.text,
+  },
+  paymentMethodTextSelected: {
+    color: "#fff",
+  },
 });

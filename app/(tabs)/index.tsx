@@ -20,6 +20,7 @@ import {
   getCurrencySymbol,
   getMonthlyComparison,
   getMonthlyTotal,
+  getPaymentMethodDistribution,
   getRecentTransactions,
   getSetting,
   getSubscriptionCount,
@@ -60,6 +61,7 @@ export default function HomeScreen() {
   const [categoryBudgets, setCategoryBudgets] = useState<Map<string, { budget: number; actual: number }>>(new Map());
   const [comparison, setComparison] = useState<{ thisMonth: number; lastMonth: number; changePercent: number } | null>(null);
   const [transactionTags, setTransactionTags] = useState<Map<string, TagItem[]>>(new Map());
+  const [paymentDistribution, setPaymentDistribution] = useState<{ method: string; total: number }[]>([]);
 
   const loadDashboard = async () => {
     try {
@@ -96,6 +98,9 @@ export default function HomeScreen() {
         const tagMap = await getTagsForTransactions(recent.map(r => r.id));
         setTransactionTags(tagMap);
       }
+
+      const payDist = await getPaymentMethodDistribution();
+      setPaymentDistribution(payDist);
     } catch (error) {
       console.error("Dashboard load error:", error);
     }
@@ -190,6 +195,41 @@ export default function HomeScreen() {
           <Text style={styles.statValue}>{currSymbol}{dailyAverage.toFixed(0)}</Text>
         </View>
       </View>
+
+      {/* Payment Method Distribution */}
+      {paymentDistribution.length > 0 && (() => {
+        const cashTotal = paymentDistribution.find(p => p.method === "cash")?.total ?? 0;
+        const cardTotal = paymentDistribution.find(p => p.method === "credit_card")?.total ?? 0;
+        const payTotal = cashTotal + cardTotal;
+        return (
+          <View style={styles.statsRow}>
+            <View style={styles.statCard}>
+              <View style={styles.statHeader}>
+                <Text style={styles.statLabel}>{t('home.cashSpending')}</Text>
+                <Ionicons name="cash-outline" size={18} color={colors.primary} />
+              </View>
+              <Text style={styles.statValue}>{currSymbol}{cashTotal.toFixed(0)}</Text>
+              {payTotal > 0 && (
+                <Text style={{ fontSize: 11, color: colors.textMuted, marginTop: 2 }}>
+                  %{Math.round((cashTotal / payTotal) * 100)}
+                </Text>
+              )}
+            </View>
+            <View style={styles.statCard}>
+              <View style={styles.statHeader}>
+                <Text style={styles.statLabel}>{t('home.cardSpending')}</Text>
+                <Ionicons name="card-outline" size={18} color={colors.purple} />
+              </View>
+              <Text style={styles.statValue}>{currSymbol}{cardTotal.toFixed(0)}</Text>
+              {payTotal > 0 && (
+                <Text style={{ fontSize: 11, color: colors.textMuted, marginTop: 2 }}>
+                  %{Math.round((cardTotal / payTotal) * 100)}
+                </Text>
+              )}
+            </View>
+          </View>
+        );
+      })()}
 
       {/* Monthly Comparison */}
       {comparison && (comparison.thisMonth > 0 || comparison.lastMonth > 0) && (
@@ -344,7 +384,17 @@ export default function HomeScreen() {
                 <Text style={{ fontSize: 20, marginRight: 10 }}>{cat.icon}</Text>
                 <View style={{ flex: 1 }}>
                   <Text style={{ fontWeight: "600", color: colors.text }}>{tx.title}</Text>
-                  <Text style={{ fontSize: 12, color: colors.textSecondary }}>{dateStr} - {cat.label}</Text>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+                    <Text style={{ fontSize: 12, color: colors.textSecondary }}>{dateStr} - {cat.label}</Text>
+                    <Ionicons
+                      name={tx.paymentMethod === "credit_card" ? "card" : "cash-outline"}
+                      size={12}
+                      color={tx.paymentMethod === "credit_card" ? colors.purple : colors.primary}
+                    />
+                    {tx.paymentMethod === "credit_card" && tx.bankName ? (
+                      <Text style={{ fontSize: 10, color: colors.purple, fontWeight: "500" }}>{tx.bankName}</Text>
+                    ) : null}
+                  </View>
                   {tx.notes ? <Text style={{ fontSize: 11, color: colors.textMuted, marginTop: 2 }} numberOfLines={1}>{tx.notes}</Text> : null}
                   {(transactionTags.get(tx.id) ?? []).length > 0 && (
                     <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 4, marginTop: 3 }}>

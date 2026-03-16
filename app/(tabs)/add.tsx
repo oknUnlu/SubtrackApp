@@ -26,6 +26,7 @@ import {
   deleteTemplate,
   getCurrencySymbol,
   getSetting,
+  setSetting,
   getTags,
   getTemplates,
   incrementTemplateUseCount,
@@ -64,6 +65,8 @@ export default function AddExpenseScreen() {
   const [showNewTag, setShowNewTag] = useState(false);
   const [newTagName, setNewTagName] = useState("");
   const [newTagColor, setNewTagColor] = useState("#3b82f6");
+  const [paymentMethod, setPaymentMethod] = useState<"cash" | "credit_card">("cash");
+  const [bankName, setBankName] = useState("");
 
   const TAG_COLORS = ["#3b82f6", "#ef4444", "#f59e0b", "#8b5cf6", "#ec4899", "#14b8a6", "#f97316", "#6366f1"];
 
@@ -81,6 +84,12 @@ export default function AddExpenseScreen() {
     useCallback(() => {
       getSetting("currency").then((c) => {
         setCurrSymbol(getCurrencySymbol(c ?? "TRY"));
+      });
+      getSetting("lastBankName").then((b) => {
+        if (b) setBankName(b);
+      });
+      getSetting("lastPaymentMethod").then((m) => {
+        if (m === "cash" || m === "credit_card") setPaymentMethod(m);
       });
       loadTemplates();
       loadTags();
@@ -156,7 +165,15 @@ export default function AddExpenseScreen() {
         date: new Date().toISOString(),
         category,
         notes: notes.trim() || undefined,
+        paymentMethod,
+        bankName: paymentMethod === "credit_card" ? bankName.trim() || undefined : undefined,
       });
+
+      // Remember payment method & bank for next entry
+      await setSetting("lastPaymentMethod", paymentMethod);
+      if (paymentMethod === "credit_card" && bankName.trim()) {
+        await setSetting("lastBankName", bankName.trim());
+      }
 
       if (selectedTagIds.length > 0) {
         await addTagsToTransaction(txId, selectedTagIds);
@@ -271,6 +288,42 @@ export default function AddExpenseScreen() {
           );
         })}
       </View>
+
+      {/* Payment Method */}
+      <Text style={styles.label}>{t('add.paymentMethod')}</Text>
+      <View style={styles.paymentMethodRow}>
+        <TouchableOpacity
+          style={[styles.paymentMethodButton, paymentMethod === "cash" && styles.paymentMethodSelected]}
+          onPress={() => setPaymentMethod("cash")}
+        >
+          <Ionicons name="cash-outline" size={22} color={paymentMethod === "cash" ? "#fff" : colors.text} />
+          <Text style={[styles.paymentMethodText, paymentMethod === "cash" && styles.paymentMethodTextSelected]}>
+            {t('add.cash')}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.paymentMethodButton, paymentMethod === "credit_card" && styles.paymentMethodSelected]}
+          onPress={() => setPaymentMethod("credit_card")}
+        >
+          <Ionicons name="card-outline" size={22} color={paymentMethod === "credit_card" ? "#fff" : colors.text} />
+          <Text style={[styles.paymentMethodText, paymentMethod === "credit_card" && styles.paymentMethodTextSelected]}>
+            {t('add.creditCard')}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {paymentMethod === "credit_card" && (
+        <>
+          <Text style={styles.label}>{t('add.bankName')}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder={t('add.bankNamePlaceholder')}
+            placeholderTextColor={colors.placeholder}
+            value={bankName}
+            onChangeText={setBankName}
+          />
+        </>
+      )}
 
       {/* Notes */}
       <Text style={styles.label}>{t('add.notes')}</Text>

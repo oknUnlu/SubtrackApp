@@ -1,10 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
+import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useMemo, useState } from "react";
 import {
   Alert,
   Modal,
+  Platform,
   ScrollView,
   Text,
   TextInput,
@@ -52,6 +54,8 @@ export default function SubscriptionsScreen() {
   const [amount, setAmount] = useState("");
   const [interval, setInterval] = useState<"monthly" | "yearly">("monthly");
   const [nextDate, setNextDate] = useState("");
+  const [nextDateObj, setNextDateObj] = useState<Date>(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [recurring, setRecurring] = useState<RecurringPattern[]>([]);
   const [dismissed, setDismissed] = useState<Set<string>>(new Set());
 
@@ -86,6 +90,8 @@ export default function SubscriptionsScreen() {
     setSelectedPreset("Netflix");
     setTitle("Netflix");
     setNextDate("");
+    setNextDateObj(new Date());
+    setShowDatePicker(false);
   };
 
   const openEditModal = (sub: SubscriptionItem) => {
@@ -94,9 +100,24 @@ export default function SubscriptionsScreen() {
     setAmount(sub.amount.toString());
     setInterval(sub.interval as "monthly" | "yearly");
     setNextDate(sub.nextDate ?? "");
+    if (sub.nextDate) {
+      const parsed = new Date(sub.nextDate);
+      if (!isNaN(parsed.getTime())) setNextDateObj(parsed);
+    }
     const isPreset = presetSubscriptions.includes(sub.title);
     setSelectedPreset(isPreset ? sub.title : OTHER_KEY);
     setShowModal(true);
+  };
+
+  const onDateChange = (_event: DateTimePickerEvent, selectedDate?: Date) => {
+    if (Platform.OS === "android") setShowDatePicker(false);
+    if (selectedDate) {
+      setNextDateObj(selectedDate);
+      const y = selectedDate.getFullYear();
+      const m = String(selectedDate.getMonth() + 1).padStart(2, "0");
+      const d = String(selectedDate.getDate()).padStart(2, "0");
+      setNextDate(`${y}-${m}-${d}`);
+    }
   };
 
   const handleSave = async () => {
@@ -279,7 +300,24 @@ export default function SubscriptionsScreen() {
             <Text style={{ fontSize: 13, color: colors.textSecondary, marginTop: 12, marginBottom: 4 }}>
               {t('subscriptions.nextRenewal')}
             </Text>
-            <TextInput placeholder="YYYY-MM-DD" value={nextDate} onChangeText={setNextDate} style={styles.input} keyboardType="numbers-and-punctuation" placeholderTextColor={colors.placeholder} />
+            <TouchableOpacity
+              style={[styles.input, { flexDirection: "row", alignItems: "center", justifyContent: "space-between" }]}
+              onPress={() => setShowDatePicker(true)}
+            >
+              <Text style={{ color: nextDate ? colors.text : colors.placeholder, fontSize: 14 }}>
+                {nextDate || t('subscriptions.selectDate')}
+              </Text>
+              <Ionicons name="calendar-outline" size={20} color={colors.iconSecondary} />
+            </TouchableOpacity>
+            {showDatePicker && (
+              <DateTimePicker
+                value={nextDateObj}
+                mode="date"
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                minimumDate={new Date()}
+                onChange={onDateChange}
+              />
+            )}
 
             <View style={styles.modalActions}>
               <TouchableOpacity onPress={resetForm} style={styles.modalActionButton}>

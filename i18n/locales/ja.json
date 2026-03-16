@@ -41,6 +41,8 @@
     "recentTransactions": "最近の取引",
     "noTransactions": "まだ取引がありません",
     "deleteTransaction": "取引を削除",
+    "cashSpending": "現金",
+    "cardSpending": "クレジットカード",
     "monthlyComparison": "月間比較",
     "thisMonth": "今月",
     "lastMonth": "先月",
@@ -69,6 +71,7 @@
     "addAsSubscription": "サブスクとして追加",
     "dismiss": "閉じる",
     "nextRenewal": "次回更新日",
+    "selectDate": "日付を選択",
     "renews": "更新"
   },
   "add": {
@@ -91,7 +94,12 @@
     "longPressToDelete": "長押しで削除",
     "tags": "タグ",
     "tagName": "タグ名",
-    "createTag": "タグを作成"
+    "createTag": "タグを作成",
+    "paymentMethod": "支払い方法",
+    "cash": "現金",
+    "creditCard": "クレジットカード",
+    "bankName": "銀行名",
+    "bankNamePlaceholder": "例: 三菱UFJ, みずほ..."
   },
   "ai": {
     "title": "スマートヒント",

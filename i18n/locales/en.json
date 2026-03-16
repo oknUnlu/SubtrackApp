@@ -41,6 +41,8 @@
     "recentTransactions": "Recent Transactions",
     "noTransactions": "No transactions yet",
     "deleteTransaction": "Delete Transaction",
+    "cashSpending": "Cash",
+    "cardSpending": "Credit Card",
     "monthlyComparison": "Monthly Comparison",
     "thisMonth": "This Month",
     "lastMonth": "Last Month",
@@ -69,6 +71,7 @@
     "addAsSubscription": "Add as Subscription",
     "dismiss": "Dismiss",
     "nextRenewal": "Next Renewal Date",
+    "selectDate": "Select a date",
     "renews": "Renews"
   },
   "add": {
@@ -91,7 +94,12 @@
     "longPressToDelete": "Long press to delete",
     "tags": "Tags",
     "tagName": "Tag name",
-    "createTag": "Create Tag"
+    "createTag": "Create Tag",
+    "paymentMethod": "Payment Method",
+    "cash": "Cash",
+    "creditCard": "Credit Card",
+    "bankName": "Bank Name",
+    "bankNamePlaceholder": "E.g: Garanti, Yapı Kredi..."
   },
   "ai": {
     "title": "Smart Tips",

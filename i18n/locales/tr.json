@@ -41,6 +41,8 @@
     "recentTransactions": "Son Harcamalar",
     "noTransactions": "Henüz harcama yok",
     "deleteTransaction": "Harcamayı Sil",
+    "cashSpending": "Nakit",
+    "cardSpending": "Kredi Kartı",
     "monthlyComparison": "Aylık Karşılaştırma",
     "thisMonth": "Bu Ay",
     "lastMonth": "Geçen Ay",
@@ -69,6 +71,7 @@
     "addAsSubscription": "Abonelik Olarak Ekle",
     "dismiss": "Kapat",
     "nextRenewal": "Sonraki Yenileme Tarihi",
+    "selectDate": "Tarih seçin",
     "renews": "Yenilenir"
   },
   "add": {
@@ -91,7 +94,12 @@
     "longPressToDelete": "Silmek için uzun basın",
     "tags": "Etiketler",
     "tagName": "Etiket adı",
-    "createTag": "Etiket Oluştur"
+    "createTag": "Etiket Oluştur",
+    "paymentMethod": "Ödeme Yöntemi",
+    "cash": "Nakit",
+    "creditCard": "Kredi Kartı",
+    "bankName": "Banka Adı",
+    "bankNamePlaceholder": "Örn: Garanti, Yapı Kredi..."
   },
   "ai": {
     "title": "Akıllı İpuçları",

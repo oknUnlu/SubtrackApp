@@ -41,6 +41,8 @@
     "recentTransactions": "हाल के लेनदेन",
     "noTransactions": "अभी तक कोई लेनदेन नहीं",
     "deleteTransaction": "लेनदेन हटाएं",
+    "cashSpending": "नकद",
+    "cardSpending": "क्रेडिट कार्ड",
     "monthlyComparison": "मासिक तुलना",
     "thisMonth": "इस माह",
     "lastMonth": "पिछले माह",
@@ -69,6 +71,7 @@
     "addAsSubscription": "सदस्यता के रूप में जोड़ें",
     "dismiss": "खारिज करें",
     "nextRenewal": "अगली नवीनीकरण तिथि",
+    "selectDate": "तारीख चुनें",
     "renews": "नवीनीकरण"
   },
   "add": {
@@ -91,7 +94,12 @@
     "longPressToDelete": "हटाने के लिए लंबा दबाएं",
     "tags": "टैग",
     "tagName": "टैग नाम",
-    "createTag": "टैग बनाएं"
+    "createTag": "टैग बनाएं",
+    "paymentMethod": "भुगतान विधि",
+    "cash": "नकद",
+    "creditCard": "क्रेडिट कार्ड",
+    "bankName": "बैंक का नाम",
+    "bankNamePlaceholder": "जैसे: SBI, HDFC..."
   },
   "ai": {
     "title": "स्मार्ट सुझाव",

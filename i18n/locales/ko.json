@@ -41,6 +41,8 @@
     "recentTransactions": "최근 거래",
     "noTransactions": "아직 거래가 없습니다",
     "deleteTransaction": "거래 삭제",
+    "cashSpending": "현금",
+    "cardSpending": "신용카드",
     "monthlyComparison": "월간 비교",
     "thisMonth": "이번 달",
     "lastMonth": "지난 달",
@@ -69,6 +71,7 @@
     "addAsSubscription": "구독으로 추가",
     "dismiss": "무시",
     "nextRenewal": "다음 갱신일",
+    "selectDate": "날짜 선택",
     "renews": "갱신"
   },
   "add": {
@@ -91,7 +94,12 @@
     "longPressToDelete": "삭제하려면 길게 누르세요",
     "tags": "태그",
     "tagName": "태그 이름",
-    "createTag": "태그 만들기"
+    "createTag": "태그 만들기",
+    "paymentMethod": "결제 수단",
+    "cash": "현금",
+    "creditCard": "신용카드",
+    "bankName": "은행명",
+    "bankNamePlaceholder": "예: 국민, 신한..."
   },
   "ai": {
     "title": "스마트 팁",

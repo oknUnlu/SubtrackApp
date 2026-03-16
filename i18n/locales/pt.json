@@ -41,6 +41,8 @@
     "recentTransactions": "Transações Recentes",
     "noTransactions": "Sem transações ainda",
     "deleteTransaction": "Excluir Transação",
+    "cashSpending": "Dinheiro",
+    "cardSpending": "Cartão de Crédito",
     "monthlyComparison": "Comparação Mensal",
     "thisMonth": "Este Mês",
     "lastMonth": "Mês Passado",
@@ -69,6 +71,7 @@
     "addAsSubscription": "Adicionar como Assinatura",
     "dismiss": "Dispensar",
     "nextRenewal": "Próxima Data de Renovação",
+    "selectDate": "Selecionar data",
     "renews": "Renova"
   },
   "add": {
@@ -91,7 +94,12 @@
     "longPressToDelete": "Pressione longo para excluir",
     "tags": "Tags",
     "tagName": "Nome da tag",
-    "createTag": "Criar Tag"
+    "createTag": "Criar Tag",
+    "paymentMethod": "Método de Pagamento",
+    "cash": "Dinheiro",
+    "creditCard": "Cartão de Crédito",
+    "bankName": "Nome do Banco",
+    "bankNamePlaceholder": "Ex: Itaú, Bradesco..."
   },
   "ai": {
     "title": "Dicas Inteligentes",

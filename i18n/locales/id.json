@@ -41,6 +41,8 @@
     "recentTransactions": "Transaksi Terbaru",
     "noTransactions": "Belum ada transaksi",
     "deleteTransaction": "Hapus Transaksi",
+    "cashSpending": "Tunai",
+    "cardSpending": "Kartu Kredit",
     "monthlyComparison": "Perbandingan Bulanan",
     "thisMonth": "Bulan Ini",
     "lastMonth": "Bulan Lalu",
@@ -69,6 +71,7 @@
     "addAsSubscription": "Tambah sebagai Langganan",
     "dismiss": "Abaikan",
     "nextRenewal": "Tanggal Perpanjangan Berikutnya",
+    "selectDate": "Pilih tanggal",
     "renews": "Diperpanjang"
   },
   "add": {
@@ -91,7 +94,12 @@
     "longPressToDelete": "Tekan lama untuk menghapus",
     "tags": "Tag",
     "tagName": "Nama tag",
-    "createTag": "Buat Tag"
+    "createTag": "Buat Tag",
+    "paymentMethod": "Metode Pembayaran",
+    "cash": "Tunai",
+    "creditCard": "Kartu Kredit",
+    "bankName": "Nama Bank",
+    "bankNamePlaceholder": "Cth: BCA, Mandiri..."
   },
   "ai": {
     "title": "Tips Cerdas",

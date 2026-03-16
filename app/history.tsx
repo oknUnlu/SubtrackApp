@@ -107,7 +107,17 @@ export default function HistoryScreen() {
         <Text style={styles.txIcon}>{cat.icon}</Text>
         <View style={styles.txInfo}>
           <Text style={styles.txTitle}>{tx.title}</Text>
-          <Text style={styles.txSubtitle}>{dateStr} - {cat.label}</Text>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+            <Text style={styles.txSubtitle}>{dateStr} - {cat.label}</Text>
+            <Ionicons
+              name={tx.paymentMethod === "credit_card" ? "card" : "cash-outline"}
+              size={12}
+              color={tx.paymentMethod === "credit_card" ? colors.purple : colors.primary}
+            />
+            {tx.paymentMethod === "credit_card" && tx.bankName ? (
+              <Text style={{ fontSize: 10, color: colors.purple, fontWeight: "500" }}>{tx.bankName}</Text>
+            ) : null}
+          </View>
           {tx.notes ? <Text style={styles.txNotes} numberOfLines={1}>{tx.notes}</Text> : null}
           {(txTags.get(tx.id) ?? []).length > 0 && (
             <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 4, marginTop: 3 }}>
