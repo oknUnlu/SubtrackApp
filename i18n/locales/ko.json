@@ -96,6 +96,8 @@
     "tags": "태그",
     "tagName": "태그 이름",
     "createTag": "태그 만들기",
+    "deleteTag": "태그 삭제",
+    "deleteTagConfirm": "\"{{name}}\" 태그를 삭제하시겠습니까? 모든 지출에서 제거됩니다.",
     "paymentMethod": "결제 수단",
     "cash": "현금",
     "creditCard": "신용카드",

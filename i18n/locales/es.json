@@ -96,6 +96,8 @@
     "tags": "Etiquetas",
     "tagName": "Nombre de etiqueta",
     "createTag": "Crear Etiqueta",
+    "deleteTag": "Eliminar Etiqueta",
+    "deleteTagConfirm": "¿Estás seguro de que deseas eliminar la etiqueta \"{{name}}\"? Se eliminará de todos los gastos.",
     "paymentMethod": "Método de Pago",
     "cash": "Efectivo",
     "creditCard": "Tarjeta de Crédito",

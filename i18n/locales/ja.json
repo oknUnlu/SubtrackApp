@@ -96,6 +96,8 @@
     "tags": "タグ",
     "tagName": "タグ名",
     "createTag": "タグを作成",
+    "deleteTag": "タグを削除",
+    "deleteTagConfirm": "「{{name}}」タグを削除してもよろしいですか？すべての支出から削除されます。",
     "paymentMethod": "支払い方法",
     "cash": "現金",
     "creditCard": "クレジットカード",

@@ -96,6 +96,8 @@
     "tags": "Tags",
     "tagName": "Tag name",
     "createTag": "Create Tag",
+    "deleteTag": "Delete Tag",
+    "deleteTagConfirm": "Are you sure you want to delete the tag \"{{name}}\"? It will be removed from all expenses.",
     "paymentMethod": "Payment Method",
     "cash": "Cash",
     "creditCard": "Credit Card",

@@ -96,6 +96,8 @@
     "tags": "Etiketler",
     "tagName": "Etiket adı",
     "createTag": "Etiket Oluştur",
+    "deleteTag": "Etiketi Sil",
+    "deleteTagConfirm": "\"{{name}}\" etiketini silmek istediğinize emin misiniz? Tüm harcamalardan kaldırılacaktır.",
     "paymentMethod": "Ödeme Yöntemi",
     "cash": "Nakit",
     "creditCard": "Kredi Kartı",

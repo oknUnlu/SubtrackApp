@@ -96,6 +96,8 @@
     "tags": "Tags",
     "tagName": "Nome da tag",
     "createTag": "Criar Tag",
+    "deleteTag": "Excluir Tag",
+    "deleteTagConfirm": "Tem certeza de que deseja excluir a tag \"{{name}}\"? Ela será removida de todas as despesas.",
     "paymentMethod": "Método de Pagamento",
     "cash": "Dinheiro",
     "creditCard": "Cartão de Crédito",

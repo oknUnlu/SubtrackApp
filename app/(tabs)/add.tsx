@@ -26,6 +26,7 @@ import {
   addTemplate,
   addTransaction,
   createTag,
+  deleteTag,
   deleteTemplate,
   formatNumber,
   getBudgetVsActual,
@@ -162,6 +163,25 @@ export default function AddExpenseScreen() {
     setSelectedTagIds(prev => [...prev, tag.id]);
     setNewTagName("");
     setShowNewTag(false);
+  };
+
+  const handleDeleteTag = (tag: TagItem) => {
+    Alert.alert(
+      t('add.deleteTag'),
+      t('add.deleteTagConfirm', { name: tag.name }),
+      [
+        { text: t('common.cancel'), style: "cancel" },
+        {
+          text: t('common.delete'),
+          style: "destructive",
+          onPress: async () => {
+            await deleteTag(tag.id);
+            setAllTags(prev => prev.filter(t => t.id !== tag.id));
+            setSelectedTagIds(prev => prev.filter(id => id !== tag.id));
+          },
+        },
+      ]
+    );
   };
 
   const pickReceipt = async () => {
@@ -625,10 +645,18 @@ export default function AddExpenseScreen() {
           return (
             <TouchableOpacity
               key={tag.id}
-              style={[styles.tagChip, { borderColor: tag.color }, isSelected && { backgroundColor: tag.color }]}
+              style={[styles.tagChip, { borderColor: tag.color, flexDirection: 'row', alignItems: 'center', gap: 4 }, isSelected && { backgroundColor: tag.color }]}
               onPress={() => toggleTag(tag.id)}
+              onLongPress={() => handleDeleteTag(tag)}
             >
               <Text style={[styles.tagChipText, isSelected && { color: '#fff' }]}>{tag.name}</Text>
+              <TouchableOpacity
+                onPress={(e) => { e.stopPropagation?.(); handleDeleteTag(tag); }}
+                hitSlop={{ top: 8, bottom: 8, left: 4, right: 8 }}
+                style={{ marginLeft: 2 }}
+              >
+                <Ionicons name="close-circle" size={14} color={isSelected ? "rgba(255,255,255,0.7)" : tag.color} />
+              </TouchableOpacity>
             </TouchableOpacity>
           );
         })}

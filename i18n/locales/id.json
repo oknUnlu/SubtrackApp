@@ -96,6 +96,8 @@
     "tags": "Tag",
     "tagName": "Nama tag",
     "createTag": "Buat Tag",
+    "deleteTag": "Hapus Tag",
+    "deleteTagConfirm": "Apakah Anda yakin ingin menghapus tag \"{{name}}\"? Tag akan dihapus dari semua pengeluaran.",
     "paymentMethod": "Metode Pembayaran",
     "cash": "Tunai",
     "creditCard": "Kartu Kredit",
