@@ -1,7 +1,8 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack, useRouter } from 'expo-router';
+import { Text, View } from 'react-native';
 import { SystemBars } from 'react-native-edge-to-edge';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import 'react-native-reanimated';
 
 import BiometricLock from '@/components/BiometricLock';
@@ -47,6 +48,8 @@ function AppContent({ showOnboarding }: { showOnboarding: boolean }) {
 export default function RootLayout() {
   const [isReady, setIsReady] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [bootError, setBootError] = useState<string | null>(null);
+  const retryCount = useRef(0);
 
   useEffect(() => {
     async function bootstrap() {
@@ -59,8 +62,15 @@ export default function RootLayout() {
         if (onboardingDone !== 'true') {
           setShowOnboarding(true);
         }
+        setBootError(null);
       } catch (e) {
         console.warn('Bootstrap error', e);
+        if (retryCount.current < 2) {
+          retryCount.current += 1;
+          setTimeout(bootstrap, 1000);
+          return;
+        }
+        setBootError(e instanceof Error ? e.message : 'Initialization failed');
       } finally {
         setIsReady(true);
       }
@@ -70,6 +80,15 @@ export default function RootLayout() {
 
   if (!isReady) {
     return null;
+  }
+
+  if (bootError) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 32, backgroundColor: '#fff' }}>
+        <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 8, color: '#ef4444' }}>Something went wrong</Text>
+        <Text style={{ fontSize: 14, color: '#666', textAlign: 'center' }}>{bootError}</Text>
+      </View>
+    );
   }
 
   return (

@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
   FlatList,
@@ -96,6 +96,14 @@ export default function AddExpenseScreen() {
   }, []);
 
   const TAG_COLORS = ["#3b82f6", "#ef4444", "#f59e0b", "#8b5cf6", "#ec4899", "#14b8a6", "#f97316", "#6366f1"];
+
+  // Cleanup timers on unmount
+  useEffect(() => {
+    return () => {
+      if (toastTimeout.current) clearTimeout(toastTimeout.current);
+      if (predictTimer.current) clearTimeout(predictTimer.current);
+    };
+  }, []);
 
   const loadTemplates = useCallback(async () => {
     const tpls = await getTemplates();

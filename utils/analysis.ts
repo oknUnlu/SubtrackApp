@@ -45,6 +45,7 @@ export function detectSpikes(transactions: TransactionItem[]): Insight[] {
 
   for (const tx of transactions) {
     const cat = tx.category ?? "other";
+    if (categoryTotals[cat].count === 0) continue;
     const avg = categoryTotals[cat].sum / categoryTotals[cat].count;
     if (tx.amount > avg * 2 && categoryTotals[cat].count >= 3) {
       insights.push({

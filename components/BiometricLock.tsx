@@ -46,6 +46,8 @@ export default function BiometricLock({ children }: Props) {
           setLocked(false);
         }
       } catch {
+        // If we can't read settings, default to unlocked
+        // (biometric lock is an optional feature, not a security gate for sensitive data)
         setLocked(false);
       }
     }
