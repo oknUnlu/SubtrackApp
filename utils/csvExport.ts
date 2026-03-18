@@ -30,8 +30,8 @@ export async function exportTransactionsCsv(): Promise<void> {
 
     const fileName = `subtrack_expenses_${new Date().toISOString().slice(0, 10)}.csv`;
     const file = new File(Paths.cache, fileName);
-    file.create();
-    file.write(csv);
+    await file.create();
+    await file.write(csv);
 
     await Sharing.shareAsync(file.uri, {
       mimeType: "text/csv",
@@ -60,8 +60,8 @@ export async function exportSubscriptionsCsv(): Promise<void> {
 
     const fileName = `subtrack_subscriptions_${new Date().toISOString().slice(0, 10)}.csv`;
     const file = new File(Paths.cache, fileName);
-    file.create();
-    file.write(csv);
+    await file.create();
+    await file.write(csv);
 
     await Sharing.shareAsync(file.uri, {
       mimeType: "text/csv",

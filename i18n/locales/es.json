@@ -58,6 +58,7 @@
     "noTrendData": "Aún no hay datos de tendencia",
     "recentTransactions": "Transacciones Recientes",
     "noTransactions": "Aún no hay transacciones",
+    "receiptAttached": "Recibo adjunto",
     "deleteTransaction": "Eliminar Transacción",
     "cashSpending": "Efectivo",
     "cardSpending": "Tarjeta de Crédito",
@@ -204,6 +205,13 @@
     "darkModeSystem": "Sistema",
     "darkModeLight": "Claro",
     "darkModeDark": "Oscuro",
+    "colorTheme": "Tema de Color",
+    "theme_default": "Verde",
+    "theme_ocean": "Océano",
+    "theme_sunset": "Atardecer",
+    "theme_rose": "Rosa",
+    "theme_lavender": "Lavanda",
+    "theme_teal": "Turquesa",
     "biometricLock": "Bloqueo Biométrico",
     "biometricPrompt": "Autentícate para continuar",
     "biometricFallback": "Usar código",
@@ -323,5 +331,12 @@
     "noData": "Sin datos para este mes",
     "previousMonth": "Mes Anterior",
     "share": "Compartir Reporte"
+  },
+  "review": {
+    "title": "¿Te gusta SubTrack?",
+    "message": "Si disfrutas usando nuestra app, ¿te importaría tomarte un momento para calificarla? ¡Gracias por tu apoyo!",
+    "rateNow": "Calificar Ahora ⭐",
+    "later": "Quizás Más Tarde",
+    "noThanks": "No, Gracias"
   }
 }

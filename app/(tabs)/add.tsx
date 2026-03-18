@@ -597,8 +597,8 @@ export default function AddExpenseScreen() {
             <Switch
               value={isInstallment}
               onValueChange={setIsInstallment}
-              trackColor={{ false: colors.border, true: '#c4b5fd' }}
-              thumbColor={isInstallment ? '#8b5cf6' : '#f4f3f4'}
+              trackColor={{ false: colors.border, true: colors.purpleText }}
+              thumbColor={isInstallment ? colors.purple : '#f4f3f4'}
             />
           </View>
 
@@ -754,8 +754,8 @@ export default function AddExpenseScreen() {
         <Switch
           value={saveAsTemplate}
           onValueChange={setSaveAsTemplate}
-          trackColor={{ false: colors.border, true: '#86efac' }}
-          thumbColor={saveAsTemplate ? '#22c55e' : '#f4f3f4'}
+          trackColor={{ false: colors.border, true: colors.primaryLight }}
+          thumbColor={saveAsTemplate ? colors.primary : '#f4f3f4'}
         />
       </View>
 
@@ -769,7 +769,7 @@ export default function AddExpenseScreen() {
       {toastData && (
         <View
           style={{
-            backgroundColor: toastData.warnings.length > 0 ? "#f59e0b" : "#22c55e",
+            backgroundColor: toastData.warnings.length > 0 ? "#f59e0b" : colors.primary,
             borderRadius: 16,
             paddingVertical: 14,
             paddingHorizontal: 18,

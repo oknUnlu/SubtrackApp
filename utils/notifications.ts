@@ -104,7 +104,8 @@ export async function rescheduleAllReminders(): Promise<void> {
     const daysSetting = await getSetting("reminderDaysBefore");
     const daysBefore = daysSetting ? parseInt(daysSetting, 10) : 1;
     const currSetting = await getSetting("currency");
-    const symbol = currSetting === "USD" ? "$" : currSetting === "EUR" ? "€" : "₺";
+    const currencySymbols: Record<string, string> = { USD: "$", EUR: "€", TRY: "₺", BRL: "R$", INR: "₹", IDR: "Rp", JPY: "¥", KRW: "₩" };
+    const symbol = currencySymbols[currSetting ?? "TRY"] ?? "₺";
 
     for (const sub of subs) {
       if (sub.nextDate) {

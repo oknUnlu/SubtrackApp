@@ -58,6 +58,7 @@
     "noTrendData": "아직 트렌드 데이터가 없습니다",
     "recentTransactions": "최근 거래",
     "noTransactions": "아직 거래가 없습니다",
+    "receiptAttached": "영수증 첨부됨",
     "deleteTransaction": "거래 삭제",
     "cashSpending": "현금",
     "cardSpending": "신용카드",
@@ -204,6 +205,13 @@
     "darkModeSystem": "시스템",
     "darkModeLight": "라이트",
     "darkModeDark": "다크",
+    "colorTheme": "컬러 테마",
+    "theme_default": "그린",
+    "theme_ocean": "오션",
+    "theme_sunset": "선셋",
+    "theme_rose": "로즈",
+    "theme_lavender": "라벤더",
+    "theme_teal": "틸",
     "biometricLock": "생체 인증 잠금",
     "biometricPrompt": "계속하려면 인증하세요",
     "biometricFallback": "비밀번호 사용",
@@ -323,5 +331,12 @@
     "noData": "이번 달 데이터가 없습니다",
     "previousMonth": "이전 달",
     "share": "리포트 공유"
+  },
+  "review": {
+    "title": "SubTrack이 마음에 드시나요?",
+    "message": "앱이 마음에 드셨다면, 잠시 시간을 내어 평가해 주시겠어요? 지원해 주셔서 감사합니다!",
+    "rateNow": "지금 평가 ⭐",
+    "later": "나중에",
+    "noThanks": "괜찮습니다"
   }
 }

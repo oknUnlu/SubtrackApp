@@ -58,6 +58,7 @@
     "noTrendData": "まだトレンドデータがありません",
     "recentTransactions": "最近の取引",
     "noTransactions": "まだ取引がありません",
+    "receiptAttached": "レシート添付済み",
     "deleteTransaction": "取引を削除",
     "cashSpending": "現金",
     "cardSpending": "クレジットカード",
@@ -204,6 +205,13 @@
     "darkModeSystem": "システム",
     "darkModeLight": "ライト",
     "darkModeDark": "ダーク",
+    "colorTheme": "カラーテーマ",
+    "theme_default": "グリーン",
+    "theme_ocean": "オーシャン",
+    "theme_sunset": "サンセット",
+    "theme_rose": "ローズ",
+    "theme_lavender": "ラベンダー",
+    "theme_teal": "ティール",
     "biometricLock": "生体認証ロック",
     "biometricPrompt": "続行するには認証してください",
     "biometricFallback": "パスコードを使用",
@@ -323,5 +331,12 @@
     "noData": "この月のデータがありません",
     "previousMonth": "前月",
     "share": "レポートを共有"
+  },
+  "review": {
+    "title": "SubTrackを気に入りましたか？",
+    "message": "アプリを気に入っていただけましたら、評価していただけると嬉しいです。ご支援ありがとうございます！",
+    "rateNow": "今すぐ評価 ⭐",
+    "later": "あとで",
+    "noThanks": "いいえ、結構です"
   }
 }

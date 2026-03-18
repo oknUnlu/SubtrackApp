@@ -58,6 +58,7 @@
     "noTrendData": "Belum ada data tren",
     "recentTransactions": "Transaksi Terbaru",
     "noTransactions": "Belum ada transaksi",
+    "receiptAttached": "Struk terlampir",
     "deleteTransaction": "Hapus Transaksi",
     "cashSpending": "Tunai",
     "cardSpending": "Kartu Kredit",
@@ -204,6 +205,13 @@
     "darkModeSystem": "Sistem",
     "darkModeLight": "Terang",
     "darkModeDark": "Gelap",
+    "colorTheme": "Tema Warna",
+    "theme_default": "Hijau",
+    "theme_ocean": "Lautan",
+    "theme_sunset": "Senja",
+    "theme_rose": "Mawar",
+    "theme_lavender": "Lavender",
+    "theme_teal": "Pirus",
     "biometricLock": "Kunci Biometrik",
     "biometricPrompt": "Autentikasi untuk melanjutkan",
     "biometricFallback": "Gunakan kode sandi",
@@ -323,5 +331,12 @@
     "noData": "Tidak ada data untuk bulan ini",
     "previousMonth": "Bulan Sebelumnya",
     "share": "Bagikan Laporan"
+  },
+  "review": {
+    "title": "Suka SubTrack?",
+    "message": "Jika Anda menikmati aplikasi kami, maukah Anda meluangkan waktu sebentar untuk memberi rating? Terima kasih atas dukungan Anda!",
+    "rateNow": "Beri Rating ⭐",
+    "later": "Nanti Saja",
+    "noThanks": "Tidak, Terima Kasih"
   }
 }

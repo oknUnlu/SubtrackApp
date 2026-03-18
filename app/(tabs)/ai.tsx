@@ -25,25 +25,27 @@ import { generateAllInsights, Insight } from "../../utils/analysis";
 import { createStyles } from "../../styles/ai";
 import { useAppTheme } from '@/hooks/use-app-theme';
 
-const INSIGHT_COLORS_LIGHT: Record<string, { border: string; bg: string; icon: string }> = {
-  warning: { border: "#f59e0b", bg: "#fffbeb", icon: "#f59e0b" },
-  tip: { border: "#22c55e", bg: "#f0fdf4", icon: "#22c55e" },
-  info: { border: "#3b82f6", bg: "#eff6ff", icon: "#3b82f6" },
-  achievement: { border: "#8b5cf6", bg: "#f5f3ff", icon: "#8b5cf6" },
-};
-
-const INSIGHT_COLORS_DARK: Record<string, { border: string; bg: string; icon: string }> = {
-  warning: { border: "#fbbf24", bg: "#451a03", icon: "#fbbf24" },
-  tip: { border: "#22c55e", bg: "#052e16", icon: "#22c55e" },
-  info: { border: "#60a5fa", bg: "#1e3a5f", icon: "#60a5fa" },
-  achievement: { border: "#a78bfa", bg: "#1e1b3a", icon: "#a78bfa" },
-};
+function getInsightColors(isDark: boolean, primary: string, primaryLight: string) {
+  const light: Record<string, { border: string; bg: string; icon: string }> = {
+    warning: { border: "#f59e0b", bg: "#fffbeb", icon: "#f59e0b" },
+    tip: { border: primary, bg: primaryLight, icon: primary },
+    info: { border: "#3b82f6", bg: "#eff6ff", icon: "#3b82f6" },
+    achievement: { border: "#8b5cf6", bg: "#f5f3ff", icon: "#8b5cf6" },
+  };
+  const dark: Record<string, { border: string; bg: string; icon: string }> = {
+    warning: { border: "#fbbf24", bg: "#451a03", icon: "#fbbf24" },
+    tip: { border: primary, bg: primaryLight, icon: primary },
+    info: { border: "#60a5fa", bg: "#1e3a5f", icon: "#60a5fa" },
+    achievement: { border: "#a78bfa", bg: "#1e1b3a", icon: "#a78bfa" },
+  };
+  return isDark ? dark : light;
+}
 
 export default function AIAnalysisScreen() {
   const { t } = useTranslation();
   const { colors, isDark } = useAppTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
-  const insightColors = isDark ? INSIGHT_COLORS_DARK : INSIGHT_COLORS_LIGHT;
+  const insightColors = useMemo(() => getInsightColors(isDark, colors.primary, colors.primaryLight), [isDark, colors.primary, colors.primaryLight]);
 
   const [insights, setInsights] = useState<Insight[]>([]);
   const [loading, setLoading] = useState(false);

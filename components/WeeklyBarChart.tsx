@@ -7,9 +7,11 @@ type Props = {
   axisColor?: string;
   labelColor?: string;
   yLabelColor?: string;
+  barColor?: string;
+  barColorActive?: string;
 };
 
-export default function WeeklyBarChart({ data, currencySymbol, axisColor = "#e5e7eb", labelColor = "#6b7280", yLabelColor = "#9ca3af" }: Props) {
+export default function WeeklyBarChart({ data, currencySymbol, axisColor = "#e5e7eb", labelColor = "#6b7280", yLabelColor = "#9ca3af", barColor = "#22c55e", barColorActive = "#16a34a" }: Props) {
   if (data.length === 0) return null;
 
   const today = new Date().getDay().toString();
@@ -17,7 +19,7 @@ export default function WeeklyBarChart({ data, currencySymbol, axisColor = "#e5e
   const barData = data.map((item) => ({
     value: item.total,
     label: item.label,
-    frontColor: item.day === today ? "#16a34a" : "#22c55e",
+    frontColor: item.day === today ? barColorActive : barColor,
     topLabelComponent: () => null,
   }));
 

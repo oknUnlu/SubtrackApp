@@ -1,8 +1,8 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useFocusEffect } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useCallback, useMemo, useState } from "react";
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Alert, Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
@@ -12,6 +12,7 @@ import ExpenseDonutChart from '../../components/ExpenseDonutChart';
 import WeeklyBarChart from '../../components/WeeklyBarChart';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { createStyles } from "../../styles";
+import { initInstallDate, checkAndPromptReview, requestReview } from '../../utils/reviewPrompt';
 
 import {
   deleteTransaction,
@@ -24,6 +25,7 @@ import {
   getPaymentMethodDistribution,
   getRecentTransactions,
   getSetting,
+  setSetting,
   getSubscriptionCount,
   getTagsForTransactions,
   getWeeklyTrend,
@@ -71,6 +73,40 @@ export default function HomeScreen() {
   const [comparison, setComparison] = useState<{ thisMonth: number; lastMonth: number; changePercent: number } | null>(null);
   const [transactionTags, setTransactionTags] = useState<Map<string, TagItem[]>>(new Map());
   const [paymentDistribution, setPaymentDistribution] = useState<{ method: string; total: number }[]>([]);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const reviewChecked = useRef(false);
+
+  // Review prompt - uygulama ilk açıldığında tarih kaydet, belirli gün sonra sor
+  useEffect(() => {
+    initInstallDate();
+  }, []);
+
+  useEffect(() => {
+    if (!reviewChecked.current) {
+      reviewChecked.current = true;
+      checkAndPromptReview().then((shouldShow) => {
+        if (shouldShow) {
+          // Biraz gecikme ile göster, dashboard yüklendikten sonra
+          setTimeout(() => setShowReviewModal(true), 2000);
+        }
+      });
+    }
+  }, []);
+
+  const handleReviewNow = async () => {
+    setShowReviewModal(false);
+    await requestReview();
+  };
+
+  const handleReviewLater = () => {
+    setShowReviewModal(false);
+    // Tekrar sorulsun diye işaretlemiyoruz
+  };
+
+  const handleReviewNever = async () => {
+    setShowReviewModal(false);
+    await setSetting('review_prompted', 'true');
+  };
 
   const loadDashboard = async () => {
     try {
@@ -140,7 +176,7 @@ export default function HomeScreen() {
 
       {/* Monthly Total */}
       <LinearGradient
-        colors={["#22c55e", "#16a34a"]}
+        colors={[colors.primary, colors.primaryDark]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.totalCard}
@@ -151,7 +187,7 @@ export default function HomeScreen() {
         </View>
         <Text style={styles.totalAmount}>{currSymbol}{formatNumber(monthlyTotal, 2)}</Text>
         <View style={styles.totalFooter}>
-          <Ionicons name="trending-up-outline" size={16} color="#dcfce7" />
+          <Ionicons name="trending-up-outline" size={16} color="rgba(255,255,255,0.7)" />
           <Text style={styles.totalSubText}>{t('home.includingSubs')}</Text>
         </View>
 
@@ -161,11 +197,11 @@ export default function HomeScreen() {
               <View style={{
                 width: `${budgetInfo.budget > 0 ? Math.min((budgetInfo.actual / budgetInfo.budget) * 100, 100) : 0}%`,
                 height: "100%",
-                backgroundColor: budgetInfo.actual > budgetInfo.budget ? "#fca5a5" : "#dcfce7",
+                backgroundColor: budgetInfo.actual > budgetInfo.budget ? "#fca5a5" : "rgba(255,255,255,0.8)",
                 borderRadius: 6,
               }} />
             </View>
-            <Text style={{ color: "#dcfce7", fontSize: 12, marginTop: 4 }}>
+            <Text style={{ color: "rgba(255,255,255,0.8)", fontSize: 12, marginTop: 4 }}>
               {budgetInfo.actual > budgetInfo.budget
                 ? t('budget.exceeded')
                 : `${t('budget.remaining')} ${currSymbol}${formatNumber(budgetInfo.budget - budgetInfo.actual, 2)}`
@@ -178,28 +214,26 @@ export default function HomeScreen() {
           onPress={() => router.push('/budget')}
           style={{ marginTop: budgetInfo ? 8 : 12, flexDirection: "row", alignItems: "center" }}
         >
-          <Ionicons name="wallet-outline" size={14} color="#dcfce7" />
-          <Text style={{ color: "#dcfce7", fontSize: 13, marginLeft: 6, fontWeight: "600" }}>
+          <Ionicons name="wallet-outline" size={14} color="rgba(255,255,255,0.8)" />
+          <Text style={{ color: "rgba(255,255,255,0.8)", fontSize: 13, marginLeft: 6, fontWeight: "600" }}>
             {budgetInfo ? t('budget.editBudget') : t('budget.setBudgetAction')}
           </Text>
         </TouchableOpacity>
       </LinearGradient>
 
-      {/* Stats */}
-      <View style={styles.statsRow}>
-        <View style={styles.statCard}>
-          <View style={styles.statHeader}>
-            <Text style={styles.statLabel}>{t('home.activeSubscriptions')}</Text>
-            <Ionicons name="card-outline" size={18} color={colors.iconSecondary} />
+      {/* Stats Row */}
+      <View style={{ flexDirection: "row", gap: 10, marginBottom: 12 }}>
+        <View style={{ flex: 1, backgroundColor: colors.surface, borderRadius: 16, paddingVertical: 16, alignItems: "center", justifyContent: "center" }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+            <Ionicons name="card-outline" size={20} color={colors.primary} />
+            <Text style={{ fontSize: 22, fontWeight: "800", color: colors.text }}>{subscriptionCount}</Text>
           </View>
-          <Text style={styles.statValue}>{subscriptionCount}</Text>
+          <Text style={{ fontSize: 10, color: colors.textSecondary, fontWeight: "500", marginTop: 4 }}>{t('home.activeSubscriptions')}</Text>
         </View>
-        <View style={styles.statCard}>
-          <View style={styles.statHeader}>
-            <Text style={styles.statLabel}>{t('home.dailyAverage')}</Text>
-            <Ionicons name="analytics-outline" size={18} color={colors.iconSecondary} />
-          </View>
-          <Text style={styles.statValue}>{currSymbol}{formatNumber(dailyAverage, 2)}</Text>
+        <View style={{ flex: 1, backgroundColor: colors.surface, borderRadius: 16, paddingVertical: 16, alignItems: "center", justifyContent: "center" }}>
+          <Ionicons name="analytics-outline" size={18} color={colors.primary} style={{ marginBottom: 6 }} />
+          <Text style={{ fontSize: 20, fontWeight: "800", color: colors.text }}>{currSymbol}{formatNumber(dailyAverage, 2)}</Text>
+          <Text style={{ fontSize: 10, color: colors.textSecondary, fontWeight: "500", marginTop: 2 }}>{t('home.dailyAverage')}</Text>
         </View>
       </View>
 
@@ -209,44 +243,38 @@ export default function HomeScreen() {
         const debitTotal = paymentDistribution.find(p => p.method === "debit_card")?.total ?? 0;
         const cardTotal = paymentDistribution.find(p => p.method === "credit_card")?.total ?? 0;
         const payTotal = cashTotal + debitTotal + cardTotal;
+        const methods = [
+          { label: t('home.cashSpending'), icon: "cash-outline" as const, amount: cashTotal, color: colors.primary, bg: colors.primary + "15" },
+          { label: t('home.debitSpending'), icon: "wallet-outline" as const, amount: debitTotal, color: colors.warning, bg: colors.warning + "15" },
+          { label: t('home.cardSpending'), icon: "card-outline" as const, amount: cardTotal, color: colors.purple, bg: colors.purple + "15" },
+        ];
         return (
-          <View style={{ flexDirection: "row", gap: 10, marginTop: 4 }}>
-            <View style={[styles.statCard, { flex: 1 }]}>
-              <View style={styles.statHeader}>
-                <Text style={styles.statLabel}>{t('home.cashSpending')}</Text>
-                <Ionicons name="cash-outline" size={16} color={colors.primary} />
-              </View>
-              <Text style={[styles.statValue, { fontSize: 16 }]}>{currSymbol}{formatNumber(cashTotal, 2)}</Text>
-              {payTotal > 0 && (
-                <Text style={{ fontSize: 10, color: colors.textMuted, marginTop: 2 }}>
-                  %{Math.round((cashTotal / payTotal) * 100)}
-                </Text>
-              )}
-            </View>
-            <View style={[styles.statCard, { flex: 1 }]}>
-              <View style={styles.statHeader}>
-                <Text style={styles.statLabel}>{t('home.debitSpending')}</Text>
-                <Ionicons name="wallet-outline" size={16} color={colors.warning} />
-              </View>
-              <Text style={[styles.statValue, { fontSize: 16 }]}>{currSymbol}{formatNumber(debitTotal, 2)}</Text>
-              {payTotal > 0 && (
-                <Text style={{ fontSize: 10, color: colors.textMuted, marginTop: 2 }}>
-                  %{Math.round((debitTotal / payTotal) * 100)}
-                </Text>
-              )}
-            </View>
-            <View style={[styles.statCard, { flex: 1 }]}>
-              <View style={styles.statHeader}>
-                <Text style={styles.statLabel}>{t('home.cardSpending')}</Text>
-                <Ionicons name="card-outline" size={16} color={colors.purple} />
-              </View>
-              <Text style={[styles.statValue, { fontSize: 16 }]}>{currSymbol}{formatNumber(cardTotal, 2)}</Text>
-              {payTotal > 0 && (
-                <Text style={{ fontSize: 10, color: colors.textMuted, marginTop: 2 }}>
-                  %{Math.round((cardTotal / payTotal) * 100)}
-                </Text>
-              )}
-            </View>
+          <View style={{ backgroundColor: colors.surface, borderRadius: 20, padding: 16, marginBottom: 12 }}>
+            {methods.map((m, i) => {
+              const pct = payTotal > 0 ? (m.amount / payTotal) * 100 : 0;
+              return (
+                <View key={m.label}>
+                  <View style={{ flexDirection: "row", alignItems: "center", paddingVertical: 12 }}>
+                    <View style={{ width: 38, height: 38, borderRadius: 12, backgroundColor: m.bg, justifyContent: "center", alignItems: "center" }}>
+                      <Ionicons name={m.icon} size={18} color={m.color} />
+                    </View>
+                    <View style={{ flex: 1, marginLeft: 12 }}>
+                      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                        <Text style={{ fontSize: 14, fontWeight: "600", color: colors.text }}>{m.label}</Text>
+                        <Text style={{ fontSize: 15, fontWeight: "700", color: colors.text }}>{currSymbol}{formatNumber(m.amount, 2)}</Text>
+                      </View>
+                      <View style={{ height: 5, backgroundColor: colors.border, borderRadius: 3, overflow: "hidden" }}>
+                        <View style={{ width: `${Math.min(pct, 100)}%`, height: "100%", backgroundColor: m.color, borderRadius: 3 }} />
+                      </View>
+                    </View>
+                    <Text style={{ fontSize: 12, fontWeight: "600", color: colors.textMuted, marginLeft: 10, minWidth: 32, textAlign: "right" }}>
+                      {payTotal > 0 ? `%${Math.round(pct)}` : ''}
+                    </Text>
+                  </View>
+                  {i < methods.length - 1 && <View style={{ height: 1, backgroundColor: colors.border, marginLeft: 50 }} />}
+                </View>
+              );
+            })}
           </View>
         );
       })()}
@@ -405,6 +433,8 @@ export default function HomeScreen() {
             axisColor={colors.border}
             labelColor={colors.textSecondary}
             yLabelColor={colors.textMuted}
+            barColor={colors.primary}
+            barColorActive={colors.primaryDark}
           />
         )}
       </View>
@@ -451,7 +481,7 @@ export default function HomeScreen() {
                   {tx.receiptUri ? (
                     <View style={{ flexDirection: "row", alignItems: "center", marginTop: 2 }}>
                       <Ionicons name="receipt-outline" size={11} color={colors.primary} />
-                      <Text style={{ fontSize: 10, color: colors.primary, marginLeft: 3 }}>Receipt attached</Text>
+                      <Text style={{ fontSize: 10, color: colors.primary, marginLeft: 3 }}>{t('home.receiptAttached')}</Text>
                     </View>
                   ) : null}
                   {(transactionTags.get(tx.id) ?? []).length > 0 && (
@@ -488,6 +518,51 @@ export default function HomeScreen() {
       {/* Ad */}
       <AdBanner />
     </ScrollView>
+
+    {/* Review Popup Modal */}
+    <Modal
+      visible={showReviewModal}
+      transparent
+      animationType="fade"
+      onRequestClose={handleReviewLater}
+    >
+      <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "center", alignItems: "center", padding: 24 }}>
+        <View style={{ backgroundColor: colors.surface, borderRadius: 24, padding: 28, width: "100%", maxWidth: 340, alignItems: "center", shadowColor: "#000", shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.25, shadowRadius: 20, elevation: 10 }}>
+          {/* Star icon */}
+          <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: colors.purple + "20", justifyContent: "center", alignItems: "center", marginBottom: 16 }}>
+            <Text style={{ fontSize: 32 }}>⭐</Text>
+          </View>
+
+          <Text style={{ fontSize: 20, fontWeight: "800", color: colors.text, textAlign: "center", marginBottom: 10 }}>
+            {t('review.title')}
+          </Text>
+          <Text style={{ fontSize: 14, color: colors.textSecondary, textAlign: "center", lineHeight: 20, marginBottom: 24 }}>
+            {t('review.message')}
+          </Text>
+
+          {/* Rate Now Button */}
+          <TouchableOpacity
+            onPress={handleReviewNow}
+            style={{ backgroundColor: colors.purple, borderRadius: 14, paddingVertical: 14, paddingHorizontal: 24, width: "100%", alignItems: "center", marginBottom: 10 }}
+          >
+            <Text style={{ color: "#fff", fontWeight: "700", fontSize: 16 }}>{t('review.rateNow')}</Text>
+          </TouchableOpacity>
+
+          {/* Maybe Later Button */}
+          <TouchableOpacity
+            onPress={handleReviewLater}
+            style={{ backgroundColor: colors.surfaceSecondary, borderRadius: 14, paddingVertical: 12, paddingHorizontal: 24, width: "100%", alignItems: "center", marginBottom: 8 }}
+          >
+            <Text style={{ color: colors.text, fontWeight: "600", fontSize: 14 }}>{t('review.later')}</Text>
+          </TouchableOpacity>
+
+          {/* No Thanks Button */}
+          <TouchableOpacity onPress={handleReviewNever}>
+            <Text style={{ color: colors.textSecondary, fontSize: 13, marginTop: 4 }}>{t('review.noThanks')}</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
   </SafeAreaView>
   );
 }

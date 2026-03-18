@@ -58,6 +58,7 @@
     "noTrendData": "Henüz trend verisi yok",
     "recentTransactions": "Son Harcamalar",
     "noTransactions": "Henüz harcama yok",
+    "receiptAttached": "Fiş eklendi",
     "deleteTransaction": "Harcamayı Sil",
     "cashSpending": "Nakit",
     "cardSpending": "Kredi Kartı",
@@ -204,6 +205,13 @@
     "darkModeSystem": "Sistem",
     "darkModeLight": "Açık",
     "darkModeDark": "Koyu",
+    "colorTheme": "Renk Teması",
+    "theme_default": "Yeşil",
+    "theme_ocean": "Okyanus",
+    "theme_sunset": "Gün Batımı",
+    "theme_rose": "Gül",
+    "theme_lavender": "Lavanta",
+    "theme_teal": "Turkuaz",
     "biometricLock": "Biyometrik Kilit",
     "biometricPrompt": "Devam etmek için kimliğinizi doğrulayın",
     "biometricFallback": "Şifre kullan",
@@ -323,5 +331,12 @@
     "noData": "Bu ay için veri yok",
     "previousMonth": "Önceki Ay",
     "share": "Raporu Paylaş"
+  },
+  "review": {
+    "title": "SubTrack'i Beğeniyor musunuz?",
+    "message": "Uygulamamızı beğendiyseniz, bir dakikanızı ayırıp değerlendirir misiniz? Desteğiniz için teşekkürler!",
+    "rateNow": "Değerlendir ⭐",
+    "later": "Daha Sonra",
+    "noThanks": "Hayır, Teşekkürler"
   }
 }

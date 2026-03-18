@@ -23,10 +23,11 @@ import {
 import { createStyles } from "../../styles/settings";
 import { exportTransactionsCsv, exportSubscriptionsCsv } from "../../utils/csvExport";
 import { useAppTheme } from '@/hooks/use-app-theme';
+import { colorThemes } from '@/constants/theme';
 
 export default function SettingsScreen() {
   const { t, i18n } = useTranslation();
-  const { colors, setDarkMode } = useAppTheme();
+  const { colors, setDarkMode, colorThemeId, setColorTheme } = useAppTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
 
   const [currency, setCurrency] = useState("TRY");
@@ -37,7 +38,7 @@ export default function SettingsScreen() {
   const [biometricEnabled, setBiometricEnabled] = useState(false);
   const [biometricAvailable, setBiometricAvailable] = useState(false);
 
-  const [modal, setModal] = useState<null | "currency" | "interval" | "view" | "language" | "reminder" | "darkMode">(null);
+  const [modal, setModal] = useState<null | "currency" | "interval" | "view" | "language" | "reminder" | "darkMode" | "colorTheme">(null);
 
   useEffect(() => {
     load();
@@ -71,6 +72,9 @@ export default function SettingsScreen() {
     if (key === "darkMode") {
       setDarkModeSetting(value);
       setDarkMode(value);
+    }
+    if (key === "colorTheme") {
+      setColorTheme(value);
     }
     setModal(null);
   };
@@ -133,6 +137,8 @@ export default function SettingsScreen() {
           <SettingRow icon="notifications-outline" label={t('settings.reminderDays')} value={t('settings.daysBefore', { count: Number(reminderDays) })} onPress={() => setModal("reminder")} colors={colors} />
           <Divider colors={colors} />
           <SettingRow icon="moon-outline" label={t('settings.darkMode')} value={darkModeLabel(darkModeSetting)} onPress={() => setModal("darkMode")} colors={colors} />
+          <Divider colors={colors} />
+          <SettingRow icon="color-palette-outline" label={t('settings.colorTheme')} value={t(`settings.theme_${colorThemeId}`)} onPress={() => setModal("colorTheme")} colors={colors} />
           {biometricAvailable && (
             <>
               <Divider colors={colors} />
@@ -185,7 +191,6 @@ export default function SettingsScreen() {
 
         {/* Danger Zone */}
         <View style={styles.dangerCard}>
-          <Text style={styles.dangerTitle}>{t('settings.dangerZone')}</Text>
           <TouchableOpacity style={styles.dangerButton} onPress={reset}>
             <Ionicons name="trash-outline" size={18} color="#fff" />
             <Text style={styles.dangerText}>{t('settings.deleteAllData')}</Text>
@@ -252,6 +257,68 @@ export default function SettingsScreen() {
         ]}
         onSelect={(v: string) => select("darkMode", v)} onClose={() => setModal(null)}
       />
+
+      {/* Color Theme Picker */}
+      <Modal visible={modal === "colorTheme"} transparent animationType="slide">
+        <TouchableOpacity style={{ flex: 1, backgroundColor: colors.modalOverlay, justifyContent: "flex-end" }} onPress={() => setModal(null)}>
+          <View style={{ backgroundColor: colors.surface, padding: 16, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
+            <Text style={{ fontSize: 16, fontWeight: "700", marginBottom: 16, color: colors.text }}>{t('settings.colorTheme')}</Text>
+            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, justifyContent: "center", paddingBottom: 8 }}>
+              {colorThemes.map((theme) => {
+                const isSelected = theme.id === colorThemeId;
+                return (
+                  <TouchableOpacity
+                    key={theme.id}
+                    onPress={() => select("colorTheme", theme.id)}
+                    style={{
+                      alignItems: "center",
+                      width: 90,
+                      paddingVertical: 12,
+                      paddingHorizontal: 8,
+                      borderRadius: 16,
+                      borderWidth: 2,
+                      borderColor: isSelected ? theme.primary : colors.border,
+                      backgroundColor: isSelected ? (theme.id === 'default' ? colors.primaryLight : theme.primaryLight) : colors.background,
+                    }}
+                  >
+                    <View style={{
+                      width: 44, height: 44, borderRadius: 22,
+                      backgroundColor: theme.primary,
+                      justifyContent: "center", alignItems: "center",
+                      marginBottom: 8,
+                      shadowColor: theme.primary,
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.3,
+                      shadowRadius: 4,
+                      elevation: 3,
+                    }}>
+                      <Ionicons name={theme.icon as any} size={22} color="#fff" />
+                    </View>
+                    <Text style={{
+                      fontSize: 12,
+                      fontWeight: isSelected ? "700" : "500",
+                      color: isSelected ? theme.primary : colors.textSecondary,
+                      textAlign: "center",
+                    }}>
+                      {t(`settings.theme_${theme.id}`)}
+                    </Text>
+                    {isSelected && (
+                      <View style={{
+                        position: "absolute", top: 6, right: 6,
+                        width: 18, height: 18, borderRadius: 9,
+                        backgroundColor: theme.primary,
+                        justifyContent: "center", alignItems: "center",
+                      }}>
+                        <Ionicons name="checkmark" size={12} color="#fff" />
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 }

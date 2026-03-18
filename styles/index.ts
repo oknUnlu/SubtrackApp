@@ -39,7 +39,7 @@ export const createStyles = (colors: AppColors) => StyleSheet.create({
     alignItems: "center",
   },
   totalLabel: {
-    color: "#dcfce7",
+    color: "rgba(255,255,255,0.85)",
     marginLeft: 8,
     fontWeight: "500",
   },
@@ -54,34 +54,8 @@ export const createStyles = (colors: AppColors) => StyleSheet.create({
     alignItems: "center",
   },
   totalSubText: {
-    color: "#dcfce7",
+    color: "rgba(255,255,255,0.75)",
     marginLeft: 6,
-  },
-
-  statsRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 16,
-  },
-  statCard: {
-    width: "48%",
-    backgroundColor: colors.surface,
-    borderRadius: 18,
-    padding: 16,
-  },
-  statHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 12,
-  },
-  statLabel: {
-    color: colors.textSecondary,
-    fontWeight: "500",
-  },
-  statValue: {
-    fontSize: 24,
-    fontWeight: "700",
-    color: colors.text,
   },
 
   largeCard: {

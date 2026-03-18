@@ -50,9 +50,9 @@ export default function MonthlyReportScreen() {
   })();
 
   const paymentTotal = report ? report.cashTotal + report.debitTotal + report.cardTotal : 0;
-  const cashPercent = paymentTotal > 0 ? Math.round((report!.cashTotal / paymentTotal) * 100) : 0;
-  const debitPercent = paymentTotal > 0 ? Math.round((report!.debitTotal / paymentTotal) * 100) : 0;
-  const cardPercent = paymentTotal > 0 ? 100 - cashPercent - debitPercent : 0;
+  const cashPercent = report && paymentTotal > 0 ? Math.round((report.cashTotal / paymentTotal) * 100) : 0;
+  const debitPercent = report && paymentTotal > 0 ? Math.round((report.debitTotal / paymentTotal) * 100) : 0;
+  const cardPercent = report && paymentTotal > 0 ? 100 - cashPercent - debitPercent : 0;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>

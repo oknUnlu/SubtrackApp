@@ -36,6 +36,74 @@ export type AppColors = {
   safeAreaBg: string;
 };
 
+/* ---- Color Theme Accents ---- */
+export type ColorTheme = {
+  id: string;
+  primary: string;
+  primaryDark: string;
+  primaryLight: string;       // light mode bg tint
+  primaryLightText: string;   // light mode text on light bg
+  primaryLightDark: string;   // dark mode bg tint
+  primaryLightTextDark: string; // dark mode text on dark bg
+  trackColor: string;
+  icon: string;
+};
+
+export const colorThemes: ColorTheme[] = [
+  {
+    id: "default",
+    primary: "#22c55e", primaryDark: "#16a34a",
+    primaryLight: "#dcfce7", primaryLightText: "#16a34a",
+    primaryLightDark: "#064e3b", primaryLightTextDark: "#86efac",
+    trackColor: "#bbf7d0", icon: "leaf-outline",
+  },
+  {
+    id: "ocean",
+    primary: "#3b82f6", primaryDark: "#2563eb",
+    primaryLight: "#dbeafe", primaryLightText: "#2563eb",
+    primaryLightDark: "#1e3a5f", primaryLightTextDark: "#93c5fd",
+    trackColor: "#bfdbfe", icon: "water-outline",
+  },
+  {
+    id: "sunset",
+    primary: "#f97316", primaryDark: "#ea580c",
+    primaryLight: "#ffedd5", primaryLightText: "#ea580c",
+    primaryLightDark: "#5c2d0e", primaryLightTextDark: "#fdba74",
+    trackColor: "#fed7aa", icon: "sunny-outline",
+  },
+  {
+    id: "rose",
+    primary: "#f43f5e", primaryDark: "#e11d48",
+    primaryLight: "#ffe4e6", primaryLightText: "#e11d48",
+    primaryLightDark: "#4c0519", primaryLightTextDark: "#fda4af",
+    trackColor: "#fecdd3", icon: "heart-outline",
+  },
+  {
+    id: "lavender",
+    primary: "#8b5cf6", primaryDark: "#7c3aed",
+    primaryLight: "#ede9fe", primaryLightText: "#7c3aed",
+    primaryLightDark: "#2e1065", primaryLightTextDark: "#c4b5fd",
+    trackColor: "#ddd6fe", icon: "flower-outline",
+  },
+  {
+    id: "teal",
+    primary: "#14b8a6", primaryDark: "#0d9488",
+    primaryLight: "#ccfbf1", primaryLightText: "#0d9488",
+    primaryLightDark: "#134e4a", primaryLightTextDark: "#5eead4",
+    trackColor: "#99f6e4", icon: "diamond-outline",
+  },
+];
+
+export function applyColorTheme(base: AppColors, theme: ColorTheme, isDark: boolean): AppColors {
+  return {
+    ...base,
+    primary: theme.primary,
+    primaryDark: theme.primaryDark,
+    primaryLight: isDark ? theme.primaryLightDark : theme.primaryLight,
+    primaryLightText: isDark ? theme.primaryLightTextDark : theme.primaryLightText,
+  };
+}
+
 export const lightAppColors: AppColors = {
   background: "#f6f7f9",
   surface: "#fff",

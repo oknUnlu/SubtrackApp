@@ -58,6 +58,7 @@
     "noTrendData": "अभी तक कोई रुझान डेटा नहीं",
     "recentTransactions": "हाल के लेनदेन",
     "noTransactions": "अभी तक कोई लेनदेन नहीं",
+    "receiptAttached": "रसीद संलग्न",
     "deleteTransaction": "लेनदेन हटाएं",
     "cashSpending": "नकद",
     "cardSpending": "क्रेडिट कार्ड",
@@ -204,6 +205,13 @@
     "darkModeSystem": "सिस्टम",
     "darkModeLight": "लाइट",
     "darkModeDark": "डार्क",
+    "colorTheme": "रंग थीम",
+    "theme_default": "हरा",
+    "theme_ocean": "महासागर",
+    "theme_sunset": "सूर्यास्त",
+    "theme_rose": "गुलाब",
+    "theme_lavender": "लैवेंडर",
+    "theme_teal": "फ़िरोज़ा",
     "biometricLock": "बायोमेट्रिक लॉक",
     "biometricPrompt": "जारी रखने के लिए प्रमाणित करें",
     "biometricFallback": "पासकोड का उपयोग करें",
@@ -323,5 +331,12 @@
     "noData": "इस माह के लिए कोई डेटा नहीं",
     "previousMonth": "पिछला महीना",
     "share": "रिपोर्ट साझा करें"
+  },
+  "review": {
+    "title": "क्या SubTrack पसंद आ रहा है?",
+    "message": "अगर आपको हमारा ऐप पसंद है, तो क्या आप इसे रेट करने के लिए एक पल निकालेंगे? आपके समर्थन के लिए धन्यवाद!",
+    "rateNow": "अभी रेट करें ⭐",
+    "later": "बाद में",
+    "noThanks": "नहीं, धन्यवाद"
   }
 }

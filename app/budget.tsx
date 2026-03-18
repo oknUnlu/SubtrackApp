@@ -112,7 +112,7 @@ export default function BudgetScreen() {
           </TouchableOpacity>
         </View>
 
-        <LinearGradient colors={["#22c55e", "#16a34a"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.overallCard}>
+        <LinearGradient colors={[colors.primary, colors.primaryDark]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.overallCard}>
           <Text style={styles.overallLabel}>{t("budget.monthlyBudget")}</Text>
           <View style={styles.overallInputRow}>
             <Text style={styles.overallCurrency}>{currSymbol}</Text>
@@ -125,11 +125,11 @@ export default function BudgetScreen() {
             <View style={{ marginTop: 14 }}>
               <View style={[styles.progressBar, { backgroundColor: "rgba(255,255,255,0.2)" }]}>
                 <View style={[styles.progressFill, {
-                  width: `${Math.min((budgetData.overall.actual / budgetData.overall.budget) * 100, 100)}%`,
-                  backgroundColor: budgetData.overall.actual > budgetData.overall.budget ? "#fca5a5" : "#dcfce7",
+                  width: `${budgetData.overall.budget > 0 ? Math.min((budgetData.overall.actual / budgetData.overall.budget) * 100, 100) : 0}%`,
+                  backgroundColor: budgetData.overall.actual > budgetData.overall.budget ? "#fca5a5" : "rgba(255,255,255,0.8)",
                 }]} />
               </View>
-              <Text style={{ color: "#dcfce7", fontSize: 13, marginTop: 6 }}>
+              <Text style={{ color: "rgba(255,255,255,0.8)", fontSize: 13, marginTop: 6 }}>
                 {t("budget.spent")} {currSymbol}{budgetData.overall.actual.toFixed(0)} / {currSymbol}{budgetData.overall.budget.toFixed(0)}
                 {budgetData.overall.actual > budgetData.overall.budget
                   ? ` - ${t("budget.exceeded")}` : ` - ${t("budget.remaining")} ${currSymbol}${(budgetData.overall.budget - budgetData.overall.actual).toFixed(0)}`}
