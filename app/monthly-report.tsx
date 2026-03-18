@@ -25,6 +25,7 @@ export default function MonthlyReportScreen() {
     avgPerDay: number;
     cashTotal: number;
     cardTotal: number;
+    debitTotal: number;
   } | null>(null);
   const [currSymbol, setCurrSymbol] = useState("₺");
 
@@ -48,10 +49,10 @@ export default function MonthlyReportScreen() {
     return new Intl.DateTimeFormat(i18n.language, { month: "long", year: "numeric" }).format(new Date(y, m - 1));
   })();
 
-  const cashPercent = report && (report.cashTotal + report.cardTotal) > 0
-    ? Math.round((report.cashTotal / (report.cashTotal + report.cardTotal)) * 100)
-    : 0;
-  const cardPercent = 100 - cashPercent;
+  const paymentTotal = report ? report.cashTotal + report.debitTotal + report.cardTotal : 0;
+  const cashPercent = paymentTotal > 0 ? Math.round((report!.cashTotal / paymentTotal) * 100) : 0;
+  const debitPercent = paymentTotal > 0 ? Math.round((report!.debitTotal / paymentTotal) * 100) : 0;
+  const cardPercent = paymentTotal > 0 ? 100 - cashPercent - debitPercent : 0;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
@@ -124,24 +125,34 @@ export default function MonthlyReportScreen() {
                 {report.cashTotal > 0 && (
                   <View style={{ width: `${cashPercent}%`, height: "100%", backgroundColor: colors.primary }} />
                 )}
+                {report.debitTotal > 0 && (
+                  <View style={{ width: `${debitPercent}%`, height: "100%", backgroundColor: colors.warning }} />
+                )}
                 {report.cardTotal > 0 && (
                   <View style={{ width: `${cardPercent}%`, height: "100%", backgroundColor: colors.purple }} />
                 )}
               </View>
 
-              <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+              <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12 }}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: colors.primary, marginRight: 8 }} />
                   <View>
                     <Text style={{ fontSize: 13, color: colors.textSecondary }}>{t("monthlyReport.cash")}</Text>
-                    <Text style={{ fontSize: 16, fontWeight: "700", color: colors.text }}>{currSymbol}{formatNumber(report.cashTotal)}</Text>
+                    <Text style={{ fontSize: 16, fontWeight: "700", color: colors.text }}>{currSymbol}{formatNumber(report.cashTotal, 2)}</Text>
+                  </View>
+                </View>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: colors.warning, marginRight: 8 }} />
+                  <View>
+                    <Text style={{ fontSize: 13, color: colors.textSecondary }}>{t("monthlyReport.debit")}</Text>
+                    <Text style={{ fontSize: 16, fontWeight: "700", color: colors.text }}>{currSymbol}{formatNumber(report.debitTotal, 2)}</Text>
                   </View>
                 </View>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: colors.purple, marginRight: 8 }} />
                   <View>
                     <Text style={{ fontSize: 13, color: colors.textSecondary }}>{t("monthlyReport.card")}</Text>
-                    <Text style={{ fontSize: 16, fontWeight: "700", color: colors.text }}>{currSymbol}{formatNumber(report.cardTotal)}</Text>
+                    <Text style={{ fontSize: 16, fontWeight: "700", color: colors.text }}>{currSymbol}{formatNumber(report.cardTotal, 2)}</Text>
                   </View>
                 </View>
               </View>

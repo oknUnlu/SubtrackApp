@@ -34,11 +34,19 @@ import {
 const CATEGORY_ICONS: Record<string, string> = {
   food: "🍔", transport: "🚗", fun: "🎮", shopping: "🛍️",
   bills: "📄", health: "💊", education: "📚", tech: "💻", other: "📌",
+  groceries: "🛒", rent: "🏠", fuel: "⛽", clothing: "👕",
+  beauty: "💄", sports: "⚽", pets: "🐾", gifts: "🎁", travel: "✈️",
+  insurance: "🛡️", taxes: "🏛️", savings: "🏦", charity: "❤️",
+  kids: "👶", home: "🔧", coffee: "☕", subscriptions: "📱", parking: "🅿️",
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
   food: "#f97316", transport: "#3b82f6", fun: "#8b5cf6", shopping: "#ec4899",
   bills: "#6366f1", health: "#ef4444", education: "#14b8a6", tech: "#06b6d4", other: "#6b7280",
+  groceries: "#84cc16", rent: "#a855f7", fuel: "#eab308", clothing: "#f43f5e",
+  beauty: "#d946ef", sports: "#22c55e", pets: "#f97316", gifts: "#e11d48", travel: "#0ea5e9",
+  insurance: "#64748b", taxes: "#78716c", savings: "#059669", charity: "#ef4444",
+  kids: "#f59e0b", home: "#8b5cf6", coffee: "#92400e", subscriptions: "#6366f1", parking: "#0284c7",
 };
 
 function getShortDayName(dayIndex: number, locale: string): string {
@@ -74,11 +82,9 @@ export default function HomeScreen() {
       const currency = await getSetting("currency");
 
       const today = new Date().getDate();
-      const avg = today > 0 ? total / today : 0;
-
       setMonthlyTotal(total);
       setSubscriptionCount(subs);
-      setDailyAverage(avg);
+      setDailyAverage(today > 0 ? total / today : 0);
       setCategories(cats);
       setWeeklyTrend(weekly);
       setRecentTransactions(recent);
@@ -162,7 +168,7 @@ export default function HomeScreen() {
             <Text style={{ color: "#dcfce7", fontSize: 12, marginTop: 4 }}>
               {budgetInfo.actual > budgetInfo.budget
                 ? t('budget.exceeded')
-                : `${t('budget.remaining')} ${currSymbol}${formatNumber(budgetInfo.budget - budgetInfo.actual)}`
+                : `${t('budget.remaining')} ${currSymbol}${formatNumber(budgetInfo.budget - budgetInfo.actual, 2)}`
               }
             </Text>
           </View>
@@ -193,37 +199,50 @@ export default function HomeScreen() {
             <Text style={styles.statLabel}>{t('home.dailyAverage')}</Text>
             <Ionicons name="analytics-outline" size={18} color={colors.iconSecondary} />
           </View>
-          <Text style={styles.statValue}>{currSymbol}{formatNumber(dailyAverage)}</Text>
+          <Text style={styles.statValue}>{currSymbol}{formatNumber(dailyAverage, 2)}</Text>
         </View>
       </View>
 
       {/* Payment Method Distribution */}
       {paymentDistribution.length > 0 && (() => {
         const cashTotal = paymentDistribution.find(p => p.method === "cash")?.total ?? 0;
+        const debitTotal = paymentDistribution.find(p => p.method === "debit_card")?.total ?? 0;
         const cardTotal = paymentDistribution.find(p => p.method === "credit_card")?.total ?? 0;
-        const payTotal = cashTotal + cardTotal;
+        const payTotal = cashTotal + debitTotal + cardTotal;
         return (
-          <View style={styles.statsRow}>
-            <View style={styles.statCard}>
+          <View style={{ flexDirection: "row", gap: 10, marginTop: 4 }}>
+            <View style={[styles.statCard, { flex: 1 }]}>
               <View style={styles.statHeader}>
                 <Text style={styles.statLabel}>{t('home.cashSpending')}</Text>
-                <Ionicons name="cash-outline" size={18} color={colors.primary} />
+                <Ionicons name="cash-outline" size={16} color={colors.primary} />
               </View>
-              <Text style={styles.statValue}>{currSymbol}{formatNumber(cashTotal)}</Text>
+              <Text style={[styles.statValue, { fontSize: 16 }]}>{currSymbol}{formatNumber(cashTotal, 2)}</Text>
               {payTotal > 0 && (
-                <Text style={{ fontSize: 11, color: colors.textMuted, marginTop: 2 }}>
+                <Text style={{ fontSize: 10, color: colors.textMuted, marginTop: 2 }}>
                   %{Math.round((cashTotal / payTotal) * 100)}
                 </Text>
               )}
             </View>
-            <View style={styles.statCard}>
+            <View style={[styles.statCard, { flex: 1 }]}>
+              <View style={styles.statHeader}>
+                <Text style={styles.statLabel}>{t('home.debitSpending')}</Text>
+                <Ionicons name="wallet-outline" size={16} color={colors.warning} />
+              </View>
+              <Text style={[styles.statValue, { fontSize: 16 }]}>{currSymbol}{formatNumber(debitTotal, 2)}</Text>
+              {payTotal > 0 && (
+                <Text style={{ fontSize: 10, color: colors.textMuted, marginTop: 2 }}>
+                  %{Math.round((debitTotal / payTotal) * 100)}
+                </Text>
+              )}
+            </View>
+            <View style={[styles.statCard, { flex: 1 }]}>
               <View style={styles.statHeader}>
                 <Text style={styles.statLabel}>{t('home.cardSpending')}</Text>
-                <Ionicons name="card-outline" size={18} color={colors.purple} />
+                <Ionicons name="card-outline" size={16} color={colors.purple} />
               </View>
-              <Text style={styles.statValue}>{currSymbol}{formatNumber(cardTotal)}</Text>
+              <Text style={[styles.statValue, { fontSize: 16 }]}>{currSymbol}{formatNumber(cardTotal, 2)}</Text>
               {payTotal > 0 && (
-                <Text style={{ fontSize: 11, color: colors.textMuted, marginTop: 2 }}>
+                <Text style={{ fontSize: 10, color: colors.textMuted, marginTop: 2 }}>
                   %{Math.round((cardTotal / payTotal) * 100)}
                 </Text>
               )}
@@ -272,13 +291,13 @@ export default function HomeScreen() {
             <View style={{ flex: 1, backgroundColor: colors.primaryLight, borderRadius: 14, padding: 14, marginRight: 6 }}>
               <Text style={{ fontSize: 12, color: colors.primaryLightText, fontWeight: "500" }}>{t('home.thisMonth')}</Text>
               <Text style={{ fontSize: 20, fontWeight: "700", color: colors.primaryLightText, marginTop: 4 }}>
-                {currSymbol}{formatNumber(comparison.thisMonth)}
+                {currSymbol}{formatNumber(comparison.thisMonth, 2)}
               </Text>
             </View>
             <View style={{ flex: 1, backgroundColor: colors.surfaceSecondary, borderRadius: 14, padding: 14, marginLeft: 6 }}>
               <Text style={{ fontSize: 12, color: colors.textSecondary, fontWeight: "500" }}>{t('home.lastMonth')}</Text>
               <Text style={{ fontSize: 20, fontWeight: "700", color: colors.text, marginTop: 4 }}>
-                {currSymbol}{formatNumber(comparison.lastMonth)}
+                {currSymbol}{formatNumber(comparison.lastMonth, 2)}
               </Text>
             </View>
           </View>
@@ -346,10 +365,10 @@ export default function HomeScreen() {
                           <Text style={{ fontWeight: "600", color: colors.text }}>{cat.label}</Text>
                           <Text style={{ fontSize: 12, color: colors.textSecondary }}>
                             {t('home.percentThisMonth', { percent: Math.round(percent * 100) })}
-                            {catBudget ? ` · ${currSymbol}${formatNumber(catBudget.budget)} ${t('budget.limit')}` : ''}
+                            {catBudget ? ` · ${currSymbol}${formatNumber(catBudget.budget, 2)} ${t('budget.limit')}` : ''}
                           </Text>
                         </View>
-                        <Text style={{ fontWeight: "700", color: colors.text }}>{currSymbol}{formatNumber(item.total)}</Text>
+                        <Text style={{ fontWeight: "700", color: colors.text }}>{currSymbol}{formatNumber(item.total, 2)}</Text>
                       </View>
                       <View style={{ height: 6, backgroundColor: colors.border, borderRadius: 6, overflow: "hidden" }}>
                         <View style={{
@@ -420,12 +439,12 @@ export default function HomeScreen() {
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
                     <Text style={{ fontSize: 12, color: colors.textSecondary }}>{dateStr} - {cat.label}</Text>
                     <Ionicons
-                      name={tx.paymentMethod === "credit_card" ? "card" : "cash-outline"}
+                      name={tx.paymentMethod === "credit_card" ? "card" : tx.paymentMethod === "debit_card" ? "wallet" : "cash-outline"}
                       size={12}
-                      color={tx.paymentMethod === "credit_card" ? colors.purple : colors.primary}
+                      color={tx.paymentMethod === "credit_card" ? colors.purple : tx.paymentMethod === "debit_card" ? colors.warning : colors.primary}
                     />
-                    {tx.paymentMethod === "credit_card" && tx.bankName ? (
-                      <Text style={{ fontSize: 10, color: colors.purple, fontWeight: "500" }}>{tx.bankName}</Text>
+                    {(tx.paymentMethod === "credit_card" || tx.paymentMethod === "debit_card") && tx.bankName ? (
+                      <Text style={{ fontSize: 10, color: tx.paymentMethod === "credit_card" ? colors.purple : colors.warning, fontWeight: "500" }}>{tx.bankName}</Text>
                     ) : null}
                   </View>
                   {tx.notes ? <Text style={{ fontSize: 11, color: colors.textMuted, marginTop: 2 }} numberOfLines={1}>{tx.notes}</Text> : null}

@@ -24,6 +24,11 @@ const CURRENCIES: CurrencyOption[] = [
   { code: "TRY", symbol: "₺", labelKey: "settings.currencyTRY" },
   { code: "USD", symbol: "$", labelKey: "settings.currencyUSD" },
   { code: "EUR", symbol: "€", labelKey: "settings.currencyEUR" },
+  { code: "BRL", symbol: "R$", labelKey: "settings.currencyBRL" },
+  { code: "INR", symbol: "₹", labelKey: "settings.currencyINR" },
+  { code: "IDR", symbol: "Rp", labelKey: "settings.currencyIDR" },
+  { code: "JPY", symbol: "¥", labelKey: "settings.currencyJPY" },
+  { code: "KRW", symbol: "₩", labelKey: "settings.currencyKRW" },
 ];
 
 export default function OnboardingScreen() {

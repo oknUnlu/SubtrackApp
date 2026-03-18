@@ -7,7 +7,7 @@ export type TransactionItem = {
   date: string; // ISO string
   category?: string;
   notes?: string;
-  paymentMethod?: string; // "cash" | "credit_card"
+  paymentMethod?: string; // "cash" | "credit_card" | "debit_card"
   bankName?: string;
   receiptUri?: string;
 };
@@ -473,6 +473,11 @@ export function getCurrencySymbol(currency: string): string {
   switch (currency) {
     case "USD": return "$";
     case "EUR": return "€";
+    case "BRL": return "R$";
+    case "INR": return "₹";
+    case "IDR": return "Rp";
+    case "JPY": return "¥";
+    case "KRW": return "₩";
     default: return "₺";
   }
 }
@@ -779,6 +784,7 @@ export async function getMonthlyReport(yearMonth?: string): Promise<{
   avgPerDay: number;
   cashTotal: number;
   cardTotal: number;
+  debitTotal: number;
 }> {
   const ym = yearMonth ?? new Date().toISOString().slice(0, 7);
   const total = await getMonthlyTotalForMonth(ym);
@@ -797,6 +803,7 @@ export async function getMonthlyReport(yearMonth?: string): Promise<{
   );
   const cashTotal = payMethods.find(p => p.method === 'cash')?.total ?? 0;
   const cardTotal = payMethods.find(p => p.method === 'credit_card')?.total ?? 0;
+  const debitTotal = payMethods.find(p => p.method === 'debit_card')?.total ?? 0;
 
   return {
     total,
@@ -805,6 +812,7 @@ export async function getMonthlyReport(yearMonth?: string): Promise<{
     avgPerDay: daysInMonth > 0 ? total / daysInMonth : 0,
     cashTotal,
     cardTotal,
+    debitTotal,
   };
 }
 

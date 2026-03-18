@@ -111,12 +111,12 @@ export default function HistoryScreen() {
           <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
             <Text style={styles.txSubtitle}>{dateStr} - {cat.label}</Text>
             <Ionicons
-              name={tx.paymentMethod === "credit_card" ? "card" : "cash-outline"}
+              name={tx.paymentMethod === "credit_card" ? "card" : tx.paymentMethod === "debit_card" ? "wallet" : "cash-outline"}
               size={12}
-              color={tx.paymentMethod === "credit_card" ? colors.purple : colors.primary}
+              color={tx.paymentMethod === "credit_card" ? colors.purple : tx.paymentMethod === "debit_card" ? colors.warning : colors.primary}
             />
-            {tx.paymentMethod === "credit_card" && tx.bankName ? (
-              <Text style={{ fontSize: 10, color: colors.purple, fontWeight: "500" }}>{tx.bankName}</Text>
+            {(tx.paymentMethod === "credit_card" || tx.paymentMethod === "debit_card") && tx.bankName ? (
+              <Text style={{ fontSize: 10, color: tx.paymentMethod === "credit_card" ? colors.purple : colors.warning, fontWeight: "500" }}>{tx.bankName}</Text>
             ) : null}
           </View>
           {tx.notes ? <Text style={styles.txNotes} numberOfLines={1}>{tx.notes}</Text> : null}

@@ -235,7 +235,7 @@ export const createStyles = (colors: AppColors) => StyleSheet.create({
   },
   paymentMethodRow: {
     flexDirection: "row",
-    gap: 12,
+    gap: 8,
     marginTop: 8,
   },
   paymentMethodButton: {
@@ -243,7 +243,7 @@ export const createStyles = (colors: AppColors) => StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
+    gap: 6,
     backgroundColor: colors.surfaceSecondary,
     borderRadius: 16,
     paddingVertical: 14,

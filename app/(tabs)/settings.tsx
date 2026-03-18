@@ -199,6 +199,11 @@ export default function SettingsScreen() {
           { label: t('settings.currencyTRY'), value: "TRY" },
           { label: t('settings.currencyUSD'), value: "USD" },
           { label: t('settings.currencyEUR'), value: "EUR" },
+          { label: t('settings.currencyBRL'), value: "BRL" },
+          { label: t('settings.currencyINR'), value: "INR" },
+          { label: t('settings.currencyIDR'), value: "IDR" },
+          { label: t('settings.currencyJPY'), value: "JPY" },
+          { label: t('settings.currencyKRW'), value: "KRW" },
         ]}
         onSelect={(v: string) => select("currency", v)} onClose={() => setModal(null)}
       />
@@ -298,9 +303,8 @@ function OptionModal({ visible, title, options, onSelect, onClose, colors }: {
 }
 
 function currencyLabel(v: string, t: any) {
-  if (v === "USD") return t('settings.currencyUSD');
-  if (v === "EUR") return t('settings.currencyEUR');
-  return t('settings.currencyTRY');
+  const key = `settings.currency${v}`;
+  return t(key, { defaultValue: t('settings.currencyTRY') });
 }
 
 function languageLabel(code: string): string {

@@ -3,6 +3,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
+  Dimensions,
   FlatList,
   Image,
   KeyboardAvoidingView,
@@ -44,6 +45,7 @@ import { createStyles } from "../../styles/add";
 import { useAppTheme } from '@/hooks/use-app-theme';
 
 const CATEGORY_DATA = [
+  // Page 1
   { key: "food", icon: "🍔" },
   { key: "transport", icon: "🚗" },
   { key: "fun", icon: "🎮" },
@@ -53,6 +55,26 @@ const CATEGORY_DATA = [
   { key: "education", icon: "📚" },
   { key: "tech", icon: "💻" },
   { key: "other", icon: "📌" },
+  // Page 2
+  { key: "groceries", icon: "🛒" },
+  { key: "rent", icon: "🏠" },
+  { key: "fuel", icon: "⛽" },
+  { key: "clothing", icon: "👕" },
+  { key: "beauty", icon: "💄" },
+  { key: "sports", icon: "⚽" },
+  { key: "pets", icon: "🐾" },
+  { key: "gifts", icon: "🎁" },
+  { key: "travel", icon: "✈️" },
+  // Page 3
+  { key: "insurance", icon: "🛡️" },
+  { key: "taxes", icon: "🏛️" },
+  { key: "savings", icon: "🏦" },
+  { key: "charity", icon: "❤️" },
+  { key: "kids", icon: "👶" },
+  { key: "home", icon: "🔧" },
+  { key: "coffee", icon: "☕" },
+  { key: "subscriptions", icon: "📱" },
+  { key: "parking", icon: "🅿️" },
 ];
 
 export default function AddExpenseScreen() {
@@ -60,6 +82,7 @@ export default function AddExpenseScreen() {
   const { colors } = useAppTheme();
   const styles = useMemo(() => createStyles(colors), [colors]);
 
+  const [categoryPage, setCategoryPage] = useState(0);
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("other");
@@ -72,7 +95,7 @@ export default function AddExpenseScreen() {
   const [showNewTag, setShowNewTag] = useState(false);
   const [newTagName, setNewTagName] = useState("");
   const [newTagColor, setNewTagColor] = useState("#3b82f6");
-  const [paymentMethod, setPaymentMethod] = useState<"cash" | "credit_card">("cash");
+  const [paymentMethod, setPaymentMethod] = useState<"cash" | "credit_card" | "debit_card">("cash");
   const [bankName, setBankName] = useState("");
   const [categoryManuallySet, setCategoryManuallySet] = useState(false);
   const [receiptUri, setReceiptUri] = useState<string | null>(null);
@@ -88,7 +111,7 @@ export default function AddExpenseScreen() {
   const showToast = useCallback((message: string, warnings: string[] = []) => {
     if (toastTimeout.current) clearTimeout(toastTimeout.current);
     setToastData({ message, warnings });
-    scrollRef.current?.scrollTo({ y: 0, animated: true });
+    setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 100);
     const duration = warnings.length > 0 ? 4500 : 3000;
     toastTimeout.current = setTimeout(() => {
       setToastData(null);
@@ -124,7 +147,7 @@ export default function AddExpenseScreen() {
         if (b) setBankName(b);
       });
       getSetting("lastPaymentMethod").then((m) => {
-        if (m === "cash" || m === "credit_card") setPaymentMethod(m);
+        if (m === "cash" || m === "credit_card" || m === "debit_card") setPaymentMethod(m);
       });
       loadTemplates();
       loadTags();
@@ -309,13 +332,13 @@ export default function AddExpenseScreen() {
         category,
         notes: notes.trim() || undefined,
         paymentMethod,
-        bankName: paymentMethod === "credit_card" ? bankName.trim() || undefined : undefined,
+        bankName: (paymentMethod === "credit_card" || paymentMethod === "debit_card") ? bankName.trim() || undefined : undefined,
         receiptUri: receiptUri ?? undefined,
       });
 
       // Remember payment method & bank for next entry
       await setSetting("lastPaymentMethod", paymentMethod);
-      if (paymentMethod === "credit_card" && bankName.trim()) {
+      if ((paymentMethod === "credit_card" || paymentMethod === "debit_card") && bankName.trim()) {
         await setSetting("lastBankName", bankName.trim());
       }
 
@@ -405,60 +428,6 @@ export default function AddExpenseScreen() {
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
     <ScrollView ref={scrollRef} contentContainerStyle={styles.container}>
-      {/* Success Toast */}
-      {toastData && (
-        <View
-          style={{
-            backgroundColor: toastData.warnings.length > 0 ? "#f59e0b" : "#22c55e",
-            borderRadius: 16,
-            paddingVertical: 14,
-            paddingHorizontal: 18,
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 12,
-            marginBottom: 12,
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 4 },
-            shadowOpacity: 0.2,
-            shadowRadius: 10,
-            elevation: 6,
-          }}
-        >
-          <View style={{
-            width: 36,
-            height: 36,
-            borderRadius: 18,
-            backgroundColor: "rgba(255,255,255,0.25)",
-            justifyContent: "center",
-            alignItems: "center",
-          }}>
-            <Ionicons
-              name={toastData.warnings.length > 0 ? "warning" : "checkmark-circle"}
-              size={22}
-              color="#fff"
-            />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: "#fff", fontWeight: "700", fontSize: 15 }}>
-              {toastData.message}
-            </Text>
-            {toastData.warnings.map((w, i) => (
-              <Text key={i} style={{ color: "rgba(255,255,255,0.9)", fontSize: 12, marginTop: 3 }}>
-                {w}
-              </Text>
-            ))}
-          </View>
-          <TouchableOpacity
-            onPress={() => {
-              if (toastTimeout.current) clearTimeout(toastTimeout.current);
-              setToastData(null);
-            }}
-          >
-            <Ionicons name="close" size={18} color="rgba(255,255,255,0.7)" />
-          </TouchableOpacity>
-        </View>
-      )}
-
       {/* Header */}
       <View style={styles.header}>
         <View>
@@ -518,23 +487,59 @@ export default function AddExpenseScreen() {
 
       {/* Categories */}
       <Text style={styles.label}>{t('add.category')}</Text>
-      <View style={styles.categoryGrid}>
-        {localizedCategories.map((item) => {
-          const selected = item.key === category;
-          return (
-            <TouchableOpacity
-              key={item.key}
-              style={[styles.categoryCard, selected && styles.categorySelected]}
-              onPress={() => handleCategorySelect(item.key)}
+      {(() => {
+        const pages = [
+          localizedCategories.slice(0, 9),
+          localizedCategories.slice(9, 18),
+          localizedCategories.slice(18, 27),
+        ];
+        return (
+          <>
+            <ScrollView
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              onMomentumScrollEnd={(e) => {
+                const page = Math.round(e.nativeEvent.contentOffset.x / (Dimensions.get("window").width - 32));
+                setCategoryPage(page);
+              }}
+              style={{ marginTop: 8 }}
             >
-              <Text style={styles.categoryIcon}>{item.icon}</Text>
-              <Text style={[styles.categoryLabel, selected && styles.categoryLabelSelected]}>
-                {item.label}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
+              {pages.map((page, pageIndex) => (
+                <View key={pageIndex} style={{ width: Dimensions.get("window").width - 32 }}>
+                  <View style={styles.categoryGrid}>
+                    {page.map((item) => {
+                      const selected = item.key === category;
+                      return (
+                        <TouchableOpacity
+                          key={item.key}
+                          style={[styles.categoryCard, selected && styles.categorySelected]}
+                          onPress={() => handleCategorySelect(item.key)}
+                        >
+                          <Text style={styles.categoryIcon}>{item.icon}</Text>
+                          <Text style={[styles.categoryLabel, selected && styles.categoryLabelSelected]}>
+                            {item.label}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                </View>
+              ))}
+            </ScrollView>
+            <View style={{ flexDirection: "row", justifyContent: "center", gap: 8, marginTop: 4 }}>
+              {[0, 1, 2].map(i => (
+                <View key={i} style={{
+                  width: categoryPage === i ? 20 : 8,
+                  height: 8,
+                  borderRadius: 4,
+                  backgroundColor: categoryPage === i ? colors.primary : colors.border,
+                }} />
+              ))}
+            </View>
+          </>
+        );
+      })()}
 
       {/* Payment Method */}
       <Text style={styles.label}>{t('add.paymentMethod')}</Text>
@@ -549,6 +554,15 @@ export default function AddExpenseScreen() {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
+          style={[styles.paymentMethodButton, paymentMethod === "debit_card" && styles.paymentMethodSelected]}
+          onPress={() => setPaymentMethod("debit_card")}
+        >
+          <Ionicons name="wallet-outline" size={22} color={paymentMethod === "debit_card" ? "#fff" : colors.text} />
+          <Text style={[styles.paymentMethodText, paymentMethod === "debit_card" && styles.paymentMethodTextSelected]}>
+            {t('add.debitCard')}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={[styles.paymentMethodButton, paymentMethod === "credit_card" && styles.paymentMethodSelected]}
           onPress={() => setPaymentMethod("credit_card")}
         >
@@ -559,7 +573,7 @@ export default function AddExpenseScreen() {
         </TouchableOpacity>
       </View>
 
-      {paymentMethod === "credit_card" && (
+      {(paymentMethod === "credit_card" || paymentMethod === "debit_card") && (
         <>
           <Text style={styles.label}>{t('add.bankName')}</Text>
           <TextInput
@@ -569,7 +583,11 @@ export default function AddExpenseScreen() {
             value={bankName}
             onChangeText={setBankName}
           />
+        </>
+      )}
 
+      {paymentMethod === "credit_card" && (
+        <>
           {/* Installment Option */}
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: colors.surface, borderRadius: 14, padding: 14, marginTop: 10, marginBottom: isInstallment ? 0 : 0 }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
@@ -746,6 +764,57 @@ export default function AddExpenseScreen() {
         <Ionicons name="checkmark" size={20} color="#fff" />
         <Text style={styles.saveButtonText}>{t('add.saveExpense')}</Text>
       </TouchableOpacity>
+
+      {/* Success Toast */}
+      {toastData && (
+        <View
+          style={{
+            backgroundColor: toastData.warnings.length > 0 ? "#f59e0b" : "#22c55e",
+            borderRadius: 16,
+            paddingVertical: 14,
+            paddingHorizontal: 18,
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 12,
+            marginTop: 12,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.2,
+            shadowRadius: 10,
+            elevation: 6,
+          }}
+        >
+          <View style={{
+            width: 36, height: 36, borderRadius: 18,
+            backgroundColor: "rgba(255,255,255,0.25)",
+            justifyContent: "center", alignItems: "center",
+          }}>
+            <Ionicons
+              name={toastData.warnings.length > 0 ? "warning" : "checkmark-circle"}
+              size={22}
+              color="#fff"
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: "#fff", fontWeight: "700", fontSize: 15 }}>
+              {toastData.message}
+            </Text>
+            {toastData.warnings.map((w, i) => (
+              <Text key={i} style={{ color: "rgba(255,255,255,0.9)", fontSize: 12, marginTop: 3 }}>
+                {w}
+              </Text>
+            ))}
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              if (toastTimeout.current) clearTimeout(toastTimeout.current);
+              setToastData(null);
+            }}
+          >
+            <Ionicons name="close" size={18} color="rgba(255,255,255,0.7)" />
+          </TouchableOpacity>
+        </View>
+      )}
 
       {/* Ad */}
       <AdBanner />
