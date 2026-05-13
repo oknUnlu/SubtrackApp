@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { View, type ViewStyle } from "react-native";
+import { getSetting } from "../database/db";
 
 /**
  * AdBanner — renders a Google AdMob banner ad.
@@ -64,12 +65,16 @@ type Props = {
 
 export default function AdBanner({ style }: Props) {
   const [failed, setFailed] = useState(false);
+  const [premium, setPremium] = useState(false);
 
   useEffect(() => {
     configureTestDevices();
+    getSetting("premium").then((val) => {
+      if (val === "true") setPremium(true);
+    });
   }, []);
 
-  if (!BannerAd || failed) {
+  if (!BannerAd || failed || premium) {
     return <View style={style} />;
   }
 

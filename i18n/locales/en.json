@@ -217,7 +217,21 @@
     "biometricFallback": "Use passcode",
     "biometricLocked": "App Locked",
     "biometricLockedDesc": "Authenticate with biometrics to access your data",
-    "biometricUnlock": "Unlock"
+    "biometricUnlock": "Unlock",
+    "removeAds": "Remove Ads",
+    "removeAdsSubtitle": "Enjoy SubTrack completely ad-free",
+    "removeAdsPrice": "$4.99",
+    "removeAdsOneTime": "One-time purchase · No subscription",
+    "removeAdsBenefit1": "No banner ads",
+    "removeAdsBenefit2": "Support the developer",
+    "removeAdsBenefit3": "Ad-free forever",
+    "removeAdsBuy": "Remove Ads — $4.99",
+    "removeAdsRestore": "Restore Purchase",
+    "removeAdsDone": "Ads Removed ✓",
+    "removeAdsSuccessTitle": "Thank You!",
+    "removeAdsSuccessMsg": "Ads have been permanently removed. Enjoy SubTrack!",
+    "removeAdsAlready": "You already removed ads. Thank you for your support!",
+    "support": "Support"
   },
   "budget": {
     "title": "Budget",

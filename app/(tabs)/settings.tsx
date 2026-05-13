@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as LocalAuthentication from "expo-local-authentication";
 import React, { useEffect, useMemo, useState } from "react";
+import PremiumModal from "../../components/PremiumModal";
 import {
   Alert,
   Modal,
@@ -39,12 +40,16 @@ export default function SettingsScreen() {
   const [biometricAvailable, setBiometricAvailable] = useState(false);
 
   const [modal, setModal] = useState<null | "currency" | "interval" | "view" | "language" | "reminder" | "darkMode" | "colorTheme">(null);
+  const [premiumModalVisible, setPremiumModalVisible] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
 
   useEffect(() => {
     load();
   }, []);
 
   const load = async () => {
+    const prem = await getSetting("premium");
+    if (prem === "true") setIsPremium(true);
     const c = await getSetting("currency");
     const i = await getSetting("interval");
     const v = await getSetting("mainView");
@@ -189,6 +194,36 @@ export default function SettingsScreen() {
           </TouchableOpacity>
         </View>
 
+        {/* Support / Remove Ads */}
+        <View style={styles.card}>
+          <TouchableOpacity
+            style={styles.row}
+            onPress={() => {
+              if (isPremium) {
+                Alert.alert(t("settings.removeAdsDone"), t("settings.removeAdsAlready"));
+              } else {
+                setPremiumModalVisible(true);
+              }
+            }}
+          >
+            <Ionicons name="star-outline" size={20} color={colors.primary} />
+            <Text style={styles.rowLabel}>{t("settings.removeAds")}</Text>
+            <View style={{ flex: 1 }} />
+            {isPremium ? (
+              <Text style={{ color: colors.primary, fontWeight: "700", fontSize: 13 }}>
+                {t("settings.removeAdsDone")}
+              </Text>
+            ) : (
+              <>
+                <Text style={{ color: colors.textSecondary, fontSize: 14 }}>
+                  {t("settings.removeAdsPrice")}
+                </Text>
+                <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
+              </>
+            )}
+          </TouchableOpacity>
+        </View>
+
         {/* Danger Zone */}
         <View style={styles.dangerCard}>
           <TouchableOpacity style={styles.dangerButton} onPress={reset}>
@@ -319,6 +354,11 @@ export default function SettingsScreen() {
           </View>
         </TouchableOpacity>
       </Modal>
+      <PremiumModal
+        visible={premiumModalVisible}
+        onClose={() => setPremiumModalVisible(false)}
+        onPurchased={() => setIsPremium(true)}
+      />
     </SafeAreaView>
   );
 }

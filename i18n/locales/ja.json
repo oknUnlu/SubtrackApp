@@ -217,7 +217,21 @@
     "biometricFallback": "パスコードを使用",
     "biometricLocked": "アプリがロックされています",
     "biometricLockedDesc": "データにアクセスするには生体認証を行ってください",
-    "biometricUnlock": "ロック解除"
+    "biometricUnlock": "ロック解除",
+    "removeAds": "広告を削除",
+    "removeAdsSubtitle": "SubTrackを完全に広告なしで楽しむ",
+    "removeAdsPrice": "¥750",
+    "removeAdsOneTime": "一回払い・サブスクなし",
+    "removeAdsBenefit1": "バナー広告なし",
+    "removeAdsBenefit2": "開発者を支援",
+    "removeAdsBenefit3": "永久に広告なし",
+    "removeAdsBuy": "広告を削除 — $4.99",
+    "removeAdsRestore": "購入を復元",
+    "removeAdsDone": "広告削除済み ✓",
+    "removeAdsSuccessTitle": "ありがとうございます！",
+    "removeAdsSuccessMsg": "広告が永久に削除されました。SubTrackをお楽しみください！",
+    "removeAdsAlready": "すでに広告を削除しました。ご支援ありがとうございます！",
+    "support": "サポート"
   },
   "budget": {
     "title": "予算",

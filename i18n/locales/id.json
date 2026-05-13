@@ -217,7 +217,21 @@
     "biometricFallback": "Gunakan kode sandi",
     "biometricLocked": "Aplikasi Terkunci",
     "biometricLockedDesc": "Autentikasi dengan biometrik untuk mengakses data Anda",
-    "biometricUnlock": "Buka Kunci"
+    "biometricUnlock": "Buka Kunci",
+    "removeAds": "Hapus Iklan",
+    "removeAdsSubtitle": "Nikmati SubTrack sepenuhnya tanpa iklan",
+    "removeAdsPrice": "Rp79.000",
+    "removeAdsOneTime": "Pembayaran sekali · Tanpa langganan",
+    "removeAdsBenefit1": "Tidak ada banner iklan",
+    "removeAdsBenefit2": "Dukung pengembang",
+    "removeAdsBenefit3": "Bebas iklan selamanya",
+    "removeAdsBuy": "Hapus Iklan — $4,99",
+    "removeAdsRestore": "Pulihkan Pembelian",
+    "removeAdsDone": "Iklan Dihapus ✓",
+    "removeAdsSuccessTitle": "Terima Kasih!",
+    "removeAdsSuccessMsg": "Iklan telah dihapus secara permanen. Nikmati SubTrack!",
+    "removeAdsAlready": "Anda sudah menghapus iklan. Terima kasih atas dukungannya!",
+    "support": "Dukungan"
   },
   "budget": {
     "title": "Anggaran",

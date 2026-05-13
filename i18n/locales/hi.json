@@ -217,7 +217,21 @@
     "biometricFallback": "पासकोड का उपयोग करें",
     "biometricLocked": "ऐप लॉक है",
     "biometricLockedDesc": "अपने डेटा तक पहुंचने के लिए बायोमेट्रिक प्रमाणीकरण करें",
-    "biometricUnlock": "अनलॉक करें"
+    "biometricUnlock": "अनलॉक करें",
+    "removeAds": "विज्ञापन हटाएं",
+    "removeAdsSubtitle": "SubTrack को पूरी तरह विज्ञापन-मुक्त उपयोग करें",
+    "removeAdsPrice": "₹399",
+    "removeAdsOneTime": "एकबारगी भुगतान · कोई सदस्यता नहीं",
+    "removeAdsBenefit1": "कोई बैनर विज्ञापन नहीं",
+    "removeAdsBenefit2": "डेवलपर को सहयोग करें",
+    "removeAdsBenefit3": "हमेशा के लिए विज्ञापन-मुक्त",
+    "removeAdsBuy": "विज्ञापन हटाएं — $4.99",
+    "removeAdsRestore": "खरीदारी पुनर्स्थापित करें",
+    "removeAdsDone": "विज्ञापन हटाए गए ✓",
+    "removeAdsSuccessTitle": "धन्यवाद!",
+    "removeAdsSuccessMsg": "विज्ञापन स्थायी रूप से हटा दिए गए हैं। SubTrack का आनंद लें!",
+    "removeAdsAlready": "आपने पहले ही विज्ञापन हटा दिए हैं। आपके समर्थन के लिए धन्यवाद!",
+    "support": "सहयोग"
   },
   "budget": {
     "title": "बजट",

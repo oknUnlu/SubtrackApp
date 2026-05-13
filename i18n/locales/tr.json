@@ -217,7 +217,21 @@
     "biometricFallback": "Şifre kullan",
     "biometricLocked": "Uygulama Kilitli",
     "biometricLockedDesc": "Verilerinize erişmek için biyometrik doğrulama yapın",
-    "biometricUnlock": "Kilidi Aç"
+    "biometricUnlock": "Kilidi Aç",
+    "removeAds": "Reklamları Kaldır",
+    "removeAdsSubtitle": "SubTrack'i tamamen reklamsız kullanın",
+    "removeAdsPrice": "$4,99",
+    "removeAdsOneTime": "Tek seferlik ödeme · Abonelik yok",
+    "removeAdsBenefit1": "Banner reklam yok",
+    "removeAdsBenefit2": "Geliştiriciye destek ol",
+    "removeAdsBenefit3": "Sonsuza dek reklamsız",
+    "removeAdsBuy": "Reklamları Kaldır — $4,99",
+    "removeAdsRestore": "Satın Almayı Geri Yükle",
+    "removeAdsDone": "Reklamlar Kaldırıldı ✓",
+    "removeAdsSuccessTitle": "Teşekkürler!",
+    "removeAdsSuccessMsg": "Reklamlar kalıcı olarak kaldırıldı. SubTrack'in tadını çıkarın!",
+    "removeAdsAlready": "Reklamları zaten kaldırdınız. Desteğiniz için teşekkürler!",
+    "support": "Destek"
   },
   "budget": {
     "title": "Bütçe",

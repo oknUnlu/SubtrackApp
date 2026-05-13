@@ -217,7 +217,21 @@
     "biometricFallback": "Usar senha",
     "biometricLocked": "App Bloqueado",
     "biometricLockedDesc": "Autentique-se com biometria para acessar seus dados",
-    "biometricUnlock": "Desbloquear"
+    "biometricUnlock": "Desbloquear",
+    "removeAds": "Remover Anúncios",
+    "removeAdsSubtitle": "Aproveite o SubTrack completamente sem anúncios",
+    "removeAdsPrice": "R$24,99",
+    "removeAdsOneTime": "Pagamento único · Sem assinatura",
+    "removeAdsBenefit1": "Sem banners de anúncios",
+    "removeAdsBenefit2": "Apoie o desenvolvedor",
+    "removeAdsBenefit3": "Sem anúncios para sempre",
+    "removeAdsBuy": "Remover Anúncios — $4,99",
+    "removeAdsRestore": "Restaurar Compra",
+    "removeAdsDone": "Anúncios Removidos ✓",
+    "removeAdsSuccessTitle": "Obrigado!",
+    "removeAdsSuccessMsg": "Anúncios foram removidos permanentemente. Aproveite o SubTrack!",
+    "removeAdsAlready": "Você já removeu os anúncios. Obrigado pelo seu apoio!",
+    "support": "Suporte"
   },
   "budget": {
     "title": "Orçamento",

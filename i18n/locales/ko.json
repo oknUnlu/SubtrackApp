@@ -217,7 +217,21 @@
     "biometricFallback": "비밀번호 사용",
     "biometricLocked": "앱이 잠겨 있습니다",
     "biometricLockedDesc": "데이터에 접근하려면 생체 인증을 사용하세요",
-    "biometricUnlock": "잠금 해제"
+    "biometricUnlock": "잠금 해제",
+    "removeAds": "광고 제거",
+    "removeAdsSubtitle": "SubTrack을 완전히 광고 없이 즐기세요",
+    "removeAdsPrice": "₩6,500",
+    "removeAdsOneTime": "일회성 결제 · 구독 없음",
+    "removeAdsBenefit1": "배너 광고 없음",
+    "removeAdsBenefit2": "개발자 지원",
+    "removeAdsBenefit3": "영구 광고 제거",
+    "removeAdsBuy": "광고 제거 — $4.99",
+    "removeAdsRestore": "구매 복원",
+    "removeAdsDone": "광고 제거됨 ✓",
+    "removeAdsSuccessTitle": "감사합니다!",
+    "removeAdsSuccessMsg": "광고가 영구적으로 제거되었습니다. SubTrack을 즐기세요!",
+    "removeAdsAlready": "이미 광고를 제거했습니다. 지원해 주셔서 감사합니다!",
+    "support": "지원"
   },
   "budget": {
     "title": "예산",
