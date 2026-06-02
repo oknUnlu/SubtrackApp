@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111827; font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; padding: 16px; }
+  .row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .swatch { border-radius: 8px; flex: 1; min-width: 36px; height: 44px; position: relative; }
+  .label { font-size: 10px; color: #9ca3af; margin-bottom: 4px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .name { font-size: 9px; color: rgba(255,255,255,0.5); position: absolute; bottom: 3px; left: 5px; }
+</style>
+</head>
+<body>
+  <div class="label">Green (Primary)</div>
+  <div class="row">
+    <div class="swatch" style="background:#dcfce7"><span class="name" style="color:#16a34a">light</span></div>
+    <div class="swatch" style="background:#bbf7d0"><span class="name" style="color:#16a34a">track</span></div>
+    <div class="swatch" style="background:#4ade80"><span class="name">400</span></div>
+    <div class="swatch" style="background:#22c55e"><span class="name">500</span></div>
+    <div class="swatch" style="background:#16a34a"><span class="name">600</span></div>
+    <div class="swatch" style="background:#15803d"><span class="name">700</span></div>
+    <div class="swatch" style="background:#064e3b"><span class="name">dark-bg</span></div>
+  </div>
+  <div class="label">Purple (AI / Installments)</div>
+  <div class="row">
+    <div class="swatch" style="background:#faf5ff"><span class="name" style="color:#7c3aed">bg-l</span></div>
+    <div class="swatch" style="background:#c4b5fd"><span class="name" style="color:#4c1d95">400</span></div>
+    <div class="swatch" style="background:#a78bfa"><span class="name">500</span></div>
+    <div class="swatch" style="background:#8b5cf6"><span class="name">600</span></div>
+    <div class="swatch" style="background:#7c3aed"><span class="name">700</span></div>
+    <div class="swatch" style="background:#1e1b3a"><span class="name">bg-d</span></div>
+  </div>
+  <div class="label">Neutrals</div>
+  <div class="row">
+    <div class="swatch" style="background:#f9fafb"><span class="name" style="color:#374151">50</span></div>
+    <div class="swatch" style="background:#f3f4f6"><span class="name" style="color:#374151">100</span></div>
+    <div class="swatch" style="background:#e5e7eb"><span class="name" style="color:#374151">200</span></div>
+    <div class="swatch" style="background:#9ca3af"><span class="name">400</span></div>
+    <div class="swatch" style="background:#6b7280"><span class="name">500</span></div>
+    <div class="swatch" style="background:#374151"><span class="name">700</span></div>
+    <div class="swatch" style="background:#1f2937"><span class="name">800</span></div>
+    <div class="swatch" style="background:#111827"><span class="name">900</span></div>
+  </div>
+  <div class="label">Status</div>
+  <div class="row">
+    <div class="swatch" style="background:#ef4444; flex:2"><span class="name">danger</span></div>
+    <div class="swatch" style="background:#f59e0b; flex:2"><span class="name">warning</span></div>
+    <div class="swatch" style="background:#3b82f6; flex:2"><span class="name">info</span></div>
+  </div>
+</body>
+</html>

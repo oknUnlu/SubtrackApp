@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111827; font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; padding: 14px; display: flex; gap: 12px; }
+  .col { flex: 1; }
+  .section { font-size: 9px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 7px; }
+  .token-row { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
+  .bar { height: 8px; background: #22c55e; border-radius: 2px; }
+  .rad-box { border-radius: 0; background: #374151; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; }
+  .tok-label { font-size: 10px; color: #9ca3af; font-weight: 500; min-width: 60px; }
+  .tok-val { font-size: 9px; color: #6b7280; font-family: monospace; }
+</style>
+</head>
+<body>
+  <div class="col">
+    <div class="section">Spacing</div>
+    <div class="token-row"><div class="bar" style="width:4px"></div><div class="tok-label">space-1</div><div class="tok-val">4px</div></div>
+    <div class="token-row"><div class="bar" style="width:8px"></div><div class="tok-label">space-2</div><div class="tok-val">8px</div></div>
+    <div class="token-row"><div class="bar" style="width:10px"></div><div class="tok-label">space-3</div><div class="tok-val">10px</div></div>
+    <div class="token-row"><div class="bar" style="width:12px"></div><div class="tok-label">space-4</div><div class="tok-val">12px</div></div>
+    <div class="token-row"><div class="bar" style="width:14px"></div><div class="tok-label">space-5</div><div class="tok-val">14px</div></div>
+    <div class="token-row"><div class="bar" style="width:16px"></div><div class="tok-label">space-6</div><div class="tok-val">16px</div></div>
+    <div class="token-row"><div class="bar" style="width:20px"></div><div class="tok-label">space-7</div><div class="tok-val">20px</div></div>
+    <div class="token-row"><div class="bar" style="width:24px"></div><div class="tok-label">space-8</div><div class="tok-val">24px</div></div>
+  </div>
+  <div class="col">
+    <div class="section">Border Radius</div>
+    <div class="token-row"><div class="rad-box" style="border-radius:8px"></div><div class="tok-label">radius-sm</div><div class="tok-val">8px</div></div>
+    <div class="token-row"><div class="rad-box" style="border-radius:10px"></div><div class="tok-label">radius-md</div><div class="tok-val">10px</div></div>
+    <div class="token-row"><div class="rad-box" style="border-radius:12px"></div><div class="tok-label">radius-lg</div><div class="tok-val">12px</div></div>
+    <div class="token-row"><div class="rad-box" style="border-radius:14px"></div><div class="tok-label">radius-xl</div><div class="tok-val">14px</div></div>
+    <div class="token-row"><div class="rad-box" style="border-radius:16px"></div><div class="tok-label">radius-2xl</div><div class="tok-val">16px</div></div>
+    <div class="token-row"><div class="rad-box" style="border-radius:20px"></div><div class="tok-label">radius-3xl</div><div class="tok-val">20px</div></div>
+    <div class="token-row"><div class="rad-box" style="border-radius:24px"></div><div class="tok-label">radius-4xl</div><div class="tok-val">24px</div></div>
+    <div class="token-row"><div class="rad-box" style="border-radius:9999px;width:40px;height:20px"></div><div class="tok-label">radius-full</div><div class="tok-val">9999px</div></div>
+  </div>
+</body>
+</html>

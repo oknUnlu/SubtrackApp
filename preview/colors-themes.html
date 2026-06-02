@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111827; font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; padding: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .theme { border-radius: 12px; padding: 10px 8px; background: #1f2937; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .name { font-size: 10px; font-weight: 600; color: #9ca3af; }
+  .track { height: 5px; border-radius: 3px; width: 100%; margin-top: 2px; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="theme">
+      <div class="dot" style="background:#22c55e">🌿</div>
+      <div class="name">Green</div>
+      <div class="track" style="background:#bbf7d0"></div>
+    </div>
+    <div class="theme">
+      <div class="dot" style="background:#3b82f6">🌊</div>
+      <div class="name">Ocean</div>
+      <div class="track" style="background:#bfdbfe"></div>
+    </div>
+    <div class="theme">
+      <div class="dot" style="background:#f97316">☀️</div>
+      <div class="name">Sunset</div>
+      <div class="track" style="background:#fed7aa"></div>
+    </div>
+    <div class="theme">
+      <div class="dot" style="background:#f43f5e">🌸</div>
+      <div class="name">Rose</div>
+      <div class="track" style="background:#fecdd3"></div>
+    </div>
+    <div class="theme">
+      <div class="dot" style="background:#8b5cf6">💜</div>
+      <div class="name">Lavender</div>
+      <div class="track" style="background:#ddd6fe"></div>
+    </div>
+    <div class="theme">
+      <div class="dot" style="background:#14b8a6">💎</div>
+      <div class="name">Teal</div>
+      <div class="track" style="background:#99f6e4"></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,273 @@
+/**
+ * SubTrack Design System — CSS Custom Properties
+ * Generated from constants/theme.ts
+ *
+ * Usage: import this file, then apply .theme-light or .theme-dark to <html> or a root element.
+ * Default theme is dark (matches app default).
+ */
+
+/* ─────────────────────────────────────────
+   BASE COLOR TOKENS  (raw palette)
+───────────────────────────────────────── */
+:root {
+  /* Primary — default green */
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+  --color-green-light: #dcfce7;
+  --color-green-dark-bg: #064e3b;
+  --color-green-track: #bbf7d0;
+
+  /* Purple — AI / installments */
+  --color-purple-400: #a78bfa;
+  --color-purple-500: #8b5cf6;
+  --color-purple-600: #7c3aed;
+  --color-purple-700: #6d28d9;
+  --color-purple-900: #9333ea;
+  --color-purple-bg-light: #faf5ff;
+  --color-purple-bg-dark: #1e1b3a;
+  --color-purple-border-light: #e9d5ff;
+  --color-purple-border-dark: #4c1d95;
+
+  /* Danger / Red */
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-red-700: #b91c1c;
+  --color-red-bg-light: #fee2e2;
+  --color-red-bg-dark: #450a0a;
+
+  /* Warning / Amber */
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-bg-light: #fffbeb;
+  --color-amber-bg-dark: #451a03;
+
+  /* Blue — info */
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-bg-light: #eff6ff;
+  --color-blue-bg-dark: #1e3a5f;
+
+  /* Neutral grays */
+  --color-gray-50:  #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* Category colors */
+  --color-cat-food:          #f97316;
+  --color-cat-transport:     #3b82f6;
+  --color-cat-fun:           #8b5cf6;
+  --color-cat-shopping:      #ec4899;
+  --color-cat-bills:         #6366f1;
+  --color-cat-health:        #ef4444;
+  --color-cat-education:     #14b8a6;
+  --color-cat-tech:          #06b6d4;
+  --color-cat-other:         #6b7280;
+  --color-cat-groceries:     #84cc16;
+  --color-cat-rent:          #a855f7;
+  --color-cat-fuel:          #eab308;
+  --color-cat-clothing:      #f43f5e;
+  --color-cat-beauty:        #d946ef;
+  --color-cat-sports:        #22c55e;
+  --color-cat-travel:        #0ea5e9;
+  --color-cat-savings:       #059669;
+  --color-cat-coffee:        #92400e;
+  --color-cat-subscriptions: #6366f1;
+}
+
+/* ─────────────────────────────────────────
+   SEMANTIC TOKENS — DARK (default)
+───────────────────────────────────────── */
+:root,
+.theme-dark {
+  --bg:                #111827;
+  --surface:           #1f2937;
+  --surface-secondary: #374151;
+  --surface-tertiary:  #1f2937;
+
+  --fg:                #f9fafb;
+  --fg-secondary:      #9ca3af;
+  --fg-muted:          #6b7280;
+
+  --border:            #374151;
+  --input-bg:          #1f2937;
+  --placeholder:       #6b7280;
+
+  --primary:           #22c55e;
+  --primary-dark:      #16a34a;
+  --primary-light:     #064e3b;
+  --primary-light-text:#86efac;
+
+  --danger:            #f87171;
+  --danger-bg:         #450a0a;
+  --danger-text:       #fca5a5;
+  --danger-button:     #dc2626;
+
+  --purple:            #a78bfa;
+  --purple-dark:       #7c3aed;
+  --purple-bg:         #1e1b3a;
+  --purple-border:     #4c1d95;
+  --purple-text:       #c4b5fd;
+
+  --warning:           #fbbf24;
+
+  --modal-overlay:     rgba(0, 0, 0, 0.6);
+  --tab-bar-bg:        #1f2937;
+  --tab-bar-border:    #374151;
+  --chip-bg:           #374151;
+  --chip-text:         #d1d5db;
+  --icon:              #d1d5db;
+  --icon-secondary:    #9ca3af;
+
+  /* Insight card backgrounds */
+  --insight-warning-border: #fbbf24;
+  --insight-warning-bg:     #451a03;
+  --insight-tip-border:     var(--primary);
+  --insight-tip-bg:         var(--primary-light);
+  --insight-info-border:    #60a5fa;
+  --insight-info-bg:        #1e3a5f;
+  --insight-achieve-border: #a78bfa;
+  --insight-achieve-bg:     #1e1b3a;
+}
+
+/* ─────────────────────────────────────────
+   SEMANTIC TOKENS — LIGHT
+───────────────────────────────────────── */
+.theme-light {
+  --bg:                #f6f7f9;
+  --surface:           #ffffff;
+  --surface-secondary: #f3f4f6;
+  --surface-tertiary:  #f9fafb;
+
+  --fg:                #222222;
+  --fg-secondary:      #6b7280;
+  --fg-muted:          #9ca3af;
+
+  --border:            #e5e7eb;
+  --input-bg:          #ffffff;
+  --placeholder:       #9ca3af;
+
+  --primary:           #22c55e;
+  --primary-dark:      #16a34a;
+  --primary-light:     #dcfce7;
+  --primary-light-text:#16a34a;
+
+  --danger:            #ef4444;
+  --danger-bg:         #fee2e2;
+  --danger-text:       #991b1b;
+  --danger-button:     #dc2626;
+
+  --purple:            #7c3aed;
+  --purple-dark:       #9333ea;
+  --purple-bg:         #faf5ff;
+  --purple-border:     #e9d5ff;
+  --purple-text:       #ede9fe;
+
+  --warning:           #f59e0b;
+
+  --modal-overlay:     rgba(0, 0, 0, 0.35);
+  --tab-bar-bg:        #ffffff;
+  --tab-bar-border:    #e5e7eb;
+  --chip-bg:           #e5e7eb;
+  --chip-text:         #374151;
+  --icon:              #374151;
+  --icon-secondary:    #6b7280;
+
+  --insight-warning-border: #f59e0b;
+  --insight-warning-bg:     #fffbeb;
+  --insight-tip-border:     var(--primary);
+  --insight-tip-bg:         var(--primary-light);
+  --insight-info-border:    #3b82f6;
+  --insight-info-bg:        #eff6ff;
+  --insight-achieve-border: #8b5cf6;
+  --insight-achieve-bg:     #f5f3ff;
+}
+
+/* ─────────────────────────────────────────
+   TYPOGRAPHY TOKENS
+   System font stack — no custom web fonts.
+   iOS: SF Pro / SF Pro Rounded
+   Android: Roboto
+   Web: system-ui
+───────────────────────────────────────── */
+:root {
+  --font-sans:    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-rounded: "SF Pro Rounded", ui-rounded, "Hiragino Maru Gothic ProN", "Nunito", sans-serif;
+  --font-mono:    "SFMono-Regular", Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  /* Scale */
+  --text-xs:   10px;
+  --text-sm:   12px;
+  --text-base: 14px;
+  --text-md:   15px;
+  --text-lg:   16px;
+  --text-xl:   18px;
+  --text-2xl:  20px;
+  --text-3xl:  22px;
+  --text-4xl:  24px;
+  --text-hero: 36px;
+
+  /* Weights */
+  --weight-regular:   400;
+  --weight-medium:    500;
+  --weight-semibold:  600;
+  --weight-bold:      700;
+  --weight-extrabold: 800;
+
+  /* Line heights */
+  --leading-tight:  1.2;
+  --leading-snug:   1.35;
+  --leading-normal: 1.5;
+  --leading-relaxed:1.65;
+}
+
+/* Semantic type roles */
+:root {
+  --type-app-name:     var(--weight-bold) var(--text-3xl) / var(--leading-tight) var(--font-sans);
+  --type-screen-title: var(--weight-bold) var(--text-4xl) / var(--leading-tight) var(--font-sans);
+  --type-hero-amount:  var(--weight-extrabold) var(--text-hero) / var(--leading-tight) var(--font-sans);
+  --type-card-title:   var(--weight-bold) var(--text-xl) / var(--leading-tight) var(--font-sans);
+  --type-list-title:   var(--weight-semibold) var(--text-lg) / var(--leading-snug) var(--font-sans);
+  --type-body:         var(--weight-regular) var(--text-base) / var(--leading-normal) var(--font-sans);
+  --type-label:        var(--weight-medium) var(--text-sm) / var(--leading-snug) var(--font-sans);
+  --type-micro:        var(--weight-medium) var(--text-xs) / var(--leading-snug) var(--font-sans);
+}
+
+/* ─────────────────────────────────────────
+   SPACING & RADIUS TOKENS
+───────────────────────────────────────── */
+:root {
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  10px;
+  --space-4:  12px;
+  --space-5:  14px;
+  --space-6:  16px;
+  --space-7:  20px;
+  --space-8:  24px;
+  --space-9:  28px;
+  --space-10: 32px;
+
+  --radius-sm:  8px;
+  --radius-md:  10px;
+  --radius-lg:  12px;
+  --radius-xl:  14px;
+  --radius-2xl: 16px;
+  --radius-3xl: 20px;
+  --radius-4xl: 24px;
+  --radius-full: 9999px;
+
+  /* Cards use no box-shadow — elevation via color contrast */
+  /* Modals and floating elements: */
+  --shadow-float: 0 8px 32px rgba(0, 0, 0, 0.25);
+  --shadow-fab:   0 4px 12px rgba(0, 0, 0, 0.2);
+}

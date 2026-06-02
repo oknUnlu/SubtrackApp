@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111827; font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; padding: 14px; display: flex; gap: 10px; }
+  .col { flex: 1; }
+  .col-title { font-size: 9px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+  .token { padding: 6px 8px; border-radius: 6px; margin-bottom: 4px; display: flex; align-items: center; gap: 7px; }
+  .dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+  .tok-name { font-size: 10px; font-weight: 600; }
+  .tok-val { font-size: 9px; opacity: .6; }
+</style>
+</head>
+<body>
+  <div class="col">
+    <div class="col-title">Dark</div>
+    <div class="token" style="background:#1f2937"><div class="dot" style="background:#111827"></div><div><div class="tok-name" style="color:#f9fafb">--bg</div><div class="tok-val" style="color:#9ca3af">#111827</div></div></div>
+    <div class="token" style="background:#1f2937"><div class="dot" style="background:#1f2937; border:1px solid #374151"></div><div><div class="tok-name" style="color:#f9fafb">--surface</div><div class="tok-val" style="color:#9ca3af">#1f2937</div></div></div>
+    <div class="token" style="background:#1f2937"><div class="dot" style="background:#374151"></div><div><div class="tok-name" style="color:#f9fafb">--surface-2</div><div class="tok-val" style="color:#9ca3af">#374151</div></div></div>
+    <div class="token" style="background:#1f2937"><div class="dot" style="background:#f9fafb"></div><div><div class="tok-name" style="color:#f9fafb">--fg</div><div class="tok-val" style="color:#9ca3af">#f9fafb</div></div></div>
+    <div class="token" style="background:#1f2937"><div class="dot" style="background:#9ca3af"></div><div><div class="tok-name" style="color:#f9fafb">--fg-secondary</div><div class="tok-val" style="color:#9ca3af">#9ca3af</div></div></div>
+    <div class="token" style="background:#1f2937"><div class="dot" style="background:#22c55e"></div><div><div class="tok-name" style="color:#f9fafb">--primary</div><div class="tok-val" style="color:#9ca3af">#22c55e</div></div></div>
+    <div class="token" style="background:#1f2937"><div class="dot" style="background:#a78bfa"></div><div><div class="tok-name" style="color:#f9fafb">--purple</div><div class="tok-val" style="color:#9ca3af">#a78bfa</div></div></div>
+    <div class="token" style="background:#1f2937"><div class="dot" style="background:#f87171"></div><div><div class="tok-name" style="color:#f9fafb">--danger</div><div class="tok-val" style="color:#9ca3af">#f87171</div></div></div>
+  </div>
+  <div class="col">
+    <div class="col-title">Light</div>
+    <div class="token" style="background:#e5e7eb"><div class="dot" style="background:#f6f7f9"></div><div><div class="tok-name" style="color:#222">--bg</div><div class="tok-val" style="color:#6b7280">#f6f7f9</div></div></div>
+    <div class="token" style="background:#e5e7eb"><div class="dot" style="background:#fff; border:1px solid #e5e7eb"></div><div><div class="tok-name" style="color:#222">--surface</div><div class="tok-val" style="color:#6b7280">#ffffff</div></div></div>
+    <div class="token" style="background:#e5e7eb"><div class="dot" style="background:#f3f4f6"></div><div><div class="tok-name" style="color:#222">--surface-2</div><div class="tok-val" style="color:#6b7280">#f3f4f6</div></div></div>
+    <div class="token" style="background:#e5e7eb"><div class="dot" style="background:#222"></div><div><div class="tok-name" style="color:#222">--fg</div><div class="tok-val" style="color:#6b7280">#222222</div></div></div>
+    <div class="token" style="background:#e5e7eb"><div class="dot" style="background:#6b7280"></div><div><div class="tok-name" style="color:#222">--fg-secondary</div><div class="tok-val" style="color:#6b7280">#6b7280</div></div></div>
+    <div class="token" style="background:#e5e7eb"><div class="dot" style="background:#22c55e"></div><div><div class="tok-name" style="color:#222">--primary</div><div class="tok-val" style="color:#6b7280">#22c55e</div></div></div>
+    <div class="token" style="background:#e5e7eb"><div class="dot" style="background:#7c3aed"></div><div><div class="tok-name" style="color:#222">--purple</div><div class="tok-val" style="color:#6b7280">#7c3aed</div></div></div>
+    <div class="token" style="background:#e5e7eb"><div class="dot" style="background:#ef4444"></div><div><div class="tok-name" style="color:#222">--danger</div><div class="tok-val" style="color:#6b7280">#ef4444</div></div></div>
+  </div>
+</body>
+</html>

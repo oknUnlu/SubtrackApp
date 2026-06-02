@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SubTrack UI Kit</title>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0f1a;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  }
+  .phone-frame {
+    width: 390px;
+    height: 844px;
+    background: #111827;
+    border-radius: 44px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 0 2px #2a2a2a, 0 30px 80px rgba(0,0,0,.7);
+    display: flex;
+    flex-direction: column;
+  }
+  .status-bar {
+    height: 44px;
+    background: #111827;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    flex-shrink: 0;
+    z-index: 10;
+  }
+  .status-time { font-size: 15px; font-weight: 700; color: #f9fafb; }
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  .screen { flex: 1; overflow-y: auto; overflow-x: hidden; background: #111827; }
+  .screen::-webkit-scrollbar { display: none; }
+  .tab-bar {
+    height: 72px;
+    background: #1f2937;
+    border-top: 1px solid #374151;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding-top: 10px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tab-label { font-size: 10px; font-weight: 500; }
+  .fab-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    margin-top: -4px;
+  }
+  .fab {
+    width: 52px; height: 52px; border-radius: 26px;
+    background: #22c55e;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(34,197,94,.4);
+    margin-top: -26px;
+  }
+  ion-icon { font-size: 22px; }
+  .card { background: #1f2937; border-radius: 20px; padding: 18px 16px; margin-bottom: 10px; }
+  .card-sm { background: #1f2937; border-radius: 16px; padding: 14px; margin-bottom: 10px; }
+  .card-title { font-size: 17px; font-weight: 700; color: #f9fafb; margin-bottom: 12px; }
+  .row { display: flex; align-items: center; }
+  .progress-track { height: 5px; background: #374151; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; }
+  input, textarea {
+    background: #1f2937; border: 1px solid #374151;
+    border-radius: 10px; padding: 11px 12px;
+    color: #f9fafb; font-size: 14px; font-family: inherit;
+    width: 100%; outline: none;
+  }
+  input::placeholder, textarea::placeholder { color: #6b7280; }
+  .btn-primary {
+    background: #22c55e; color: #fff; border: none;
+    border-radius: 16px; padding: 14px; font-size: 15px;
+    font-weight: 600; width: 100%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn-danger {
+    background: #dc2626; color: #fff; border: none;
+    border-radius: 14px; padding: 13px; font-size: 14px;
+    font-weight: 600; width: 100%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .setting-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 0; cursor: pointer;
+  }
+  .setting-divider { height: 1px; background: #374151; margin-left: 44px; }
+  .modal-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,.6);
+    display: flex; align-items: flex-end;
+    z-index: 100;
+  }
+  .modal-sheet {
+    background: #1f2937; width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 16px 36px;
+  }
+  .modal-title { font-size: 17px; font-weight: 700; color: #f9fafb; margin-bottom: 14px; }
+  .tag { display: inline-flex; align-items: center; padding: 5px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; border: 1.5px solid; cursor: pointer; }
+  .chip { display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 9999px; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .insight-card {
+    border-radius: 14px; padding: 14px 16px;
+    border-left: 4px solid; margin-bottom: 10px;
+  }
+  .insight-title { font-size: 14px; font-weight: 700; color: #f9fafb; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .insight-body { font-size: 12px; line-height: 1.5; color: #9ca3af; }
+  .color-theme-dot {
+    width: 48px; height: 48px; border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color .2s;
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useCallback } = React;
+
+// ── DATA ───────────────────────────────────────────────
+const MOCK_TRANSACTIONS = [
+  { id: 1, title: "Starbucks Coffee", amount: 85, category: "coffee", payment: "cash", date: "Jan 21" },
+  { id: 2, title: "Grocery Shopping", amount: 420, category: "groceries", payment: "debit_card", bank: "Garanti", date: "Jan 20" },
+  { id: 3, title: "Uber", amount: 68, category: "transport", payment: "credit_card", bank: "Yapı Kredi", date: "Jan 19" },
+  { id: 4, title: "Netflix", amount: 199, category: "subscriptions", payment: "credit_card", bank: "İş Bankası", date: "Jan 19" },
+  { id: 5, title: "Gym Membership", amount: 350, category: "sports", payment: "debit_card", date: "Jan 18" },
+];
+const MOCK_SUBS = [
+  { id: 1, title: "Netflix", amount: 199, interval: "monthly", renews: "2025-02-01" },
+  { id: 2, title: "Spotify", amount: 59, interval: "monthly", renews: "2025-02-05" },
+  { id: 3, title: "YouTube Premium", amount: 139, interval: "monthly", renews: "2025-02-12" },
+  { id: 4, title: "Apple Music", amount: 89, interval: "monthly", renews: "2025-02-20" },
+  { id: 5, title: "iCloud+", amount: 29, interval: "monthly", renews: "2025-02-28" },
+  { id: 6, title: "Amazon Prime", amount: 499, interval: "yearly", renews: "2025-12-01" },
+];
+const INSIGHTS = [
+  { type: "warning", icon: "warning-outline", title: "Budget Alert", body: "You've used 85% of your monthly budget. Consider reducing discretionary spending." },
+  { type: "tip", icon: "bulb-outline", title: "Savings Opportunity", body: "Food accounts for 32% of your spending. Consider setting a budget limit." },
+  { type: "info", icon: "calendar-outline", title: "Weekend Pattern", body: "You tend to spend the most on Saturdays. Setting a weekend budget could help." },
+  { type: "achievement", icon: "trophy-outline", title: "Great Savings!", body: "You spent 18% less than last month. Keep it up!" },
+  { type: "info", icon: "repeat-outline", title: "Subscription Load", body: "Subscriptions make up 42% of your spending (6 active). Review unused ones." },
+];
+const CATEGORIES = [
+  {key:"food",icon:"🍔"},{key:"transport",icon:"🚗"},{key:"fun",icon:"🎮"},
+  {key:"shopping",icon:"🛍️"},{key:"bills",icon:"📄"},{key:"health",icon:"💊"},
+  {key:"education",icon:"📚"},{key:"tech",icon:"💻"},{key:"other",icon:"📌"},
+  {key:"groceries",icon:"🛒"},{key:"rent",icon:"🏠"},{key:"fuel",icon:"⛽"},
+  {key:"clothing",icon:"👕"},{key:"beauty",icon:"💄"},{key:"sports",icon:"⚽"},
+  {key:"pets",icon:"🐾"},{key:"gifts",icon:"🎁"},{key:"travel",icon:"✈️"},
+];
+const CAT_ICONS = {food:"🍔",transport:"🚗",fun:"🎮",shopping:"🛍️",bills:"📄",health:"💊",education:"📚",tech:"💻",other:"📌",groceries:"🛒",rent:"🏠",fuel:"⛽",clothing:"👕",beauty:"💄",sports:"⚽",pets:"🐾",gifts:"🎁",travel:"✈️",coffee:"☕",subscriptions:"📱",parking:"🅿️"};
+const THEMES = [
+  {id:"default",color:"#22c55e",label:"Green",icon:"leaf-outline"},
+  {id:"ocean",color:"#3b82f6",label:"Ocean",icon:"water-outline"},
+  {id:"sunset",color:"#f97316",label:"Sunset",icon:"sunny-outline"},
+  {id:"rose",color:"#f43f5e",label:"Rose",icon:"heart-outline"},
+  {id:"lavender",color:"#8b5cf6",label:"Lavender",icon:"flower-outline"},
+  {id:"teal",color:"#14b8a6",label:"Teal",icon:"diamond-outline"},
+];
+
+// ── LOGO ──────────────────────────────────────────────
+function Logo({size=32, primary="#22c55e"}) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100">
+      <rect x="0" y="0" width="100" height="100" rx="22" ry="22" fill={primary}/>
+      <path d="M 35 25 C 50 25, 68 28, 68 42 C 68 52, 55 55, 45 55" fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="round"/>
+      <path d="M 50 48 L 43 55 L 50 62" fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M 65 75 C 50 75, 32 72, 32 58 C 32 48, 45 45, 55 45" fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="round"/>
+      <path d="M 50 38 L 57 45 L 50 52" fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+// ── DONUT CHART ───────────────────────────────────────
+function DonutChart({ data, total, symbol }) {
+  const r = 54, cx = 70, cy = 70, stroke = 14;
+  const circ = 2 * Math.PI * r;
+  let offset = 0;
+  const colors = ["#f97316","#3b82f6","#8b5cf6","#ec4899","#6366f1","#ef4444","#14b8a6","#06b6d4","#6b7280"];
+  const slices = data.slice(0,8).map((d,i) => {
+    const pct = d.total / total;
+    const dash = pct * circ;
+    const el = { offset, dash, color: colors[i % colors.length], ...d };
+    offset += dash;
+    return el;
+  });
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:16}}>
+      <svg width={140} height={140} viewBox="0 0 140 140">
+        <circle cx={cx} cy={cy} r={r} fill="none" stroke="#374151" strokeWidth={stroke}/>
+        {slices.map((s,i) => (
+          <circle key={i} cx={cx} cy={cy} r={r} fill="none"
+            stroke={s.color} strokeWidth={stroke}
+            strokeDasharray={`${s.dash} ${circ - s.dash}`}
+            strokeDashoffset={circ / 4 - s.offset}
+            style={{transform:"rotate(-90deg)",transformOrigin:`${cx}px ${cy}px`}}/>
+        ))}
+        <text x={cx} y={cy-8} textAnchor="middle" fill="#f9fafb" fontSize="16" fontWeight="800">{symbol}1,245</text>
+        <text x={cx} y={cy+10} textAnchor="middle" fill="#9ca3af" fontSize="10">Total</text>
+      </svg>
+      <div style={{flex:1}}>
+        {slices.map((s,i)=>(
+          <div key={i} style={{display:"flex",alignItems:"center",gap:7,marginBottom:6}}>
+            <div style={{width:10,height:10,borderRadius:2,background:s.color,flexShrink:0}}/>
+            <span style={{fontSize:12,color:"#9ca3af",flex:1}}>{s.label}</span>
+            <span style={{fontSize:12,fontWeight:700,color:"#f9fafb"}}>{Math.round((s.total/total)*100)}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── BAR CHART ─────────────────────────────────────────
+function BarChart({ primary }) {
+  const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  const vals = [120, 340, 85, 420, 195, 510, 290];
+  const max = Math.max(...vals);
+  return (
+    <div style={{display:"flex",alignItems:"flex-end",gap:6,height:80,paddingTop:8}}>
+      {days.map((d,i)=>(
+        <div key={d} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
+          <div style={{width:"100%",height:`${(vals[i]/max)*64}px`,background: i===3 ? (primary||"#16a34a") : (primary||"#22c55e"),borderRadius:4,transition:"height .3s"}}/>
+          <span style={{fontSize:9,color:"#6b7280"}}>{d}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── HOME SCREEN ───────────────────────────────────────
+function HomeScreen({ primary, onNav }) {
+  const cats = [
+    {label:"Food",total:420},{label:"Transport",total:215},
+    {label:"Subscriptions",total:189},{label:"Shopping",total:141},{label:"Other",total:280}
+  ];
+  const total = cats.reduce((s,c)=>s+c.total,0);
+  return (
+    <div style={{padding:"12px 14px 14px"}}>
+      {/* Header */}
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:14}}>
+        <div>
+          <div style={{fontSize:21,fontWeight:700,color:"#f9fafb"}}>SubTrack</div>
+          <div style={{fontSize:12,color:"#9ca3af",marginTop:1}}>Monday, January 21</div>
+        </div>
+        <Logo size={36} primary={primary}/>
+      </div>
+
+      {/* Hero card */}
+      <div style={{background:`linear-gradient(135deg, ${primary}, ${primary}cc)`,borderRadius:20,padding:"18px 16px",marginBottom:10}}>
+        <div style={{display:"flex",alignItems:"center",gap:6,color:"rgba(255,255,255,.8)",fontSize:12,marginBottom:6}}>
+          <ion-icon name="wallet-outline" style={{fontSize:15}}></ion-icon> Total Spending This Month
+        </div>
+        <div style={{fontSize:34,fontWeight:800,color:"#fff",marginBottom:4}}>₺1,245.00</div>
+        <div style={{display:"flex",alignItems:"center",gap:5,color:"rgba(255,255,255,.7)",fontSize:12,marginBottom:12}}>
+          <ion-icon name="trending-up-outline" style={{fontSize:14}}></ion-icon> Including subscriptions
+        </div>
+        <div style={{height:6,background:"rgba(255,255,255,.2)",borderRadius:6,overflow:"hidden"}}>
+          <div style={{width:"65%",height:"100%",background:"rgba(255,255,255,.85)",borderRadius:6}}/>
+        </div>
+        <div style={{color:"rgba(255,255,255,.75)",fontSize:12,marginTop:5}}>Remaining ₺670.00</div>
+      </div>
+
+      {/* Stats row */}
+      <div style={{display:"flex",gap:8,marginBottom:10}}>
+        {[{icon:"card-outline",val:"7",lbl:"Active Subscriptions"},{icon:"analytics-outline",val:"₺41.50",lbl:"Daily Average"}].map((s,i)=>(
+          <div key={i} style={{flex:1,background:"#1f2937",borderRadius:16,padding:"14px 10px",textAlign:"center"}}>
+            <div style={{display:"flex",justifyContent:"center",alignItems:"center",gap:5,marginBottom:4}}>
+              <ion-icon name={s.icon} style={{fontSize:18,color:primary}}></ion-icon>
+              <span style={{fontSize:20,fontWeight:800,color:"#f9fafb"}}>{s.val}</span>
+            </div>
+            <div style={{fontSize:10,color:"#9ca3af",fontWeight:500}}>{s.lbl}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Category Distribution */}
+      <div className="card">
+        <div className="card-title">Spending Distribution</div>
+        <DonutChart data={cats} total={total} symbol="₺"/>
+      </div>
+
+      {/* Weekly Trend */}
+      <div className="card">
+        <div className="card-title">Weekly Trend</div>
+        <BarChart primary={primary}/>
+      </div>
+
+      {/* Recent Transactions */}
+      <div className="card">
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+          <div className="card-title" style={{marginBottom:0}}>Recent Transactions</div>
+          <span style={{color:primary,fontWeight:600,fontSize:13,cursor:"pointer"}}>View All</span>
+        </div>
+        {MOCK_TRANSACTIONS.map(tx=>(
+          <div key={tx.id} style={{display:"flex",alignItems:"center",background:"#374151",borderRadius:12,padding:"10px 12px",marginBottom:7}}>
+            <span style={{fontSize:20,marginRight:10}}>{CAT_ICONS[tx.category]||"📌"}</span>
+            <div style={{flex:1}}>
+              <div style={{fontWeight:600,color:"#f9fafb",fontSize:14}}>{tx.title}</div>
+              <div style={{fontSize:11,color:"#9ca3af",marginTop:2}}>{tx.date} · {tx.bank||tx.payment}</div>
+            </div>
+            <span style={{fontWeight:700,color:"#f9fafb",fontSize:14}}>₺{tx.amount}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── SUBSCRIPTIONS SCREEN ──────────────────────────────
+function SubscriptionsScreen({ primary }) {
+  const [showModal, setShowModal] = useState(false);
+  const monthly = MOCK_SUBS.filter(s=>s.interval==="monthly").reduce((a,s)=>a+s.amount,0);
+  const yearly = MOCK_SUBS.reduce((a,s)=>a+(s.interval==="monthly"?s.amount*12:s.amount),0);
+  return (
+    <div style={{padding:"12px 14px 14px"}}>
+      <div style={{marginBottom:16}}>
+        <div style={{fontSize:22,fontWeight:700,color:"#f9fafb"}}>Subscriptions</div>
+        <div style={{fontSize:13,color:"#9ca3af",marginTop:2}}>{MOCK_SUBS.length} active subscriptions</div>
+      </div>
+      {/* Summary card */}
+      <div className="card-sm" style={{display:"flex",justifyContent:"space-between",marginBottom:10}}>
+        <div><div style={{color:"#9ca3af",fontSize:12,marginBottom:4}}>Monthly Total</div><div style={{fontSize:20,fontWeight:700,color:"#f9fafb"}}>₺{monthly}</div></div>
+        <div style={{textAlign:"right"}}><div style={{color:"#9ca3af",fontSize:12,marginBottom:4}}>Yearly</div><div style={{fontSize:20,fontWeight:700,color:"#f9fafb"}}>₺{yearly.toLocaleString()}</div></div>
+      </div>
+      {/* Add button */}
+      <button className="btn-primary" style={{marginBottom:12,background:primary}} onClick={()=>setShowModal(true)}>
+        <ion-icon name="add" style={{fontSize:20}}></ion-icon> Add New Subscription
+      </button>
+      {/* List */}
+      {MOCK_SUBS.map(sub=>(
+        <div key={sub.id} style={{background:"#1f2937",borderRadius:14,padding:"13px 14px",marginBottom:8,display:"flex",alignItems:"center"}}>
+          <div style={{flex:1}}>
+            <div style={{fontWeight:600,fontSize:15,color:"#f9fafb",display:"flex",alignItems:"center",gap:5}}>
+              {sub.title}
+              {sub.renews && <ion-icon name="notifications" style={{fontSize:13,color:primary}}></ion-icon>}
+            </div>
+            <div style={{fontSize:12,color:"#9ca3af",marginTop:2}}>
+              {sub.interval==="monthly"?"Monthly":"Yearly"} · Renews {sub.renews}
+            </div>
+          </div>
+          <div style={{fontWeight:700,fontSize:15,color:"#f9fafb",marginRight:10}}>₺{sub.amount}</div>
+          <ion-icon name="pencil-outline" style={{fontSize:18,color:"#6b7280",marginRight:8,cursor:"pointer"}}></ion-icon>
+          <ion-icon name="trash-outline" style={{fontSize:18,color:"#f87171",cursor:"pointer"}}></ion-icon>
+        </div>
+      ))}
+      {/* Detected recurring */}
+      <div style={{marginTop:16}}>
+        <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+          <ion-icon name="repeat-outline" style={{fontSize:18,color:"#a78bfa"}}></ion-icon>
+          <span style={{fontSize:16,fontWeight:700,color:"#f9fafb"}}>Detected Recurring</span>
+        </div>
+        <div style={{background:"#1e1b3a",borderRadius:16,padding:14,border:"1px solid #4c1d95"}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
+            <div><div style={{fontWeight:600,color:"#f9fafb"}}>DAZN</div><div style={{fontSize:11,color:"#a78bfa",marginTop:2}}>3 times · ~30 days apart</div></div>
+            <div style={{fontWeight:700,color:"#a78bfa"}}>₺149.99</div>
+          </div>
+          <div style={{display:"flex",gap:8}}>
+            <button style={{flex:1,background:"#7c3aed",color:"#fff",border:"none",borderRadius:10,padding:"8px",fontSize:12,fontWeight:600,cursor:"pointer"}}>Add as Subscription</button>
+            <button style={{padding:"8px 14px",background:"#374151",color:"#9ca3af",border:"none",borderRadius:10,fontSize:12,fontWeight:500,cursor:"pointer"}}>Dismiss</button>
+          </div>
+        </div>
+      </div>
+      {/* Modal */}
+      {showModal && (
+        <div className="modal-overlay" onClick={()=>setShowModal(false)}>
+          <div className="modal-sheet" onClick={e=>e.stopPropagation()}>
+            <div className="modal-title">New Subscription</div>
+            <div style={{marginBottom:10}}><select style={{width:"100%",background:"#374151",border:"1px solid #4b5563",borderRadius:10,padding:"10px 12px",color:"#f9fafb",fontSize:14,fontFamily:"inherit"}}><option>Netflix</option><option>Spotify</option><option>YouTube Premium</option><option>Other</option></select></div>
+            <input placeholder="Amount (₺)" style={{marginBottom:10}} />
+            <div style={{display:"flex",gap:8,marginBottom:12}}>
+              {["Monthly","Yearly"].map(i=><div key={i} style={{flex:1,textAlign:"center",padding:"10px",borderRadius:10,background:i==="Monthly"?primary:"#374151",color:i==="Monthly"?"#fff":"#9ca3af",fontWeight:600,fontSize:13,cursor:"pointer"}}>{i}</div>)}
+            </div>
+            <div style={{display:"flex",justifyContent:"space-between"}}>
+              <button style={{flex:1,background:"transparent",border:"none",color:"#9ca3af",fontSize:15,padding:"12px",cursor:"pointer"}} onClick={()=>setShowModal(false)}>Cancel</button>
+              <button style={{flex:1,background:"transparent",border:"none",color:primary,fontSize:15,fontWeight:700,padding:"12px",cursor:"pointer"}} onClick={()=>setShowModal(false)}>Save</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── ADD EXPENSE SCREEN ────────────────────────────────
+function AddExpenseScreen({ primary }) {
+  const [category, setCategory] = useState("food");
+  const [payment, setPayment] = useState("cash");
+  const [saved, setSaved] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [title, setTitle] = useState("");
+
+  const handleSave = () => {
+    if (!title || !amount) return;
+    setSaved(true);
+    setTimeout(()=>setSaved(false), 3000);
+    setTitle(""); setAmount("");
+  };
+
+  return (
+    <div style={{padding:"12px 14px 14px"}}>
+      <div style={{marginBottom:16}}>
+        <div style={{fontSize:22,fontWeight:700,color:"#f9fafb"}}>Add Expense</div>
+        <div style={{fontSize:13,color:"#9ca3af",marginTop:2}}>Record your daily expenses</div>
+      </div>
+      {/* Title */}
+      <div style={{fontSize:13,fontWeight:600,color:"#9ca3af",marginBottom:6}}>Expense Title</div>
+      <input value={title} onChange={e=>setTitle(e.target.value)} placeholder="E.g: Coffee, Grocery shopping…" style={{marginBottom:12}}/>
+      {/* Amount */}
+      <div style={{fontSize:13,fontWeight:600,color:"#9ca3af",marginBottom:6}}>Amount (₺)</div>
+      <input value={amount} onChange={e=>setAmount(e.target.value)} placeholder="0,00" style={{fontSize:22,fontWeight:700,color:primary,marginBottom:12}}/>
+      {/* Category */}
+      <div style={{fontSize:13,fontWeight:600,color:"#9ca3af",marginBottom:8}}>Category</div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:7,marginBottom:12}}>
+        {CATEGORIES.slice(0,9).map(c=>(
+          <div key={c.key} onClick={()=>setCategory(c.key)} style={{background:category===c.key?primary:"#1f2937",borderRadius:12,padding:"11px 6px",display:"flex",flexDirection:"column",alignItems:"center",gap:4,cursor:"pointer",border:`2px solid ${category===c.key?primary:"transparent"}`}}>
+            <span style={{fontSize:20}}>{c.icon}</span>
+            <span style={{fontSize:10,fontWeight:600,color:category===c.key?"#fff":"#9ca3af",textTransform:"capitalize"}}>{c.key}</span>
+          </div>
+        ))}
+      </div>
+      {/* Payment method */}
+      <div style={{fontSize:13,fontWeight:600,color:"#9ca3af",marginBottom:8}}>Payment Method</div>
+      <div style={{display:"flex",gap:7,marginBottom:12}}>
+        {[{k:"cash",icon:"cash-outline",label:"Cash"},{k:"debit_card",icon:"wallet-outline",label:"Debit"},{k:"credit_card",icon:"card-outline",label:"Credit"}].map(p=>(
+          <div key={p.k} onClick={()=>setPayment(p.k)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:5,padding:"11px 6px",borderRadius:12,background:payment===p.k?primary:"#1f2937",cursor:"pointer",border:`2px solid ${payment===p.k?primary:"transparent"}`}}>
+            <ion-icon name={p.icon} style={{fontSize:20,color:payment===p.k?"#fff":"#9ca3af"}}></ion-icon>
+            <span style={{fontSize:11,fontWeight:600,color:payment===p.k?"#fff":"#9ca3af"}}>{p.label}</span>
+          </div>
+        ))}
+      </div>
+      {/* Notes */}
+      <div style={{fontSize:13,fontWeight:600,color:"#9ca3af",marginBottom:6}}>Notes (optional)</div>
+      <textarea placeholder="Add a note…" style={{marginBottom:12,resize:"none",height:60}}/>
+      {/* Tags */}
+      <div style={{fontSize:13,fontWeight:600,color:"#9ca3af",marginBottom:8}}>Tags</div>
+      <div style={{display:"flex",gap:7,flexWrap:"wrap",marginBottom:12}}>
+        {[{name:"Essentials",color:"#3b82f6"},{name:"Weekend",color:"#f59e0b"},{name:"Family",color:"#ec4899"}].map(tag=>(
+          <div key={tag.name} className="tag" style={{borderColor:tag.color,color:tag.color}}>{tag.name} ×</div>
+        ))}
+        <div style={{width:32,height:32,borderRadius:8,background:"#1f2937",display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",border:"1.5px dashed #374151"}}>
+          <ion-icon name="add" style={{fontSize:18,color:primary}}></ion-icon>
+        </div>
+      </div>
+      {/* Save button */}
+      <button className="btn-primary" style={{background:primary}} onClick={handleSave}>
+        <ion-icon name="checkmark" style={{fontSize:20}}></ion-icon> Save Expense
+      </button>
+      {/* Toast */}
+      {saved && (
+        <div style={{background:primary,borderRadius:16,padding:"13px 16px",display:"flex",alignItems:"center",gap:12,marginTop:10}}>
+          <div style={{width:36,height:36,borderRadius:18,background:"rgba(255,255,255,.25)",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <ion-icon name="checkmark-circle" style={{fontSize:20,color:"#fff"}}></ion-icon>
+          </div>
+          <span style={{color:"#fff",fontWeight:700,fontSize:14}}>Expense saved</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── AI SCREEN ─────────────────────────────────────────
+function AIScreen({ primary }) {
+  const ic = {
+    warning: { border:"#fbbf24", bg:"#451a03" },
+    tip:     { border: primary,   bg:"#064e3b" },
+    info:    { border:"#60a5fa",  bg:"#1e3a5f" },
+    achievement: { border:"#a78bfa", bg:"#1e1b3a" },
+  };
+  return (
+    <div style={{padding:"12px 14px 14px"}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14}}>
+        <div>
+          <div style={{fontSize:22,fontWeight:700,color:"#f9fafb"}}>Smart Tips</div>
+          <div style={{fontSize:13,color:"#9ca3af",marginTop:2}}>Smart spending suggestions</div>
+        </div>
+        <ion-icon name="analytics-outline" style={{fontSize:22,color:"#6b7280"}}></ion-icon>
+      </div>
+      {/* Hero */}
+      <div style={{background:"linear-gradient(135deg,#7c3aed,#9333ea)",borderRadius:20,padding:"20px 16px",marginBottom:12,textAlign:"center"}}>
+        <div style={{width:60,height:60,borderRadius:30,background:"rgba(255,255,255,.15)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 12px"}}>
+          <ion-icon name="sparkles-outline" style={{fontSize:30,color:"#fff"}}></ion-icon>
+        </div>
+        <div style={{fontSize:18,fontWeight:700,color:"#fff",marginBottom:6}}>Smart Analysis</div>
+        <div style={{fontSize:13,color:"rgba(255,255,255,.75)",lineHeight:1.5}}>Your spending data is analyzed locally to provide smart insights and savings tips.</div>
+      </div>
+      {/* Refresh */}
+      <button className="btn-primary" style={{background:"#7c3aed",marginBottom:14}}>
+        <ion-icon name="sparkles-outline" style={{fontSize:18}}></ion-icon> Refresh Analysis
+      </button>
+      {/* Insights */}
+      <div style={{fontSize:15,fontWeight:700,color:"#f9fafb",marginBottom:10}}>{INSIGHTS.length} insights found</div>
+      {INSIGHTS.map((ins,i)=>(
+        <div key={i} className="insight-card" style={{background:ic[ins.type].bg, borderColor:ic[ins.type].border}}>
+          <div className="insight-title">
+            <ion-icon name={ins.icon} style={{fontSize:18,color:ic[ins.type].border}}></ion-icon>
+            {ins.title}
+          </div>
+          <div className="insight-body">{ins.body}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── SETTINGS SCREEN ───────────────────────────────────
+function SettingsScreen({ primary, theme, setTheme }) {
+  const [darkMode, setDarkMode] = useState("dark");
+  const [showThemePicker, setShowThemePicker] = useState(false);
+  const rows = [
+    {icon:"cash-outline",label:"Currency",value:"Turkish Lira (₺)"},
+    {icon:"repeat-outline",label:"Default Subscription",value:"Monthly"},
+    {icon:"stats-chart-outline",label:"Main View",value:"Monthly"},
+    {icon:"notifications-outline",label:"Reminder Before Renewal",value:"1 day before"},
+    {icon:"moon-outline",label:"Dark Mode",value:"Dark"},
+    {icon:"color-palette-outline",label:"Color Theme",value:THEMES.find(t=>t.id===theme)?.label||"Green",action:()=>setShowThemePicker(true)},
+    {icon:"language-outline",label:"Language",value:"English"},
+  ];
+  return (
+    <div style={{padding:"12px 14px 14px"}}>
+      <div style={{fontSize:22,fontWeight:700,color:"#f9fafb",marginBottom:16}}>Control Center</div>
+      {/* Main settings card */}
+      <div className="card-sm" style={{padding:"4px 14px"}}>
+        {rows.map((r,i)=>(
+          <React.Fragment key={r.label}>
+            <div className="setting-row" onClick={r.action}>
+              <ion-icon name={r.icon} style={{fontSize:20,color:primary,width:22}}></ion-icon>
+              <span style={{fontSize:14,fontWeight:500,color:"#f9fafb",flex:1}}>{r.label}</span>
+              <span style={{fontSize:13,color:"#9ca3af",marginRight:6}}>{r.value}</span>
+              <ion-icon name="chevron-forward" style={{fontSize:15,color:"#6b7280"}}></ion-icon>
+            </div>
+            {i < rows.length-1 && <div className="setting-divider"/>}
+          </React.Fragment>
+        ))}
+      </div>
+      {/* Export card */}
+      <div className="card-sm" style={{padding:"4px 14px",marginTop:10}}>
+        {[{icon:"download-outline",label:"Export Expenses",val:"CSV"},{icon:"cloud-download-outline",label:"Export Subscriptions",val:"CSV"}].map((r,i)=>(
+          <React.Fragment key={r.label}>
+            <div className="setting-row">
+              <ion-icon name={r.icon} style={{fontSize:20,color:primary,width:22}}></ion-icon>
+              <span style={{fontSize:14,fontWeight:500,color:"#f9fafb",flex:1}}>{r.label}</span>
+              <span style={{fontSize:13,color:"#9ca3af",marginRight:6}}>{r.val}</span>
+              <ion-icon name="chevron-forward" style={{fontSize:15,color:"#6b7280"}}></ion-icon>
+            </div>
+            {i===0 && <div className="setting-divider"/>}
+          </React.Fragment>
+        ))}
+      </div>
+      {/* Danger */}
+      <div style={{marginTop:10}}>
+        <button className="btn-danger">
+          <ion-icon name="trash-outline" style={{fontSize:18}}></ion-icon> Delete All Data
+        </button>
+      </div>
+      {/* Theme picker modal */}
+      {showThemePicker && (
+        <div className="modal-overlay" onClick={()=>setShowThemePicker(false)}>
+          <div className="modal-sheet" onClick={e=>e.stopPropagation()}>
+            <div className="modal-title">Color Theme</div>
+            <div style={{display:"flex",flexWrap:"wrap",gap:10,justifyContent:"center",paddingBottom:8}}>
+              {THEMES.map(t=>(
+                <div key={t.id} onClick={()=>{setTheme(t.id);setShowThemePicker(false);}} style={{width:80,display:"flex",flexDirection:"column",alignItems:"center",gap:6,padding:"10px 6px",borderRadius:14,border:`2px solid ${theme===t.id?t.color:"#374151"}`,background:theme===t.id?"#374151":"transparent",cursor:"pointer"}}>
+                  <div style={{width:44,height:44,borderRadius:22,background:t.color,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>
+                    <ion-icon name={t.icon} style={{fontSize:22,color:"#fff"}}></ion-icon>
+                  </div>
+                  <span style={{fontSize:11,fontWeight:theme===t.id?700:500,color:theme===t.id?t.color:"#9ca3af"}}>{t.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── TAB BAR ───────────────────────────────────────────
+function TabBar({ active, onNav, primary }) {
+  const tabs = [
+    {id:"home", icon:"home-outline", iconActive:"home", label:"Home"},
+    {id:"subscriptions", icon:"card-outline", iconActive:"card", label:"Subs"},
+    null, // FAB
+    {id:"ai", icon:"analytics-outline", iconActive:"analytics", label:"Smart Tips"},
+    {id:"settings", icon:"settings-outline", iconActive:"settings", label:"Settings"},
+  ];
+  return (
+    <div className="tab-bar">
+      {tabs.map((tab, i) => {
+        if (!tab) return (
+          <div key="fab" className="fab-tab" onClick={()=>onNav("add")}>
+            <div className="fab" style={{background:primary}}>
+              <ion-icon name="add" style={{fontSize:28,color:"#fff"}}></ion-icon>
+            </div>
+          </div>
+        );
+        const isActive = active === tab.id;
+        return (
+          <div key={tab.id} className="tab-item" onClick={()=>onNav(tab.id)}>
+            <ion-icon name={isActive?tab.iconActive:tab.icon} style={{fontSize:22,color:isActive?primary:"#6b7280"}}></ion-icon>
+            <span className="tab-label" style={{color:isActive?primary:"#6b7280"}}>{tab.label}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── APP ───────────────────────────────────────────────
+function App() {
+  const [screen, setScreen] = useState(() => localStorage.getItem("st_screen") || "home");
+  const [themeId, setThemeId] = useState(() => localStorage.getItem("st_theme") || "default");
+
+  const navigate = useCallback(s => {
+    setScreen(s);
+    localStorage.setItem("st_screen", s);
+  }, []);
+
+  const handleThemeChange = useCallback(id => {
+    setThemeId(id);
+    localStorage.setItem("st_theme", id);
+  }, []);
+
+  const primary = THEMES.find(t=>t.id===themeId)?.color || "#22c55e";
+
+  const screens = {
+    home: <HomeScreen primary={primary} onNav={navigate}/>,
+    subscriptions: <SubscriptionsScreen primary={primary}/>,
+    add: <AddExpenseScreen primary={primary}/>,
+    ai: <AIScreen primary={primary}/>,
+    settings: <SettingsScreen primary={primary} theme={themeId} setTheme={handleThemeChange}/>,
+  };
+
+  return (
+    <div className="phone-frame">
+      {/* Status bar */}
+      <div className="status-bar">
+        <span className="status-time">9:41</span>
+        <div className="status-icons">
+          <ion-icon name="cellular-outline" style={{fontSize:15,color:"#f9fafb"}}></ion-icon>
+          <ion-icon name="wifi-outline" style={{fontSize:15,color:"#f9fafb"}}></ion-icon>
+          <ion-icon name="battery-half-outline" style={{fontSize:16,color:"#f9fafb"}}></ion-icon>
+        </div>
+      </div>
+      {/* Screen */}
+      <div className="screen">
+        {screens[screen]}
+      </div>
+      {/* Tab bar */}
+      <TabBar active={screen} onNav={navigate} primary={primary}/>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

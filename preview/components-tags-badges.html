@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111827; font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .label { font-size: 9px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing:.06em; }
+  .row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; border: 1.5px solid; }
+  .chip { display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600; }
+  .badge { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="label">Tags (colored, custom)</div>
+  <div class="row">
+    <div class="tag" style="border-color:#3b82f6;color:#3b82f6">Essentials ×</div>
+    <div class="tag" style="border-color:#f59e0b;color:#f59e0b">Weekend ×</div>
+    <div class="tag" style="border-color:#ec4899;background:#ec4899;color:#fff">Family ×</div>
+    <div class="tag" style="border-color:#8b5cf6;color:#8b5cf6">Work ×</div>
+    <div class="tag" style="border-color:#22c55e;background:#22c55e;color:#fff">Food ×</div>
+  </div>
+  <div class="label">Interval Chips</div>
+  <div class="row">
+    <div class="chip" style="background:#22c55e;color:#fff">Monthly</div>
+    <div class="chip" style="background:#374151;color:#d1d5db">Yearly</div>
+  </div>
+  <div class="label">Filter Chips (History)</div>
+  <div class="row">
+    <div class="chip" style="background:#22c55e;color:#fff;font-size:11px;padding:5px 11px">This Month</div>
+    <div class="chip" style="background:#374151;color:#9ca3af;font-size:11px;padding:5px 11px">This Week</div>
+    <div class="chip" style="background:#374151;color:#9ca3af;font-size:11px;padding:5px 11px">This Year</div>
+    <div class="chip" style="background:#374151;color:#9ca3af;font-size:11px;padding:5px 11px">All Time</div>
+  </div>
+  <div class="label">Status Badges</div>
+  <div class="row">
+    <div class="badge" style="background:#064e3b;color:#86efac">Monthly</div>
+    <div class="badge" style="background:#1e1b3a;color:#a78bfa">Detected</div>
+    <div class="badge" style="background:#450a0a;color:#fca5a5">Exceeded</div>
+    <div class="badge" style="background:#451a03;color:#fbbf24">Warning</div>
+  </div>
+</body>
+</html>

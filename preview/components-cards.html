@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111827; font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .label { font-size: 9px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing:.06em; }
+  /* Hero gradient card */
+  .hero-card { background: linear-gradient(135deg, #22c55e, #16a34a); border-radius: 20px; padding: 18px 16px; }
+  .hero-top { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,.8); font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+  .hero-amount { color: #fff; font-size: 32px; font-weight: 800; margin-bottom: 4px; }
+  .hero-sub { color: rgba(255,255,255,.7); font-size: 12px; }
+  /* Surface card */
+  .card { background: #1f2937; border-radius: 20px; padding: 16px; }
+  .card-title { font-size: 17px; font-weight: 700; color: #f9fafb; margin-bottom: 10px; }
+  /* Stat mini cards */
+  .stat-row { display: flex; gap: 8px; }
+  .stat { flex: 1; background: #1f2937; border-radius: 16px; padding: 12px; text-align: center; }
+  .stat-val { font-size: 20px; font-weight: 800; color: #f9fafb; }
+  .stat-lbl { font-size: 10px; color: #9ca3af; font-weight: 500; margin-top: 2px; }
+  /* Sub card */
+  .sub-card { background: #1f2937; border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; }
+  .sub-title { font-size: 15px; font-weight: 600; color: #f9fafb; }
+  .sub-meta { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+  .sub-amount { font-size: 16px; font-weight: 700; color: #f9fafb; margin-left: auto; margin-right: 10px; }
+  .progress-bar { height: 6px; background: #374151; border-radius: 3px; margin-top: 6px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #22c55e; border-radius: 3px; }
+</style>
+</head>
+<body>
+  <div class="label">Hero Card (Monthly Total)</div>
+  <div class="hero-card">
+    <div class="hero-top">💳 Total Spending This Month</div>
+    <div class="hero-amount">₺1,245.00</div>
+    <div class="hero-sub">📈 Including subscriptions</div>
+    <div class="progress-bar" style="background:rgba(255,255,255,.2);margin-top:10px"><div class="progress-fill" style="width:65%;background:rgba(255,255,255,.8)"></div></div>
+    <div style="color:rgba(255,255,255,.75);font-size:12px;margin-top:4px">Remaining ₺670.00</div>
+  </div>
+  <div class="label">Stat Mini Cards</div>
+  <div class="stat-row">
+    <div class="stat"><div class="stat-val" style="color:#22c55e">7</div><div class="stat-lbl">Active Subscriptions</div></div>
+    <div class="stat"><div class="stat-val">₺41.50</div><div class="stat-lbl">Daily Average</div></div>
+  </div>
+  <div class="label">List Card (Subscription)</div>
+  <div class="sub-card">
+    <div>
+      <div class="sub-title">Netflix</div>
+      <div class="sub-meta">Monthly · Renews 2025-02-01</div>
+    </div>
+    <div class="sub-amount">₺199.99</div>
+    <span style="color:#9ca3af;font-size:18px">✏️</span>
+  </div>
+</body>
+</html>

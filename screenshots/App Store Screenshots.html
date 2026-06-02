@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>SubTrack — App Store Screenshots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: #04080f;
+  font-family: 'Plus Jakarta Sans', -apple-system, system-ui, sans-serif;
+  padding: 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* ── SCREENSHOT CARD ─────────────────────────────── */
+.sc {
+  border-radius: 28px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 28px 20px 24px;
+  aspect-ratio: 9 / 19.5;
+}
+
+/* Glow */
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+/* ── PHONE FRAME ─────────────────────────────────── */
+.phone {
+  width: 152px;
+  height: 310px;
+  background: #0d1117;
+  border-radius: 26px;
+  border: 1.5px solid rgba(255,255,255,.12);
+  box-shadow: 0 0 0 1px #000, 0 20px 60px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.06);
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  margin-bottom: 18px;
+}
+.phone::before {
+  content: '';
+  position: absolute; top:0; left:50%; transform:translateX(-50%);
+  width: 52px; height: 14px; background: #0d1117;
+  border-radius: 0 0 10px 10px; z-index:20;
+}
+.phone-inner {
+  position: absolute; inset:0; background:#111827;
+  border-radius: 25px; overflow:hidden;
+  display: flex; flex-direction:column;
+}
+.status {
+  height: 22px; background:#111827;
+  display:flex; align-items:flex-end; justify-content:space-between;
+  padding: 0 12px 4px;
+  font-size: 6px; font-weight:700; color:#f9fafb; flex-shrink:0;
+}
+.scr { flex:1; overflow:hidden; padding:5px 6px 0; }
+.tabbar {
+  height: 30px; background:#1f2937;
+  border-top: 0.5px solid #374151;
+  display:flex; align-items:flex-end;
+  padding: 0 4px 5px; flex-shrink:0;
+}
+.ti { flex:1; display:flex; flex-direction:column; align-items:center; gap:1.5px; font-size:4.5px; font-weight:600; }
+.fab {
+  width: 22px; height:22px; border-radius:11px; background:#22c55e;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; color:#fff; margin-top:-10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.5); line-height:1;
+}
+.row-item {
+  display:flex; align-items:center;
+  background:#1f2937; border-radius:6px;
+  padding:5px 6px; margin-bottom:3px;
+}
+.card { background:#1f2937; border-radius:7px; padding:6px 7px; margin-bottom:4px; }
+.prog { height:3px; background:#374151; border-radius:2px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:2px; }
+.insight { border-radius:6px; padding:5px 6px; margin-bottom:3px; border-left:2px solid; }
+.cat-box {
+  background:#1f2937; border-radius:5px;
+  padding:4px 2px; display:flex; flex-direction:column; align-items:center; gap:1px;
+}
+
+/* ── HEADLINE AREA ───────────────────────────────── */
+.headline {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.hl-tag {
+  display: inline-block;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  margin-bottom: 8px;
+  padding: 3px 10px; border-radius: 100px;
+}
+.hl-title {
+  font-size: 22px; font-weight: 900;
+  color: #fff; line-height: 1.1;
+  letter-spacing: -.5px;
+}
+.hl-sub {
+  font-size: 9.5px; color: rgba(255,255,255,.45);
+  margin-top: 6px; line-height: 1.5; font-weight: 500;
+}
+
+/* ── CHIPS ───────────────────────────────────────── */
+.chips {
+  display: flex; flex-direction: column; gap: 5px;
+  width: 100%; margin-top: auto; padding-top: 10px;
+}
+.chip {
+  display: flex; align-items: center; gap: 7px;
+  border-radius: 100px; padding: 6px 10px;
+  font-size: 9px; font-weight: 700;
+}
+.ci {
+  width: 18px; height: 18px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+<div class="grid">
+
+<!-- ══════ 1 — DASHBOARD ══════ -->
+<div class="sc" style="background:#060d0a">
+  <div class="glow" style="width:300px;height:300px;background:#22c55e;opacity:.15;top:-80px;left:-50px"></div>
+  <div class="glow" style="width:200px;height:200px;background:#16a34a;opacity:.10;bottom:80px;right:-50px"></div>
+
+  <div class="headline">
+    <div class="hl-tag" style="background:rgba(34,197,94,.15);color:#86efac">DASHBOARD</div>
+    <div class="hl-title">All your <span style="color:#22c55e">finances</span><br>at a glance</div>
+    <div class="hl-sub">Monthly totals, trends &<br>spending breakdown</div>
+  </div>
+
+  <div class="phone">
+    <div class="phone-inner">
+      <div class="status"><span>9:41</span><span>▲ 🔋</span></div>
+      <div class="scr">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+          <div style="font-size:8px;font-weight:700;color:#f9fafb">SubTrack</div>
+          <svg width="14" height="14" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#22c55e"/><path d="M35 25C50 25 68 28 68 42c0 10-13 13-23 13" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M50 48L43 55l7 7" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M65 75C50 75 32 72 32 58c0-10 13-13 23-13" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M50 38l7 7-7 7" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <!-- Hero -->
+        <div style="background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:9px;padding:7px;margin-bottom:4px">
+          <div style="font-size:5px;color:rgba(255,255,255,.8);margin-bottom:2px">💳 Total Spending This Month</div>
+          <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:1px">₺1,245.00</div>
+          <div class="prog" style="background:rgba(255,255,255,.2);margin-top:4px"><div class="prog-fill" style="width:62%;background:rgba(255,255,255,.9)"></div></div>
+          <div style="font-size:4.5px;color:rgba(255,255,255,.7);margin-top:2px">Remaining ₺755.00</div>
+        </div>
+        <!-- Stats -->
+        <div style="display:flex;gap:3px;margin-bottom:4px">
+          <div style="flex:1;background:#1f2937;border-radius:6px;padding:5px 3px;text-align:center">
+            <div style="font-size:10px;font-weight:800;color:#22c55e">7</div>
+            <div style="font-size:4px;color:#9ca3af;margin-top:1px">Active Subs</div>
+          </div>
+          <div style="flex:1;background:#1f2937;border-radius:6px;padding:5px 3px;text-align:center">
+            <div style="font-size:8px;font-weight:800;color:#f9fafb">₺41.50</div>
+            <div style="font-size:4px;color:#9ca3af;margin-top:1px">Daily Avg</div>
+          </div>
+        </div>
+        <!-- Donut + cats -->
+        <div class="card">
+          <div style="font-size:6px;font-weight:700;color:#f9fafb;margin-bottom:4px">Spending Distribution</div>
+          <div style="display:flex;align-items:center;gap:5px">
+            <svg width="36" height="36" viewBox="0 0 64 64">
+              <circle cx="32" cy="32" r="22" fill="none" stroke="#374151" stroke-width="10"/>
+              <circle cx="32" cy="32" r="22" fill="none" stroke="#f97316" stroke-width="10" stroke-dasharray="41 97" stroke-dashoffset="0" transform="rotate(-90 32 32)"/>
+              <circle cx="32" cy="32" r="22" fill="none" stroke="#3b82f6" stroke-width="10" stroke-dasharray="26 97" stroke-dashoffset="-41" transform="rotate(-90 32 32)"/>
+              <circle cx="32" cy="32" r="22" fill="none" stroke="#8b5cf6" stroke-width="10" stroke-dasharray="17 97" stroke-dashoffset="-67" transform="rotate(-90 32 32)"/>
+              <circle cx="32" cy="32" r="22" fill="none" stroke="#ec4899" stroke-width="10" stroke-dasharray="13 97" stroke-dashoffset="-84" transform="rotate(-90 32 32)"/>
+            </svg>
+            <div style="flex:1">
+              <div style="display:flex;align-items:center;gap:2px;margin-bottom:2px"><div style="width:4px;height:4px;border-radius:1px;background:#f97316"></div><span style="font-size:5px;color:#9ca3af;flex:1">🍔 Food</span><span style="font-size:5px;font-weight:700;color:#f9fafb">42%</span></div>
+              <div style="display:flex;align-items:center;gap:2px;margin-bottom:2px"><div style="width:4px;height:4px;border-radius:1px;background:#3b82f6"></div><span style="font-size:5px;color:#9ca3af;flex:1">🚗 Transport</span><span style="font-size:5px;font-weight:700;color:#f9fafb">26%</span></div>
+              <div style="display:flex;align-items:center;gap:2px;margin-bottom:2px"><div style="width:4px;height:4px;border-radius:1px;background:#8b5cf6"></div><span style="font-size:5px;color:#9ca3af;flex:1">📱 Subs</span><span style="font-size:5px;font-weight:700;color:#f9fafb">17%</span></div>
+              <div style="display:flex;align-items:center;gap:2px"><div style="width:4px;height:4px;border-radius:1px;background:#ec4899"></div><span style="font-size:5px;color:#9ca3af;flex:1">🛍 Shop</span><span style="font-size:5px;font-weight:700;color:#f9fafb">13%</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- Weekly bars -->
+        <div class="card" style="padding:5px 6px">
+          <div style="font-size:5.5px;font-weight:700;color:#f9fafb;margin-bottom:3px">Weekly Trend</div>
+          <div style="display:flex;align-items:flex-end;gap:2px;height:22px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1px"><div style="width:100%;height:12px;background:#22c55e;border-radius:2px"></div><span style="font-size:3.5px;color:#6b7280">M</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1px"><div style="width:100%;height:18px;background:#22c55e;border-radius:2px"></div><span style="font-size:3.5px;color:#6b7280">T</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1px"><div style="width:100%;height:8px;background:#22c55e;border-radius:2px"></div><span style="font-size:3.5px;color:#6b7280">W</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1px"><div style="width:100%;height:20px;background:#16a34a;border-radius:2px"></div><span style="font-size:3.5px;color:#6b7280">T</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1px"><div style="width:100%;height:13px;background:#22c55e;border-radius:2px"></div><span style="font-size:3.5px;color:#6b7280">F</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1px"><div style="width:100%;height:17px;background:#22c55e;border-radius:2px"></div><span style="font-size:3.5px;color:#6b7280">S</span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1px"><div style="width:100%;height:15px;background:#22c55e;border-radius:2px"></div><span style="font-size:3.5px;color:#6b7280">S</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="ti"><div style="font-size:8px;color:#22c55e">⌂</div><span style="color:#22c55e">Home</span></div>
+        <div class="ti"><div style="font-size:8px">▭</div><span style="color:#6b7280">Subs</span></div>
+        <div style="flex:1;display:flex;justify-content:center"><div class="fab">+</div></div>
+        <div class="ti"><div style="font-size:8px">📊</div><span style="color:#6b7280">Tips</span></div>
+        <div class="ti"><div style="font-size:8px">⚙</div><span style="color:#6b7280">Settings</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chips">
+    <div class="chip" style="background:rgba(34,197,94,.13);border:1px solid rgba(34,197,94,.25);color:#86efac"><div class="ci" style="background:#22c55e">📊</div>Monthly Overview</div>
+    <div class="chip" style="background:rgba(59,130,246,.11);border:1px solid rgba(59,130,246,.22);color:#93c5fd"><div class="ci" style="background:#3b82f6">💰</div>Budget Tracking</div>
+    <div class="chip" style="background:rgba(139,92,246,.11);border:1px solid rgba(139,92,246,.22);color:#c4b5fd"><div class="ci" style="background:#8b5cf6">📈</div>Spending Charts</div>
+  </div>
+</div>
+
+
+<!-- ══════ 2 — SUBSCRIPTIONS ══════ -->
+<div class="sc" style="background:#060c0e">
+  <div class="glow" style="width:280px;height:280px;background:#14b8a6;opacity:.14;top:-60px;right:-60px"></div>
+  <div class="glow" style="width:200px;height:200px;background:#0d9488;opacity:.10;bottom:100px;left:-40px"></div>
+
+  <div class="headline">
+    <div class="hl-tag" style="background:rgba(45,212,191,.13);color:#5eead4">SUBSCRIPTIONS</div>
+    <div class="hl-title">Never miss<br>a <span style="color:#2dd4bf">renewal</span> again</div>
+    <div class="hl-sub">Auto-detect recurring charges<br>and get notified before billing</div>
+  </div>
+
+  <div class="phone">
+    <div class="phone-inner">
+      <div class="status"><span>9:41</span><span>▲ 🔋</span></div>
+      <div class="scr">
+        <div style="margin-bottom:5px">
+          <div style="font-size:8px;font-weight:700;color:#f9fafb">Subscriptions</div>
+          <div style="font-size:4.5px;color:#9ca3af">6 active subscriptions</div>
+        </div>
+        <div class="card" style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <div><div style="font-size:4.5px;color:#9ca3af">Monthly</div><div style="font-size:8px;font-weight:700;color:#f9fafb">₺515</div></div>
+          <div style="text-align:right"><div style="font-size:4.5px;color:#9ca3af">Yearly</div><div style="font-size:8px;font-weight:700;color:#f9fafb">₺6,595</div></div>
+        </div>
+        <div style="background:#22c55e;border-radius:6px;padding:5px;text-align:center;margin-bottom:5px">
+          <span style="color:#fff;font-size:5.5px;font-weight:700">+ Add New Subscription</span>
+        </div>
+        <!-- Sub items -->
+        <div class="row-item">
+          <div style="width:16px;height:16px;border-radius:5px;background:#e50914;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:800;color:#fff;margin-right:5px;flex-shrink:0">N</div>
+          <div style="flex:1"><div style="font-size:6.5px;font-weight:600;color:#f9fafb">Netflix</div><div style="font-size:4px;color:#9ca3af">Monthly · Feb 1</div></div>
+          <div style="font-size:6px;font-weight:700;color:#f9fafb">₺199.99</div>
+        </div>
+        <div class="row-item">
+          <div style="width:16px;height:16px;border-radius:5px;background:#1DB954;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:800;color:#fff;margin-right:5px;flex-shrink:0">S</div>
+          <div style="flex:1"><div style="font-size:6.5px;font-weight:600;color:#f9fafb">Spotify</div><div style="font-size:4px;color:#9ca3af">Monthly · Feb 5</div></div>
+          <div style="font-size:6px;font-weight:700;color:#f9fafb">₺59.99</div>
+        </div>
+        <div class="row-item">
+          <div style="width:16px;height:16px;border-radius:5px;background:#ff0000;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:800;color:#fff;margin-right:5px;flex-shrink:0">Y</div>
+          <div style="flex:1"><div style="font-size:6.5px;font-weight:600;color:#f9fafb">YouTube Premium</div><div style="font-size:4px;color:#9ca3af">Monthly · Feb 12</div></div>
+          <div style="font-size:6px;font-weight:700;color:#f9fafb">₺139.00</div>
+        </div>
+        <div class="row-item">
+          <div style="width:16px;height:16px;border-radius:5px;background:#fc3c44;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:800;color:#fff;margin-right:5px;flex-shrink:0">A</div>
+          <div style="flex:1"><div style="font-size:6.5px;font-weight:600;color:#f9fafb">Apple Music</div><div style="font-size:4px;color:#9ca3af">Monthly · Feb 20</div></div>
+          <div style="font-size:6px;font-weight:700;color:#f9fafb">₺89.00</div>
+        </div>
+        <div class="row-item">
+          <div style="width:16px;height:16px;border-radius:5px;background:#147ce5;display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:800;color:#fff;margin-right:5px;flex-shrink:0">i</div>
+          <div style="flex:1"><div style="font-size:6.5px;font-weight:600;color:#f9fafb">iCloud+</div><div style="font-size:4px;color:#9ca3af">Monthly · Feb 28</div></div>
+          <div style="font-size:6px;font-weight:700;color:#f9fafb">₺29.00</div>
+        </div>
+        <!-- Detected -->
+        <div style="background:#1e1b3a;border-radius:7px;padding:6px;border:0.5px solid #4c1d95;margin-top:3px">
+          <div style="font-size:5px;font-weight:700;color:#a78bfa;margin-bottom:3px">🔁 Detected Recurring</div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div><div style="font-size:6px;font-weight:600;color:#f9fafb">DAZN</div><div style="font-size:4px;color:#a78bfa">3×  · ~30 days apart</div></div>
+            <div style="font-size:6px;font-weight:700;color:#a78bfa">₺149.99</div>
+          </div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="ti"><div style="font-size:8px">⌂</div><span style="color:#6b7280">Home</span></div>
+        <div class="ti"><div style="font-size:8px;color:#22c55e">▭</div><span style="color:#22c55e">Subs</span></div>
+        <div style="flex:1;display:flex;justify-content:center"><div class="fab">+</div></div>
+        <div class="ti"><div style="font-size:8px">📊</div><span style="color:#6b7280">Tips</span></div>
+        <div class="ti"><div style="font-size:8px">⚙</div><span style="color:#6b7280">Settings</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chips">
+    <div class="chip" style="background:rgba(45,212,191,.12);border:1px solid rgba(45,212,191,.25);color:#5eead4"><div class="ci" style="background:#14b8a6">🔔</div>Renewal Alerts</div>
+    <div class="chip" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#86efac"><div class="ci" style="background:#22c55e">🔁</div>Auto-Detection</div>
+    <div class="chip" style="background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.25);color:#c4b5fd"><div class="ci" style="background:#8b5cf6">📆</div>Renewal Calendar</div>
+  </div>
+</div>
+
+
+<!-- ══════ 3 — ADD EXPENSE ══════ -->
+<div class="sc" style="background:#06090f">
+  <div class="glow" style="width:280px;height:280px;background:#3b82f6;opacity:.12;top:-60px;right:-50px"></div>
+  <div class="glow" style="width:200px;height:200px;background:#22c55e;opacity:.10;bottom:120px;left:-40px"></div>
+
+  <div class="headline">
+    <div class="hl-tag" style="background:rgba(96,165,250,.13);color:#93c5fd">ADD EXPENSE</div>
+    <div class="hl-title">Track every <span style="color:#60a5fa">expense</span><br>in seconds</div>
+    <div class="hl-sub">27 categories, smart tagging<br>& receipt photo capture</div>
+  </div>
+
+  <div class="phone">
+    <div class="phone-inner">
+      <div class="status"><span>9:41</span><span>▲ 🔋</span></div>
+      <div class="scr">
+        <div style="margin-bottom:4px">
+          <div style="font-size:8px;font-weight:700;color:#f9fafb">Add Expense</div>
+          <div style="font-size:4.5px;color:#9ca3af">Record your daily expenses</div>
+        </div>
+        <div style="background:#1f2937;border:1px solid #22c55e;border-radius:6px;padding:5px 6px;margin-bottom:4px">
+          <div style="font-size:4px;color:#9ca3af;margin-bottom:1px">Amount (₺)</div>
+          <div style="font-size:14px;font-weight:800;color:#22c55e">₺45.00</div>
+        </div>
+        <div style="background:#1f2937;border:0.5px solid #374151;border-radius:6px;padding:4px 6px;margin-bottom:4px">
+          <div style="font-size:4px;color:#9ca3af;margin-bottom:1px">Title</div>
+          <div style="font-size:6.5px;color:#f9fafb">Grocery shopping</div>
+        </div>
+        <!-- Categories 3x3 -->
+        <div style="font-size:4.5px;color:#9ca3af;margin-bottom:3px;font-weight:600">Category</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-bottom:4px">
+          <div class="cat-box" style="border:1px solid #22c55e;background:#22c55e"><span style="font-size:10px">🍔</span><span style="font-size:4px;color:#fff">food</span></div>
+          <div class="cat-box" style="border:1px solid transparent"><span style="font-size:10px">🚗</span><span style="font-size:4px;color:#9ca3af">transport</span></div>
+          <div class="cat-box" style="border:1px solid transparent"><span style="font-size:10px">🎮</span><span style="font-size:4px;color:#9ca3af">fun</span></div>
+          <div class="cat-box" style="border:1px solid transparent"><span style="font-size:10px">🛒</span><span style="font-size:4px;color:#9ca3af">groceries</span></div>
+          <div class="cat-box" style="border:1px solid transparent"><span style="font-size:10px">📄</span><span style="font-size:4px;color:#9ca3af">bills</span></div>
+          <div class="cat-box" style="border:1px solid transparent"><span style="font-size:10px">💊</span><span style="font-size:4px;color:#9ca3af">health</span></div>
+          <div class="cat-box" style="border:1px solid transparent"><span style="font-size:10px">📚</span><span style="font-size:4px;color:#9ca3af">education</span></div>
+          <div class="cat-box" style="border:1px solid transparent"><span style="font-size:10px">💻</span><span style="font-size:4px;color:#9ca3af">tech</span></div>
+          <div class="cat-box" style="border:1px solid transparent"><span style="font-size:10px">📌</span><span style="font-size:4px;color:#9ca3af">other</span></div>
+        </div>
+        <!-- Payment -->
+        <div style="font-size:4.5px;color:#9ca3af;margin-bottom:3px;font-weight:600">Payment Method</div>
+        <div style="display:flex;gap:3px;margin-bottom:5px">
+          <div style="flex:1;background:#22c55e;border-radius:5px;padding:4px 2px;text-align:center"><div style="font-size:9px">💵</div><div style="font-size:4px;color:#fff">Cash</div></div>
+          <div style="flex:1;background:#1f2937;border-radius:5px;padding:4px 2px;text-align:center"><div style="font-size:9px">💳</div><div style="font-size:4px;color:#9ca3af">Debit</div></div>
+          <div style="flex:1;background:#1f2937;border-radius:5px;padding:4px 2px;text-align:center"><div style="font-size:9px">🏦</div><div style="font-size:4px;color:#9ca3af">Credit</div></div>
+        </div>
+        <!-- Tags -->
+        <div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:5px">
+          <div style="display:inline-flex;padding:2px 6px;border-radius:4px;font-size:5px;font-weight:600;border:0.8px solid #3b82f6;color:#3b82f6">Essentials</div>
+          <div style="display:inline-flex;padding:2px 6px;border-radius:4px;font-size:5px;font-weight:600;border:0.8px solid #f59e0b;color:#f59e0b">Weekend</div>
+          <div style="display:inline-flex;padding:2px 6px;border-radius:4px;font-size:5px;font-weight:600;background:#ec4899;color:#fff">Family</div>
+        </div>
+        <div style="background:#22c55e;border-radius:6px;padding:6px;display:flex;align-items:center;justify-content:center;gap:3px">
+          <span style="color:#fff;font-size:8px">✓</span><span style="color:#fff;font-size:6px;font-weight:700">Save Expense</span>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="ti"><div style="font-size:8px">⌂</div><span style="color:#6b7280">Home</span></div>
+        <div class="ti"><div style="font-size:8px">▭</div><span style="color:#6b7280">Subs</span></div>
+        <div style="flex:1;display:flex;justify-content:center"><div class="fab" style="box-shadow:0 0 12px rgba(34,197,94,.6)">+</div></div>
+        <div class="ti"><div style="font-size:8px">📊</div><span style="color:#6b7280">Tips</span></div>
+        <div class="ti"><div style="font-size:8px">⚙</div><span style="color:#6b7280">Settings</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chips">
+    <div class="chip" style="background:rgba(96,165,250,.12);border:1px solid rgba(96,165,250,.25);color:#93c5fd"><div class="ci" style="background:#3b82f6">🏷</div>27 Categories</div>
+    <div class="chip" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#86efac"><div class="ci" style="background:#22c55e">🧾</div>Receipt Photos</div>
+    <div class="chip" style="background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.25);color:#c4b5fd"><div class="ci" style="background:#8b5cf6">⚡</div>Quick Templates</div>
+  </div>
+</div>
+
+
+<!-- ══════ 4 — BUDGET ══════ -->
+<div class="sc" style="background:#0d0900">
+  <div class="glow" style="width:280px;height:280px;background:#f59e0b;opacity:.12;top:-80px;left:-50px"></div>
+  <div class="glow" style="width:200px;height:200px;background:#22c55e;opacity:.09;bottom:100px;right:-40px"></div>
+
+  <div class="headline">
+    <div class="hl-tag" style="background:rgba(251,191,36,.13);color:#fcd34d">BUDGET</div>
+    <div class="hl-title">Stay on <span style="color:#fbbf24">budget</span>,<br>always</div>
+    <div class="hl-sub">Set monthly limits per category<br>& get alerts before overspending</div>
+  </div>
+
+  <div class="phone">
+    <div class="phone-inner">
+      <div class="status"><span>9:41</span><span>▲ 🔋</span></div>
+      <div class="scr">
+        <div style="margin-bottom:5px">
+          <div style="font-size:8px;font-weight:700;color:#f9fafb">Budget</div>
+          <div style="font-size:4.5px;color:#9ca3af">Set your spending limits</div>
+        </div>
+        <div class="card">
+          <div style="font-size:4.5px;color:#9ca3af;margin-bottom:2px">Overall Budget</div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px">
+            <div style="font-size:11px;font-weight:800;color:#f9fafb">₺1,245</div>
+            <div style="font-size:4.5px;color:#9ca3af">/ ₺2,000</div>
+          </div>
+          <div class="prog"><div class="prog-fill" style="width:62%;background:#22c55e"></div></div>
+          <div style="font-size:4px;color:#9ca3af;margin-top:2px;text-align:right">62% used</div>
+        </div>
+        <div style="font-size:5.5px;font-weight:700;color:#f9fafb;margin-bottom:3px">By Category</div>
+        <!-- Cat rows -->
+        <div style="background:#1f2937;border-radius:6px;padding:5px 6px;margin-bottom:3px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+            <div style="display:flex;align-items:center;gap:3px"><div style="width:5px;height:5px;border-radius:1px;background:#f97316"></div><span style="font-size:5.5px;font-weight:600;color:#f9fafb">🍔 Food</span></div>
+            <span style="font-size:4.5px;color:#9ca3af">₺245/₺300</span>
+          </div>
+          <div class="prog"><div class="prog-fill" style="width:82%;background:#22c55e"></div></div>
+        </div>
+        <div style="background:#1f2937;border-radius:6px;padding:5px 6px;margin-bottom:3px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+            <div style="display:flex;align-items:center;gap:3px"><div style="width:5px;height:5px;border-radius:1px;background:#3b82f6"></div><span style="font-size:5.5px;font-weight:600;color:#f9fafb">🚗 Transport</span></div>
+            <span style="font-size:4.5px;color:#9ca3af">₺82/₺100</span>
+          </div>
+          <div class="prog"><div class="prog-fill" style="width:82%;background:#22c55e"></div></div>
+        </div>
+        <div style="background:#1f2937;border-radius:6px;padding:5px 6px;margin-bottom:3px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+            <div style="display:flex;align-items:center;gap:3px"><div style="width:5px;height:5px;border-radius:1px;background:#ec4899"></div><span style="font-size:5.5px;font-weight:600;color:#f9fafb">🛍 Shopping</span></div>
+            <span style="font-size:4.5px;color:#f87171">₺190/₺200</span>
+          </div>
+          <div class="prog"><div class="prog-fill" style="width:95%;background:#f59e0b"></div></div>
+        </div>
+        <div style="background:#1f2937;border-radius:6px;padding:5px 6px;margin-bottom:3px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+            <div style="display:flex;align-items:center;gap:3px"><div style="width:5px;height:5px;border-radius:1px;background:#8b5cf6"></div><span style="font-size:5.5px;font-weight:600;color:#f9fafb">🎮 Entertainment</span></div>
+            <span style="font-size:4.5px;color:#9ca3af">₺85/₺100</span>
+          </div>
+          <div class="prog"><div class="prog-fill" style="width:85%;background:#f59e0b"></div></div>
+        </div>
+        <div style="background:#1f2937;border-radius:6px;padding:5px 6px;margin-bottom:3px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+            <div style="display:flex;align-items:center;gap:3px"><div style="width:5px;height:5px;border-radius:1px;background:#6366f1"></div><span style="font-size:5.5px;font-weight:600;color:#f9fafb">📄 Bills</span></div>
+            <span style="font-size:4.5px;color:#9ca3af">₺310/₺400</span>
+          </div>
+          <div class="prog"><div class="prog-fill" style="width:78%;background:#22c55e"></div></div>
+        </div>
+        <div style="background:#1f2937;border-radius:6px;padding:5px 6px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
+            <div style="display:flex;align-items:center;gap:3px"><div style="width:5px;height:5px;border-radius:1px;background:#ef4444"></div><span style="font-size:5.5px;font-weight:600;color:#f9fafb">💊 Health</span></div>
+            <span style="font-size:4.5px;color:#9ca3af">₺45/₺100</span>
+          </div>
+          <div class="prog"><div class="prog-fill" style="width:45%;background:#22c55e"></div></div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="ti"><div style="font-size:8px;color:#22c55e">⌂</div><span style="color:#22c55e">Home</span></div>
+        <div class="ti"><div style="font-size:8px">▭</div><span style="color:#6b7280">Subs</span></div>
+        <div style="flex:1;display:flex;justify-content:center"><div class="fab">+</div></div>
+        <div class="ti"><div style="font-size:8px">📊</div><span style="color:#6b7280">Tips</span></div>
+        <div class="ti"><div style="font-size:8px">⚙</div><span style="color:#6b7280">Settings</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chips">
+    <div class="chip" style="background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.25);color:#fcd34d"><div class="ci" style="background:#f59e0b">🎯</div>Set Limits</div>
+    <div class="chip" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#86efac"><div class="ci" style="background:#22c55e">📦</div>Per Category</div>
+    <div class="chip" style="background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.25);color:#fca5a5"><div class="ci" style="background:#ef4444">⚠️</div>Smart Alerts</div>
+  </div>
+</div>
+
+
+<!-- ══════ 5 — SMART TIPS ══════ -->
+<div class="sc" style="background:#06040f">
+  <div class="glow" style="width:280px;height:280px;background:#8b5cf6;opacity:.14;top:-60px;right:-60px"></div>
+  <div class="glow" style="width:200px;height:200px;background:#7c3aed;opacity:.10;bottom:100px;left:-50px"></div>
+
+  <div class="headline">
+    <div class="hl-tag" style="background:rgba(167,139,250,.13);color:#c4b5fd">SMART TIPS</div>
+    <div class="hl-title">Your personal<br><span style="color:#a78bfa">finance</span> advisor</div>
+    <div class="hl-sub">100% local AI analysis.<br>No data leaves your device.</div>
+  </div>
+
+  <div class="phone">
+    <div class="phone-inner">
+      <div class="status"><span>9:41</span><span>▲ 🔋</span></div>
+      <div class="scr">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+          <div><div style="font-size:8px;font-weight:700;color:#f9fafb">Smart Tips</div><div style="font-size:4.5px;color:#9ca3af">Smart spending suggestions</div></div>
+          <span style="font-size:10px">📊</span>
+        </div>
+        <div style="background:linear-gradient(135deg,#7c3aed,#9333ea);border-radius:9px;padding:8px;margin-bottom:5px;text-align:center">
+          <div style="width:24px;height:24px;border-radius:12px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin:0 auto 4px;font-size:12px">✨</div>
+          <div style="font-size:7px;font-weight:700;color:#fff;margin-bottom:2px">Smart Analysis</div>
+          <div style="font-size:4.5px;color:rgba(255,255,255,.7);line-height:1.4">Spending data analyzed locally to provide smart insights.</div>
+        </div>
+        <div style="font-size:5.5px;font-weight:700;color:#f9fafb;margin-bottom:4px">5 insights found</div>
+        <div class="insight" style="background:#451a03;border-color:#fbbf24">
+          <div style="display:flex;align-items:center;gap:3px;margin-bottom:1px"><span style="font-size:7px">⚠️</span><span style="font-size:6px;font-weight:700;color:#f9fafb">Budget Alert</span></div>
+          <div style="font-size:4.5px;color:#9ca3af;line-height:1.4">You've used 85% of your monthly budget.</div>
+        </div>
+        <div class="insight" style="background:#064e3b;border-color:#22c55e">
+          <div style="display:flex;align-items:center;gap:3px;margin-bottom:1px"><span style="font-size:7px">💡</span><span style="font-size:6px;font-weight:700;color:#f9fafb">Savings Opportunity</span></div>
+          <div style="font-size:4.5px;color:#9ca3af;line-height:1.4">Food accounts for 32% of your spending.</div>
+        </div>
+        <div class="insight" style="background:#1e3a5f;border-color:#60a5fa">
+          <div style="display:flex;align-items:center;gap:3px;margin-bottom:1px"><span style="font-size:7px">📅</span><span style="font-size:6px;font-weight:700;color:#f9fafb">Weekend Pattern</span></div>
+          <div style="font-size:4.5px;color:#9ca3af;line-height:1.4">You tend to spend most on Saturdays.</div>
+        </div>
+        <div class="insight" style="background:#1e1b3a;border-color:#a78bfa">
+          <div style="display:flex;align-items:center;gap:3px;margin-bottom:1px"><span style="font-size:7px">🏆</span><span style="font-size:6px;font-weight:700;color:#f9fafb">Great Savings!</span></div>
+          <div style="font-size:4.5px;color:#9ca3af;line-height:1.4">You spent 18% less than last month!</div>
+        </div>
+        <div class="insight" style="background:#451a03;border-color:#f59e0b">
+          <div style="display:flex;align-items:center;gap:3px;margin-bottom:1px"><span style="font-size:7px">🔁</span><span style="font-size:6px;font-weight:700;color:#f9fafb">Subscription Load</span></div>
+          <div style="font-size:4.5px;color:#9ca3af;line-height:1.4">Subscriptions make up 42% of spending.</div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="ti"><div style="font-size:8px">⌂</div><span style="color:#6b7280">Home</span></div>
+        <div class="ti"><div style="font-size:8px">▭</div><span style="color:#6b7280">Subs</span></div>
+        <div style="flex:1;display:flex;justify-content:center"><div class="fab">+</div></div>
+        <div class="ti"><div style="font-size:8px;color:#8b5cf6">📊</div><span style="color:#8b5cf6">Tips</span></div>
+        <div class="ti"><div style="font-size:8px">⚙</div><span style="color:#6b7280">Settings</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chips">
+    <div class="chip" style="background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.25);color:#c4b5fd"><div class="ci" style="background:#8b5cf6">🔒</div>100% Private</div>
+    <div class="chip" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#86efac"><div class="ci" style="background:#22c55e">🧠</div>Pattern Detection</div>
+    <div class="chip" style="background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.25);color:#fcd34d"><div class="ci" style="background:#f59e0b">💸</div>Save More</div>
+  </div>
+</div>
+
+
+<!-- ══════ 6 — SETTINGS ══════ -->
+<div class="sc" style="background:#060a09">
+  <div class="glow" style="width:280px;height:280px;background:#22c55e;opacity:.10;top:-60px;left:-50px"></div>
+  <div class="glow" style="width:200px;height:200px;background:#14b8a6;opacity:.08;bottom:100px;right:-40px"></div>
+
+  <div class="headline">
+    <div class="hl-tag" style="background:rgba(52,211,153,.13);color:#6ee7b7">SETTINGS</div>
+    <div class="hl-title">Made for <span style="color:#34d399">you,</span><br>your way</div>
+    <div class="hl-sub">6 color themes, 8 languages,<br>biometric lock & more</div>
+  </div>
+
+  <div class="phone">
+    <div class="phone-inner">
+      <div class="status"><span>9:41</span><span>▲ 🔋</span></div>
+      <div class="scr">
+        <div style="font-size:8px;font-weight:700;color:#f9fafb;margin-bottom:6px">Control Center</div>
+        <div style="background:#1f2937;border-radius:8px;padding:2px 7px;margin-bottom:5px">
+          <div style="display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:0.5px solid #374151">
+            <span style="font-size:9px;width:12px">💵</span><span style="font-size:6px;font-weight:500;color:#f9fafb;flex:1">Currency</span><span style="font-size:5px;color:#9ca3af">Lira (₺)</span><span style="font-size:7px;color:#6b7280">›</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:0.5px solid #374151">
+            <span style="font-size:9px;width:12px">🌙</span><span style="font-size:6px;font-weight:500;color:#f9fafb;flex:1">Dark Mode</span><span style="font-size:5px;color:#9ca3af">Dark</span><span style="font-size:7px;color:#6b7280">›</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:0.5px solid #374151">
+            <span style="font-size:9px;width:12px">🎨</span><span style="font-size:6px;font-weight:500;color:#f9fafb;flex:1">Color Theme</span><span style="font-size:5px;color:#9ca3af">Green</span><span style="font-size:7px;color:#6b7280">›</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:0.5px solid #374151">
+            <span style="font-size:9px;width:12px">🔐</span><span style="font-size:6px;font-weight:500;color:#f9fafb;flex:1">Biometric Lock</span>
+            <div style="width:18px;height:10px;background:#22c55e;border-radius:5px;position:relative"><div style="width:8px;height:8px;background:#fff;border-radius:4px;position:absolute;top:1px;right:1px"></div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;padding:5px 0;border-bottom:0.5px solid #374151">
+            <span style="font-size:9px;width:12px">🔔</span><span style="font-size:6px;font-weight:500;color:#f9fafb;flex:1">Reminders</span><span style="font-size:5px;color:#9ca3af">1 day</span><span style="font-size:7px;color:#6b7280">›</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;padding:5px 0">
+            <span style="font-size:9px;width:12px">🌐</span><span style="font-size:6px;font-weight:500;color:#f9fafb;flex:1">Language</span><span style="font-size:5px;color:#9ca3af">English</span><span style="font-size:7px;color:#6b7280">›</span>
+          </div>
+        </div>
+        <!-- Theme swatches -->
+        <div style="background:#1f2937;border-radius:8px;padding:7px 8px">
+          <div style="font-size:5.5px;font-weight:700;color:#f9fafb;margin-bottom:6px">Color Themes</div>
+          <div style="display:flex;gap:6px;justify-content:center">
+            <div style="width:22px;height:22px;border-radius:11px;background:#22c55e;box-shadow:0 0 0 1.5px #111827,0 0 0 3px #22c55e"></div>
+            <div style="width:22px;height:22px;border-radius:11px;background:#3b82f6"></div>
+            <div style="width:22px;height:22px;border-radius:11px;background:#f97316"></div>
+            <div style="width:22px;height:22px;border-radius:11px;background:#f43f5e"></div>
+            <div style="width:22px;height:22px;border-radius:11px;background:#8b5cf6"></div>
+            <div style="width:22px;height:22px;border-radius:11px;background:#14b8a6"></div>
+          </div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="ti"><div style="font-size:8px">⌂</div><span style="color:#6b7280">Home</span></div>
+        <div class="ti"><div style="font-size:8px">▭</div><span style="color:#6b7280">Subs</span></div>
+        <div style="flex:1;display:flex;justify-content:center"><div class="fab">+</div></div>
+        <div class="ti"><div style="font-size:8px">📊</div><span style="color:#6b7280">Tips</span></div>
+        <div class="ti"><div style="font-size:8px;color:#22c55e">⚙</div><span style="color:#22c55e">Settings</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chips">
+    <div class="chip" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#86efac"><div class="ci" style="background:#22c55e">🎨</div>6 Color Themes</div>
+    <div class="chip" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.25);color:#93c5fd"><div class="ci" style="background:#3b82f6">🌐</div>8 Languages</div>
+    <div class="chip" style="background:rgba(167,139,250,.12);border:1px solid rgba(139,92,246,.25);color:#c4b5fd"><div class="ci" style="background:#8b5cf6">🔐</div>Biometric Lock</div>
+  </div>
+</div>
+
+</div><!-- /grid -->
+</body>
+</html>
