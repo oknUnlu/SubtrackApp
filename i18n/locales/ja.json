@@ -50,6 +50,7 @@
     "totalSpending": "今月の合計支出",
     "includingSubs": "サブスク含む",
     "activeSubscriptions": "有効なサブスク",
+    "subscriptionTotal": "サブスク合計",
     "dailyAverage": "日平均",
     "spendingDistribution": "支出の内訳",
     "noSpendingData": "まだ支出データがありません",
@@ -338,5 +339,9 @@
     "rateNow": "今すぐ評価 ⭐",
     "later": "あとで",
     "noThanks": "いいえ、結構です"
+  },
+  "spendingDistribution": {
+    "title": "支出の内訳",
+    "subtitle": "今月のカテゴリー別支出"
   }
 }

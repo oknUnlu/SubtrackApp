@@ -50,6 +50,7 @@
     "totalSpending": "Total Spending This Month",
     "includingSubs": "Including subscriptions",
     "activeSubscriptions": "Active Subscriptions",
+    "subscriptionTotal": "Subscription Total",
     "dailyAverage": "Daily Average",
     "spendingDistribution": "Spending Distribution",
     "noSpendingData": "No spending data yet",
@@ -338,5 +339,9 @@
     "rateNow": "Rate Now ⭐",
     "later": "Maybe Later",
     "noThanks": "No, Thanks"
+  },
+  "spendingDistribution": {
+    "title": "Spending Distribution",
+    "subtitle": "This month's spending by category"
   }
 }

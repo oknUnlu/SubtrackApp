@@ -50,6 +50,7 @@
     "totalSpending": "Total Pengeluaran Bulan Ini",
     "includingSubs": "Termasuk langganan",
     "activeSubscriptions": "Langganan Aktif",
+    "subscriptionTotal": "Total Langganan",
     "dailyAverage": "Rata-rata Harian",
     "spendingDistribution": "Distribusi Pengeluaran",
     "noSpendingData": "Belum ada data pengeluaran",
@@ -338,5 +339,9 @@
     "rateNow": "Beri Rating ⭐",
     "later": "Nanti Saja",
     "noThanks": "Tidak, Terima Kasih"
+  },
+  "spendingDistribution": {
+    "title": "Distribusi Pengeluaran",
+    "subtitle": "Pengeluaran bulan ini per kategori"
   }
 }

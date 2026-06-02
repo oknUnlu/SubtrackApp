@@ -1,12 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { randomUUID } from "expo-crypto";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 
-import { addInstallment, deleteInstallment, formatNumber, getAllInstallments, getCurrencySymbol, getSetting, InstallmentItem, updateInstallmentPaid } from "../database/db";
+import { addInstallment, deleteInstallment, formatNumber, getAllInstallments, getCurrencySymbol, getSetting, InstallmentItem, reconcileInstallments } from "../database/db";
 import { useAppTheme } from "@/hooks/use-app-theme";
 
 export default function InstallmentsScreen() {
@@ -52,6 +52,7 @@ export default function InstallmentsScreen() {
   }, []);
 
   const load = async () => {
+    await reconcileInstallments();
     const data = await getAllInstallments();
     setInstallments(data);
     const currency = await getSetting("currency");
@@ -69,6 +70,8 @@ export default function InstallmentsScreen() {
     const count = parseInt(installmentCount, 10);
     if (isNaN(total) || isNaN(count) || count <= 0) return;
 
+    // Records the installment and its monthly payments as expenses (the monthly
+    // payment shows up as an expense each month over the installment period).
     await addInstallment({
       id: randomUUID(),
       title: title.trim(),
@@ -78,16 +81,11 @@ export default function InstallmentsScreen() {
       monthlyAmount: total / count,
       startDate: new Date().toISOString(),
       bankName: bankName.trim() || undefined,
+      category: "shopping",
     });
 
     setTitle(""); setTotalAmount(""); setInstallmentCount(""); setBankName("");
     setShowModal(false);
-    load();
-  };
-
-  const handleMarkPaid = async (item: InstallmentItem) => {
-    if (item.paidCount >= item.installmentCount) return;
-    await updateInstallmentPaid(item.id);
     load();
   };
 
@@ -129,15 +127,6 @@ export default function InstallmentsScreen() {
           </View>
         </View>
 
-        {/* Add Button */}
-        <TouchableOpacity
-          onPress={() => setShowModal(true)}
-          style={{ backgroundColor: colors.primary, borderRadius: 14, paddingVertical: 14, flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 8, marginBottom: 20 }}
-        >
-          <Ionicons name="add" size={20} color="#fff" />
-          <Text style={{ color: "#fff", fontWeight: "600", fontSize: 15 }}>{t("installments.addNew")}</Text>
-        </TouchableOpacity>
-
         {/* Active */}
         {active.map(item => {
           const progress = item.installmentCount > 0 ? (item.paidCount / item.installmentCount) * 100 : 0;
@@ -157,15 +146,9 @@ export default function InstallmentsScreen() {
                 <Text style={{ fontSize: 12, color: colors.textSecondary }}>{t("installments.remaining", { paid: item.paidCount, total: item.installmentCount })}</Text>
                 <Text style={{ fontSize: 14, fontWeight: "700", color: colors.text }}>{currSymbol}{formatNumber(item.monthlyAmount)}/{t("common.monthly").toLowerCase()}</Text>
               </View>
-              <View style={{ height: 8, backgroundColor: colors.border, borderRadius: 8, overflow: "hidden", marginBottom: 8 }}>
+              <View style={{ height: 8, backgroundColor: colors.border, borderRadius: 8, overflow: "hidden" }}>
                 <View style={{ width: `${progress}%`, height: "100%", backgroundColor: colors.primary, borderRadius: 8 }} />
               </View>
-              <TouchableOpacity
-                onPress={() => handleMarkPaid(item)}
-                style={{ backgroundColor: colors.primaryLight, borderRadius: 10, paddingVertical: 8, alignItems: "center" }}
-              >
-                <Text style={{ color: colors.primary, fontWeight: "600", fontSize: 13 }}>{t("installments.markPaid")}</Text>
-              </TouchableOpacity>
             </View>
           );
         })}

@@ -50,6 +50,7 @@
     "totalSpending": "Gasto Total Este Mes",
     "includingSubs": "Incluyendo suscripciones",
     "activeSubscriptions": "Suscripciones Activas",
+    "subscriptionTotal": "Total Suscripciones",
     "dailyAverage": "Promedio Diario",
     "spendingDistribution": "Distribución de Gastos",
     "noSpendingData": "Aún no hay datos de gastos",
@@ -338,5 +339,9 @@
     "rateNow": "Calificar Ahora ⭐",
     "later": "Quizás Más Tarde",
     "noThanks": "No, Gracias"
+  },
+  "spendingDistribution": {
+    "title": "Distribución de Gastos",
+    "subtitle": "Tus gastos por categoría este mes"
   }
 }

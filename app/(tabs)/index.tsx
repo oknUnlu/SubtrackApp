@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 
 import AdBanner from '@/components/AdBanner';
-import ExpenseDonutChart from '../../components/ExpenseDonutChart';
 import WeeklyBarChart from '../../components/WeeklyBarChart';
 import { useAppTheme } from '@/hooks/use-app-theme';
 import { createStyles } from "../../styles";
@@ -18,7 +17,6 @@ import {
   deleteTransaction,
   formatNumber,
   getBudgetVsActual,
-  getCategoryDistribution,
   getCurrencySymbol,
   getMonthlyComparison,
   getMonthlyTotal,
@@ -26,7 +24,7 @@ import {
   getRecentTransactions,
   getSetting,
   setSetting,
-  getSubscriptionCount,
+  getSubscriptionMonthlyTotal,
   getTagsForTransactions,
   getWeeklyTrend,
   TagItem,
@@ -42,15 +40,6 @@ const CATEGORY_ICONS: Record<string, string> = {
   kids: "👶", home: "🔧", coffee: "☕", subscriptions: "📱", parking: "🅿️",
 };
 
-const CATEGORY_COLORS: Record<string, string> = {
-  food: "#f97316", transport: "#3b82f6", fun: "#8b5cf6", shopping: "#ec4899",
-  bills: "#6366f1", health: "#ef4444", education: "#14b8a6", tech: "#06b6d4", other: "#6b7280",
-  groceries: "#84cc16", rent: "#a855f7", fuel: "#eab308", clothing: "#f43f5e",
-  beauty: "#d946ef", sports: "#22c55e", pets: "#f97316", gifts: "#e11d48", travel: "#0ea5e9",
-  insurance: "#64748b", taxes: "#78716c", savings: "#059669", charity: "#ef4444",
-  kids: "#f59e0b", home: "#8b5cf6", coffee: "#92400e", subscriptions: "#6366f1", parking: "#0284c7",
-};
-
 function getShortDayName(dayIndex: number, locale: string): string {
   const refDate = new Date(2024, 0, 7 + dayIndex);
   return new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(refDate);
@@ -62,14 +51,12 @@ export default function HomeScreen() {
   const styles = useMemo(() => createStyles(colors), [colors]);
 
   const [monthlyTotal, setMonthlyTotal] = useState(0);
-  const [subscriptionCount, setSubscriptionCount] = useState(0);
+  const [subscriptionTotal, setSubscriptionTotal] = useState(0);
   const [dailyAverage, setDailyAverage] = useState(0);
-  const [categories, setCategories] = useState<{ category: string; total: number }[]>([]);
   const [weeklyTrend, setWeeklyTrend] = useState<{ day: string; total: number }[]>([]);
   const [currSymbol, setCurrSymbol] = useState("₺");
   const [recentTransactions, setRecentTransactions] = useState<TransactionItem[]>([]);
   const [budgetInfo, setBudgetInfo] = useState<{ budget: number; actual: number } | null>(null);
-  const [categoryBudgets, setCategoryBudgets] = useState<Map<string, { budget: number; actual: number }>>(new Map());
   const [comparison, setComparison] = useState<{ thisMonth: number; lastMonth: number; changePercent: number } | null>(null);
   const [transactionTags, setTransactionTags] = useState<Map<string, TagItem[]>>(new Map());
   const [paymentDistribution, setPaymentDistribution] = useState<{ method: string; total: number }[]>([]);
@@ -111,28 +98,21 @@ export default function HomeScreen() {
   const loadDashboard = async () => {
     try {
       const total = await getMonthlyTotal();
-      const subs = await getSubscriptionCount();
-      const cats = await getCategoryDistribution();
+      const subsTotal = await getSubscriptionMonthlyTotal();
       const weekly = await getWeeklyTrend();
       const recent = await getRecentTransactions(5);
       const currency = await getSetting("currency");
 
       const today = new Date().getDate();
       setMonthlyTotal(total);
-      setSubscriptionCount(subs);
+      setSubscriptionTotal(subsTotal);
       setDailyAverage(today > 0 ? total / today : 0);
-      setCategories(cats);
       setWeeklyTrend(weekly);
       setRecentTransactions(recent);
       setCurrSymbol(getCurrencySymbol(currency ?? "TRY"));
 
       const budgetData = await getBudgetVsActual();
       setBudgetInfo(budgetData.overall);
-      const catBudgetMap = new Map<string, { budget: number; actual: number }>();
-      for (const cb of budgetData.categories) {
-        catBudgetMap.set(cb.category, { budget: cb.budget, actual: cb.actual });
-      }
-      setCategoryBudgets(catBudgetMap);
 
       const comp = await getMonthlyComparison();
       setComparison(comp);
@@ -172,6 +152,20 @@ export default function HomeScreen() {
             </Text>
           </View>
         </View>
+        <TouchableOpacity
+          onPress={() => router.push('/spending-distribution')}
+          accessibilityLabel={t('home.spendingDistribution')}
+          style={{
+            width: 44,
+            height: 44,
+            borderRadius: 22,
+            backgroundColor: colors.surface,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Ionicons name="pie-chart-outline" size={22} color={colors.primary} />
+        </TouchableOpacity>
       </View>
 
       {/* Monthly Total */}
@@ -224,11 +218,9 @@ export default function HomeScreen() {
       {/* Stats Row */}
       <View style={{ flexDirection: "row", gap: 10, marginBottom: 12 }}>
         <View style={{ flex: 1, backgroundColor: colors.surface, borderRadius: 16, paddingVertical: 16, alignItems: "center", justifyContent: "center" }}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-            <Ionicons name="card-outline" size={20} color={colors.primary} />
-            <Text style={{ fontSize: 22, fontWeight: "800", color: colors.text }}>{subscriptionCount}</Text>
-          </View>
-          <Text style={{ fontSize: 10, color: colors.textSecondary, fontWeight: "500", marginTop: 4 }}>{t('home.activeSubscriptions')}</Text>
+          <Ionicons name="card-outline" size={18} color={colors.primary} style={{ marginBottom: 6 }} />
+          <Text style={{ fontSize: 20, fontWeight: "800", color: colors.text }}>{currSymbol}{formatNumber(subscriptionTotal, 2)}</Text>
+          <Text style={{ fontSize: 10, color: colors.textSecondary, fontWeight: "500", marginTop: 2 }}>{t('home.subscriptionTotal')}</Text>
         </View>
         <View style={{ flex: 1, backgroundColor: colors.surface, borderRadius: 16, paddingVertical: 16, alignItems: "center", justifyContent: "center" }}>
           <Ionicons name="analytics-outline" size={18} color={colors.primary} style={{ marginBottom: 6 }} />
@@ -279,38 +271,6 @@ export default function HomeScreen() {
         );
       })()}
 
-      {/* Quick Actions */}
-      <View style={styles.largeCard}>
-        <Text style={styles.cardTitle}>{t('home.quickActions')}</Text>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
-          {[
-            { icon: "calendar-outline" as const, label: t("monthlyReport.title"), route: "/monthly-report" },
-            { icon: "bar-chart-outline" as const, label: t("yearlyReport.title"), route: "/yearly-report" },
-            { icon: "card-outline" as const, label: t("bankReport.title"), route: "/bank-report" },
-            { icon: "trending-up-outline" as const, label: t("categoryTrend.title"), route: "/category-trend" },
-            { icon: "receipt-outline" as const, label: t("installments.title"), route: "/installments" },
-            { icon: "flag-outline" as const, label: t("spendingGoals.title"), route: "/spending-goals" },
-          ].map((item) => (
-            <TouchableOpacity
-              key={item.route}
-              onPress={() => router.push(item.route as any)}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                backgroundColor: colors.surfaceTertiary,
-                borderRadius: 12,
-                paddingHorizontal: 14,
-                paddingVertical: 10,
-                gap: 8,
-              }}
-            >
-              <Ionicons name={item.icon} size={18} color={colors.primary} />
-              <Text style={{ fontSize: 13, fontWeight: "600", color: colors.text }}>{item.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-
       {/* Monthly Comparison */}
       {comparison && (comparison.thisMonth > 0 || comparison.lastMonth > 0) && (
         <View style={styles.largeCard}>
@@ -346,73 +306,6 @@ export default function HomeScreen() {
           )}
         </View>
       )}
-
-      {/* Category Distribution */}
-      <View style={styles.largeCard}>
-        <Text style={styles.cardTitle}>{t('home.spendingDistribution')}</Text>
-        {categories.length === 0 ? (
-          <View style={styles.emptyState}>
-            <Text style={styles.emptyIcon}>📊</Text>
-            <Text style={styles.emptyText}>{t('home.noSpendingData')}</Text>
-          </View>
-        ) : (
-          (() => {
-            const total = categories.reduce((s, c) => s + c.total, 0);
-            const chartData = categories.map((item) => ({
-              category: t(`categories.${item.category}`, { defaultValue: item.category }),
-              total: item.total,
-              color: CATEGORY_COLORS[item.category] || "#6b7280",
-            }));
-
-            return (
-              <>
-                <ExpenseDonutChart
-                  data={chartData}
-                  total={total}
-                  currencySymbol={currSymbol}
-                  totalLabel={t('home.totalLabel')}
-                  innerCircleColor={colors.surface}
-                  textColor={colors.text}
-                  textSecondaryColor={colors.textSecondary}
-                />
-                {categories.map((item) => {
-                  const percent = total > 0 ? item.total / total : 0;
-                  const cat = {
-                    icon: CATEGORY_ICONS[item.category] || "📌",
-                    label: t(`categories.${item.category}`, { defaultValue: item.category }),
-                  };
-                  const catBudget = categoryBudgets.get(item.category);
-                  const budgetPercent = catBudget ? item.total / catBudget.budget : 0;
-                  const budgetColor = budgetPercent >= 0.9 ? colors.danger : budgetPercent >= 0.7 ? colors.warning : colors.primary;
-
-                  return (
-                    <View key={item.category} style={{ backgroundColor: colors.surfaceTertiary, borderRadius: 14, padding: 12, marginBottom: 12 }}>
-                      <View style={{ flexDirection: "row", marginBottom: 8 }}>
-                        <Text style={{ fontSize: 20, marginRight: 10 }}>{cat.icon}</Text>
-                        <View style={{ flex: 1 }}>
-                          <Text style={{ fontWeight: "600", color: colors.text }}>{cat.label}</Text>
-                          <Text style={{ fontSize: 12, color: colors.textSecondary }}>
-                            {t('home.percentThisMonth', { percent: Math.round(percent * 100) })}
-                            {catBudget ? ` · ${currSymbol}${formatNumber(catBudget.budget, 2)} ${t('budget.limit')}` : ''}
-                          </Text>
-                        </View>
-                        <Text style={{ fontWeight: "700", color: colors.text }}>{currSymbol}{formatNumber(item.total, 2)}</Text>
-                      </View>
-                      <View style={{ height: 6, backgroundColor: colors.border, borderRadius: 6, overflow: "hidden" }}>
-                        <View style={{
-                          width: `${Math.min((catBudget ? budgetPercent : percent) * 100, 100)}%`,
-                          height: "100%",
-                          backgroundColor: catBudget ? budgetColor : colors.primary,
-                        }} />
-                      </View>
-                    </View>
-                  );
-                })}
-              </>
-            );
-          })()
-        )}
-      </View>
 
       {/* Weekly Trend */}
       <View style={styles.largeCard}>
@@ -457,17 +350,15 @@ export default function HomeScreen() {
             const cat = {
               icon: CATEGORY_ICONS[tx.category ?? "other"] || "📌",
               label: t(`categories.${tx.category ?? "other"}`, { defaultValue: tx.category ?? "other" }),
-            };
-            const txDate = new Date(tx.date);
-            const dateStr = new Intl.DateTimeFormat(i18n.language, { day: 'numeric', month: 'numeric' }).format(txDate);
-
+            }; 
+            
             return (
               <View key={tx.id} style={{ flexDirection: "row", alignItems: "center", backgroundColor: colors.surfaceTertiary, borderRadius: 12, padding: 12, marginBottom: 8 }}>
                 <Text style={{ fontSize: 20, marginRight: 10 }}>{cat.icon}</Text>
                 <View style={{ flex: 1 }}>
                   <Text style={{ fontWeight: "600", color: colors.text }}>{tx.title}</Text>
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-                    <Text style={{ fontSize: 12, color: colors.textSecondary }}>{dateStr} - {cat.label}</Text>
+                    <Text style={{ fontSize: 12, color: colors.textSecondary }}>{cat.label}</Text>
                     <Ionicons
                       name={tx.paymentMethod === "credit_card" ? "card" : tx.paymentMethod === "debit_card" ? "wallet" : "cash-outline"}
                       size={12}

@@ -50,6 +50,7 @@
     "totalSpending": "इस माह कुल खर्च",
     "includingSubs": "सदस्यताएं शामिल",
     "activeSubscriptions": "सक्रिय सदस्यताएं",
+    "subscriptionTotal": "सदस्यता कुल",
     "dailyAverage": "दैनिक औसत",
     "spendingDistribution": "खर्च वितरण",
     "noSpendingData": "अभी तक कोई खर्च डेटा नहीं",
@@ -338,5 +339,9 @@
     "rateNow": "अभी रेट करें ⭐",
     "later": "बाद में",
     "noThanks": "नहीं, धन्यवाद"
+  },
+  "spendingDistribution": {
+    "title": "खर्च वितरण",
+    "subtitle": "इस महीने श्रेणी अनुसार आपका खर्च"
   }
 }

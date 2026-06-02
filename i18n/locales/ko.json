@@ -50,6 +50,7 @@
     "totalSpending": "이번 달 총 지출",
     "includingSubs": "구독 포함",
     "activeSubscriptions": "활성 구독",
+    "subscriptionTotal": "구독 합계",
     "dailyAverage": "일 평균",
     "spendingDistribution": "지출 분포",
     "noSpendingData": "아직 지출 데이터가 없습니다",
@@ -338,5 +339,9 @@
     "rateNow": "지금 평가 ⭐",
     "later": "나중에",
     "noThanks": "괜찮습니다"
+  },
+  "spendingDistribution": {
+    "title": "지출 분포",
+    "subtitle": "이번 달 카테고리별 지출"
   }
 }

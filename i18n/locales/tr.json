@@ -50,6 +50,7 @@
     "totalSpending": "Bu Ay Toplam Harcama",
     "includingSubs": "Abonelikler dahil",
     "activeSubscriptions": "Aktif Abonelik",
+    "subscriptionTotal": "Abonelik Toplamı",
     "dailyAverage": "Günlük Ortalama",
     "spendingDistribution": "Harcama Dağılımı",
     "noSpendingData": "Henüz harcama verisi yok",
@@ -338,5 +339,9 @@
     "rateNow": "Değerlendir ⭐",
     "later": "Daha Sonra",
     "noThanks": "Hayır, Teşekkürler"
+  },
+  "spendingDistribution": {
+    "title": "Harcama Dağılımı",
+    "subtitle": "Bu ay kategorilere göre harcamanız"
   }
 }

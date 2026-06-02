@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import 'react-native-reanimated';
 
 import BiometricLock from '@/components/BiometricLock';
-import { initDB, getSetting } from '@/database/db';
+import { initDB, getSetting, reconcileInstallments } from '@/database/db';
 import { AppThemeProvider, useAppTheme } from '@/hooks/use-app-theme';
 import { initI18n } from '@/i18n/i18n';
 import { rescheduleAllReminders } from '@/utils/notifications';
@@ -39,6 +39,7 @@ function AppContent({ showOnboarding }: { showOnboarding: boolean }) {
         <Stack.Screen name="installments" options={{ presentation: 'modal', headerShown: false }} />
         <Stack.Screen name="monthly-report" options={{ presentation: 'modal', headerShown: false }} />
         <Stack.Screen name="spending-goals" options={{ presentation: 'modal', headerShown: false }} />
+        <Stack.Screen name="spending-distribution" options={{ presentation: 'modal', headerShown: false }} />
       </Stack>
       <SystemBars style={isDark ? "light" : "dark"} />
     </ThemeProvider>
@@ -55,6 +56,7 @@ export default function RootLayout() {
     async function bootstrap() {
       try {
         await initDB();
+        await reconcileInstallments().catch(() => {});
         await initI18n();
         rescheduleAllReminders().catch(() => {});
 
