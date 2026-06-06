@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390,initial-scale=1">
+<title>SubTrack — Dashboard (EN)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:390px;height:844px;overflow:hidden;background:linear-gradient(160deg,#040d06 0%,#071509 40%,#030b07 100%)}
+body{font-family:'Inter',-apple-system,system-ui,sans-serif;display:flex;align-items:center;justify-content:center}
+.card{width:390px;height:844px;position:relative;display:flex;flex-direction:column;align-items:center;padding:38px 28px 30px;isolation:isolate;overflow:hidden;background:linear-gradient(160deg,#040d06 0%,#071509 40%,#030b07 100%)}
+.glow{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0}
+/* Phone */
+.phone{width:168px;height:338px;border-radius:32px;border:1.5px solid rgba(255,255,255,.13);box-shadow:0 0 0 1px rgba(0,0,0,.8),0 28px 80px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.08);overflow:hidden;flex-shrink:0;position:relative;margin-bottom:20px;z-index:2}
+.phone-inner{position:absolute;inset:0;border-radius:31px;overflow:hidden;display:flex;flex-direction:column}
+.island{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:58px;height:15px;background:#000;border-radius:20px;z-index:30}
+.sb{flex:1;overflow:hidden;display:flex;flex-direction:column}
+/* Headline */
+.headline{text-align:center;z-index:2;margin-bottom:20px}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 13px;border-radius:100px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:11px}
+.bdot{width:5px;height:5px;border-radius:50%}
+.title{font-size:28px;font-weight:900;line-height:1.07;letter-spacing:-.8px;color:#fff}
+.sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:8px;line-height:1.5;font-weight:500}
+/* Pills */
+.pills{display:flex;flex-direction:column;gap:7px;width:100%;margin-top:auto;z-index:2}
+.pill{display:flex;align-items:center;gap:9px;padding:9px 14px;border-radius:16px;font-size:11px;font-weight:600}
+.pi{width:26px;height:26px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+/* Mini UI */
+.uc{border-radius:10px;padding:7px 8px;margin-bottom:4px}
+.ur{display:flex;align-items:center;border-radius:8px;padding:5px 7px;margin-bottom:3px}
+.bar{height:3px;border-radius:2px;overflow:hidden}
+.bf{height:100%;border-radius:2px}
+</style>
+
+</head>
+<body>
+<div class="card">
+
+  <div class="glow" style="width:360px;height:300px;background:#22c55e;opacity:.13;top:-110px;left:-60px"></div><div class="glow" style="width:220px;height:220px;background:#4ade80;opacity:.07;bottom:50px;right:-40px"></div>
+  <div class="headline">
+    <div class="badge" style="background:rgba(34,197,94,.12);color:#4ade80;border:1px solid rgba(34,197,94,.2)">
+      <div class="bdot" style="background:#4ade80"></div>
+      Dashboard
+    </div>
+    <div class="title">Everything in<br><em style="color:#22c55e">one glance</em></div>
+    <div class="sub">Totals, trends & breakdown<br>always visible</div>
+  </div>
+  <div class="phone" style="background:#0b1410">
+    
+    <div class="island"></div>
+    <div class="phone-inner" style="background:#0f1a10;padding-top:28px">
+      <div class="sb" style="padding:0 8px 6px;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div><div style="font-size:6px;color:#6b7280;font-weight:500">Good morning 👋</div><div style="font-size:9px;font-weight:800;color:#f9fafb">Okan</div></div>
+          <div style="width:22px;height:22px;border-radius:11px;background:#22c55e;display:flex;align-items:center;justify-content:center;font-size:9px">🔔</div>
+        </div>
+        <div style="background:linear-gradient(135deg,#16a34a,#15803d);border-radius:12px;padding:9px 10px;margin-bottom:5px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:-20px;right:-20px;width:70px;height:70px;background:rgba(255,255,255,.05);border-radius:50%"></div>
+          <div style="font-size:5px;color:rgba(255,255,255,.7);font-weight:500;margin-bottom:3px">💳 This Month</div>
+          <div style="font-size:18px;font-weight:900;color:#fff;letter-spacing:-1px">₺4,280</div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px">
+            <div><div style="font-size:4.5px;color:rgba(255,255,255,.6)">Budget</div><div style="font-size:6px;font-weight:700;color:#fff">₺6,000</div></div>
+            <div><div style="font-size:4.5px;color:rgba(255,255,255,.6)">Left</div><div style="font-size:6px;font-weight:700;color:#bbf7d0">₺1,720</div></div>
+            <div><div style="font-size:4.5px;color:rgba(255,255,255,.6)">Daily Avg</div><div style="font-size:6px;font-weight:700;color:#fff">₺142</div></div>
+          </div>
+          <div class="bar" style="background:rgba(255,255,255,.2);margin-top:5px"><div class="bf" style="width:71%;background:rgba(255,255,255,.85)"></div></div>
+        </div>
+        <div class="uc" style="background:#141e15">
+          <div style="font-size:5.5px;font-weight:700;color:#d1fae5;margin-bottom:5px">Weekly Spending</div>
+          <div style="display:flex;align-items:flex-end;gap:4px;height:30px">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1.5px"><div style="flex:1;width:100%;background:#1f2937;border-radius:2px;display:flex;align-items:flex-end"><div style="width:100%;height:55%;background:#22c55e;border-radius:2px;opacity:.6"></div></div><div style="font-size:4px;color:#6b7280">M</div></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1.5px"><div style="flex:1;width:100%;background:#1f2937;border-radius:2px;display:flex;align-items:flex-end"><div style="width:100%;height:80%;background:#22c55e;border-radius:2px;opacity:.6"></div></div><div style="font-size:4px;color:#6b7280">T</div></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1.5px"><div style="flex:1;width:100%;background:#1f2937;border-radius:2px;display:flex;align-items:flex-end"><div style="width:100%;height:40%;background:#22c55e;border-radius:2px;opacity:.6"></div></div><div style="font-size:4px;color:#6b7280">W</div></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1.5px"><div style="flex:1;width:100%;background:#1f2937;border-radius:2px;display:flex;align-items:flex-end"><div style="width:100%;height:95%;background:#4ade80;border-radius:2px"></div></div><div style="font-size:4px;color:#6b7280">T</div></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1.5px"><div style="flex:1;width:100%;background:#1f2937;border-radius:2px;display:flex;align-items:flex-end"><div style="width:100%;height:65%;background:#22c55e;border-radius:2px;opacity:.6"></div></div><div style="font-size:4px;color:#6b7280">F</div></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1.5px"><div style="flex:1;width:100%;background:#1f2937;border-radius:2px;display:flex;align-items:flex-end"><div style="width:100%;height:30%;background:#22c55e;border-radius:2px;opacity:.6"></div></div><div style="font-size:4px;color:#6b7280">S</div></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:1.5px"><div style="flex:1;width:100%;background:#1f2937;border-radius:2px;display:flex;align-items:flex-end"><div style="width:100%;height:20%;background:#22c55e;border-radius:2px;opacity:.6"></div></div><div style="font-size:4px;color:#6b7280">S</div></div>
+          </div>
+        </div>
+        <div style="font-size:5.5px;font-weight:700;color:#d1fae5;margin-bottom:3px">Recent</div>
+        <div class="ur" style="background:#141e15"><div style="width:16px;height:16px;border-radius:6px;background:#f97316;display:flex;align-items:center;justify-content:center;font-size:8px;margin-right:5px">🍔</div><div style="flex:1"><div style="font-size:5.5px;font-weight:600;color:#f9fafb">Lunch</div><div style="font-size:4px;color:#6b7280">Today · Food</div></div><div style="font-size:6px;font-weight:700;color:#f87171">-₺85</div></div>
+        <div class="ur" style="background:#141e15"><div style="width:16px;height:16px;border-radius:6px;background:#8b5cf6;display:flex;align-items:center;justify-content:center;font-size:8px;margin-right:5px">🎵</div><div style="flex:1"><div style="font-size:5.5px;font-weight:600;color:#f9fafb">Spotify</div><div style="font-size:4px;color:#6b7280">Yesterday · Subs</div></div><div style="font-size:6px;font-weight:700;color:#f87171">-₺54</div></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="pills"><div class="pill" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.15)"><div class="pi" style="background:rgba(34,197,94,.15)">📊</div><span style="color:#86efac">Live spending overview</span></div><div class="pill" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.15)"><div class="pi" style="background:rgba(34,197,94,.15)">📅</div><span style="color:#86efac">Daily & weekly trends</span></div></div>
+
+</div>
+</body>
+</html>
